@@ -1,0 +1,38 @@
+const path = require("path");
+
+console.log(__dirname);
+const client_path = path.resolve(__dirname);
+const public_path = path.resolve(__dirname, "..", "public");
+
+module.exports = {
+  mode: "development",
+
+  entry: client_path + "/src/index.tsx",
+
+  output: {
+    path: path.resolve(public_path, "js"),
+    filename: "bundle.js",
+    publicPath: "js"
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader"
+      }
+    ]
+  },
+
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"]
+  },
+
+  devServer: {
+    port: 3000,
+    contentBase: public_path,
+    openPage: "index.html",
+    watchContentBase: true,
+    open: true,
+  }
+};

@@ -1,0 +1,58 @@
+Arguments: 
+  /Users/haru/Projects/MarkdownNotebook/client/node/node /Users/haru/Projects/MarkdownNotebook/client/node/yarn/dist/bin/yarn.js
+
+PATH: 
+  /Users/haru/Projects/MarkdownNotebook/client/node:/Users/haru/Projects/MarkdownNotebook/client/node/yarn/dist/bin:/Users/haru/.composer/vendor/bin:/Users/haru/.nodenv/shims:/Users/haru/.pyenv/shims:/Users/haru/.pyenv/bin:/Users/haru/.rbenv/shims:/Applications/MAMP/bin/php/php7.1.1/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/haru/bin:
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.15.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/haru/Projects/MarkdownNotebook/client/package.json: Unexpected token } in JSON at position 688
+      at JSON.parse (<anonymous>)
+      at /Users/haru/Projects/MarkdownNotebook/client/node/yarn/dist/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/Users/haru/Projects/MarkdownNotebook/client/node/yarn/dist/lib/cli.js:304:30)
+      at /Users/haru/Projects/MarkdownNotebook/client/node/yarn/dist/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "markdown-notebook-client",
+    "version": "1.0.0",
+    "author": "Harunobu Ozeki <ozeki.haru@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+      "build": "webpack",
+      "dev": "webpack-dev-server"
+    },
+    "devDependencies": {
+      "@types/react": "^16.8.8",
+      "@types/react-dom": "^16.8.3",
+      "@types/react-redux": "^7.0.7",
+      "@types/redux": "^3.6.0",
+      "ts-loader": "^5.3.3",
+      "typescript": "^3.3.4000",
+      "webpack": "^4.29.6",
+      "webpack-cli": "^3.3.0",
+      "webpack-dev-server": "^3.2.1"
+    },
+    "dependencies": {
+      "react": "^16.8.5",
+      "react-dom": "^16.8.5",
+      "react-redux": "^7.0.2",
+      "redux": "^4.0.1",
+      "redux-devtools-extension": "^2.13.8",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

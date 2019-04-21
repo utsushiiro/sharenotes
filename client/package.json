@@ -1,0 +1,31 @@
+{
+  "name": "markdown-notebook-client",
+  "version": "1.0.0",
+  "author": "Harunobu Ozeki <ozeki.haru@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.3",
+    "@types/react-redux": "^7.0.7",
+    "@types/redux": "^3.6.0",
+    "@types/redux-logger": "^3.0.7",
+    "redux-logger": "^3.0.6",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-redux": "^7.0.2",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "reselect": "^4.0.0"
+  }
+}
