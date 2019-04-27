@@ -1,36 +1,39 @@
 import { Reducer } from "redux";
-import { State } from "./types";
+import { NotesState, State } from "./types";
 import { Action, actionTypes } from "./actions";
 
-const initialState = {
+const initialState: NotesState = {
   notes: [
     {
       id: 0,
-      text: 'hoge'
+      title: 'hoge title',
+      content: 'hoge content'
     },
     {
       id: 1,
-      text: 'fuga'
+      title:'fuga title',
+      content: 'fuga content'
     }
   ]
 };
 
-const note: Reducer<State, Action> = (state = initialState, action) => {
+const note: Reducer<NotesState, Action> = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_NOTE:
       return {
         ...state,
         notes: state.notes.concat(
             {
-              id: action.id,
-              text: action.text
+              id: action.payload.id,
+              title: action.payload.title,
+              content: action.payload.content
             }
         )
       };
     case actionTypes.DELETE_NOTE:
       return {
         ...state,
-        notes: state.notes.filter(note => note.id !== action.id)
+        notes: state.notes.filter(note => note.id !== action.payload.id)
       };
     default:
       const _: never = action;

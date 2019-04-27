@@ -4,17 +4,22 @@ export const actionTypes =  {
   DELETE_NOTE: "DELETE_NOTE"
 } as const;
 
-let nextNoteId: number = 0;
+let nextNoteId: number = 2;
 
-export const addNote = (text: string) => ({
+const addNote = (title: string, content: string) => ({
   type: actionTypes.ADD_NOTE,
-  id: nextNoteId++,
-  text
+  payload: {
+    id: nextNoteId++,
+    title,
+    content
+  }
 });
 
-export const deleteNote = (id: number) => ({
+const deleteNote = (id: number) => ({
   type: actionTypes.DELETE_NOTE,
-  id: id
+  payload: {
+    id: id
+  }
 });
 
 export default {

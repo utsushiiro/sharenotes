@@ -1,8 +1,13 @@
 export type Note = {
   id: number;
-  text: string;
+  title: string;
+  content: string;
+}
+
+export type NotesState = {
+  notes: Note[];
 }
 
 export type State = {
-  notes: Note[];
+  notesState: NotesState;
 }
