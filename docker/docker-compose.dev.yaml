@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: markdown_note_dev
+      MYSQL_USER: markdown_note
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    command: mysqld
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3001:3306
+    networks:
+      - db_network
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOSTS=mysql
+      - PMA_PORT=3306
+      - PMA_USER=markdown_note
+      - PMA_PASSWORD=password
+    ports:
+      - 3002:80
+    networks:
+      - db_network
+
+networks:
+  db_network:
