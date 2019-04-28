@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3001/markdown_notebook_dev
+    url: jdbc:mysql://localhost:3002/markdown_notebook_dev
     username: markdown_notebook
     password: password
     driverClassName: com.mysql.cj.jdbc.Driver

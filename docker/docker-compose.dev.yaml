@@ -16,7 +16,7 @@ services:
       - ./initdb.d:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
     ports:
-      - 3001:3306
+      - 3002:3306
     networks:
       - db_network
 
@@ -29,7 +29,7 @@ services:
       - PMA_USER=markdown_notebook
       - PMA_PASSWORD=password
     ports:
-      - 3002:80
+      - 3003:80
     networks:
       - db_network
 
