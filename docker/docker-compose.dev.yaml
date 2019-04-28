@@ -6,13 +6,15 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: markdown_note_dev
-      MYSQL_USER: markdown_note
+      MYSQL_DATABASE: markdown_notebook_dev
+      MYSQL_USER: markdown_notebook
       MYSQL_PASSWORD: password
       TZ: 'Asia/Tokyo'
     command: mysqld
     volumes:
       - ./my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./initdb.d:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
     ports:
       - 3001:3306
     networks:
@@ -24,7 +26,7 @@ services:
     environment:
       - PMA_HOSTS=mysql
       - PMA_PORT=3306
-      - PMA_USER=markdown_note
+      - PMA_USER=markdown_notebook
       - PMA_PASSWORD=password
     ports:
       - 3002:80
@@ -33,3 +35,7 @@ services:
 
 networks:
   db_network:
+
+volumes:
+  mysql_data:
+    driver: local
