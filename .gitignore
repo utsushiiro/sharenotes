@@ -31,4 +31,6 @@ HELP.md
 ### My Settings
 /client/node/
 /client/node_modules/
+/public/js/bundle.js
+
 
