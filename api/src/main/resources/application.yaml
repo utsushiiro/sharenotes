@@ -4,3 +4,6 @@ spring:
 
 server:
   port: 3001
+
+mybatis:
+  type-aliases-package: jp.utsushiiro.mdnb.api.domain
