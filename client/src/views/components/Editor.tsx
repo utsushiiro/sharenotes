@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { Note, State } from '../../state/notes/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from "../../state/notes/actions";
-import {RouteComponentProps} from 'react-router';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 import { useState } from 'react';
 import { notesOperations } from '../../state/notes';
 import { push, CallHistoryMethodAction } from 'connected-react-router'
@@ -47,10 +46,10 @@ const Editor: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({ notesState }: State, ownProps: RouteComponentProps<{id: string}>) => {
-  if (ownProps.match.params.id != null) {
+const mapStateToProps = ({ notesState }: State, ownProps: {id: string}) => {
+  if (ownProps.id != null) {
     return { 
-      note: notesState.notes[ownProps.match.params.id] 
+      note: notesState.notes[ownProps.id] 
     };
   }else {
     return {
@@ -61,7 +60,7 @@ const mapStateToProps = ({ notesState }: State, ownProps: RouteComponentProps<{i
 
 const mapDispatchToProps = (
     dispatch:  ThunkDispatch<State, void, Action | CallHistoryMethodAction>,
-    ownProps: RouteComponentProps<{id: string}>
+    ownProps: {id: string}
   )=> {
   return {
     onSubmit(title: string, content: string) {
@@ -69,7 +68,9 @@ const mapDispatchToProps = (
       dispatch(push(`/notes/${payload.id}`));
     },
     onClick() {
-      dispatch(push(`/notes/${ownProps.match.params.id}`));
+      if(ownProps.id != null){
+        dispatch(push(`/notes/${ownProps.id}`));
+      }
     }
   };
 };

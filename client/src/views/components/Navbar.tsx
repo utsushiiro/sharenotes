@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
-import { Note, State } from '../../state/notes/types';
+import { State } from '../../state/notes/types';
 import { Action } from "../../state/notes/actions";
 import {
   Collapse,
@@ -17,14 +17,6 @@ import {
   DropdownItem } from 'reactstrap';
 
 type Props = {};
-
-const mapStateToProps = (state: State) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch:  ThunkDispatch<State, void, Action>)=> {
-  return {};
-};
 
 const NoteList: React.FC<Props> = ({
 }) => {
@@ -63,6 +55,14 @@ const NoteList: React.FC<Props> = ({
       </Collapse>
     </Navbar>
   );
+};
+
+const mapStateToProps = (state: State) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch:  ThunkDispatch<State, void, Action>)=> {
+  return {};
 };
 
 export default connect(

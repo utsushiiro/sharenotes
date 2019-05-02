@@ -13,9 +13,9 @@ const App: React.FC = () => {
       <Container>
         <Switch>
           <Route exact path="/(notes)?" component={NoteList} />
-          <Route exact path="/notes/:id/edit" component={Editor} />
-          <Route exact path="/notes/new" component={Editor} />
-          <Route exact path="/notes/:id" component={Note} />
+          <Route exact path="/notes/:id/edit" render={({match}) => <Editor id={match.params.id} />} />
+          <Route exact path="/notes/new" render={() => <Editor id={null} />} />
+          <Route exact path="/notes/:id" render={({match}) => <Note id={match.params.id} />} />
           <Route render={() => (<div>Not Found</div>)} />
         </Switch>
       </Container>

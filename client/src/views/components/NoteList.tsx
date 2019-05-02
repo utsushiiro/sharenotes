@@ -10,14 +10,6 @@ type Props = {
   notes: Note[];
 }
 
-const mapStateToProps = ({ notesState }: State) => {
-  return { notes: notesState.notes };
-};
-
-const mapDispatchToProps = (dispatch:  ThunkDispatch<State, void, Action>)=> {
-  return {};
-};
-
 const NoteList: React.FC<Props> = ({
   notes = [],
 }) => {
@@ -42,6 +34,14 @@ const NoteList: React.FC<Props> = ({
       </ul>
     </>
   );
+};
+
+const mapStateToProps = ({ notesState }: State) => {
+  return { notes: notesState.notes };
+};
+
+const mapDispatchToProps = (dispatch:  ThunkDispatch<State, void, Action>)=> {
+  return {};
 };
 
 export default connect(
