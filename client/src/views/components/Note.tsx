@@ -5,32 +5,45 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Action } from "../../state/notes/actions";
 import { Button } from 'reactstrap';
 import { push, CallHistoryMethodAction } from 'connected-react-router';
+import { notesOperations } from '../../state/notes';
+import { useEffect } from 'react';
 
 type Props = {
   note: Note;
   onClick: () => void;
+  onMount: () => void;
+  isFetching: boolean;
 };
 
 const Note: React.FC<Props> = ({
   note,
   onClick,
+  onMount,
+  isFetching,
 }) => {
+  useEffect(() => {
+    onMount();
+  }, []);
+
   return (
-    <>
-      <div>
-        {note.title}
-      </div>
-      <div>
-        {note.content}
-      </div>
-      <Button color="primary" onClick={onClick} >Edit</Button>
-    </>
+      (isFetching || note == null)
+      ? <div>Loading...</div>
+      : <div className="p-3"> 
+          <h2>
+            {note.title}
+          </h2>
+          <div className="py-2">
+            {note.content}
+          </div>
+          <Button color="primary" onClick={onClick} >Edit</Button>
+        </div>
   );
 };
 
 const mapStateToProps = ({ notesState }: State, ownProps: {id: string}) => {
   return { 
-    note: notesState.notes[ownProps.id]
+    note: notesState.note,
+    isFetching: notesState.isFetching,
   };
 };
 
@@ -41,6 +54,9 @@ const mapDispatchToProps = (
     return {
       onClick() {
         dispatch(push(`/notes/${ownProps.id}/edit`));
+      },
+      onMount() {
+        dispatch(notesOperations.fetchNote(parseInt(ownProps.id)));
       }
     };
 };

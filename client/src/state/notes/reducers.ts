@@ -3,38 +3,95 @@ import { NotesState, State } from "./types";
 import { Action, actionTypes } from "./actions";
 
 const initialState: NotesState = {
-  notes: [
-    {
-      id: 0,
-      title: 'hoge title',
-      content: 'hoge content'
-    },
-    {
-      id: 1,
-      title:'fuga title',
-      content: 'fuga content'
-    }
-  ]
+  notes: [],
+  note: null,
+  isFetching: false,
 };
 
 const note: Reducer<NotesState, Action> = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_NOTE:
-      return {
-        ...state,
-        notes: state.notes.concat(
-            {
-              id: action.payload.id,
-              title: action.payload.title,
-              content: action.payload.content
-            }
-        )
-      };
     case actionTypes.DELETE_NOTE:
       return {
         ...state,
         notes: state.notes.filter(note => note.id !== action.payload.id)
       };
+    
+    case actionTypes.CREATE_NOTE.STARTED:
+      return {
+        ...state,
+        note: null,
+        isFetching: true,
+      };
+    case actionTypes.CREATE_NOTE.DONE:
+      return {
+        ...state,
+        note: action.payload.note,
+        isFetching: false,
+      };
+    case actionTypes.CREATE_NOTE.FAILED:
+      return {
+        ...state,
+        note: null,
+        isFetching: false,
+      };
+    
+    case actionTypes.GET_NOTES.STARTED:
+      return {
+        ...state,
+        notes: [],
+        isFetching: true,
+      };
+    case actionTypes.GET_NOTES.DONE:
+      return {
+        ...state,
+        notes: action.payload.notes,
+        isFetching: false,
+      };
+    case actionTypes.GET_NOTES.FAILED:
+      return {
+        ...state,
+        notes: [],
+        isFetching: false,
+      };
+    
+    case actionTypes.GET_NOTE.STARTED:
+      return {
+        ...state,
+        note: null,
+        isFetching: true,
+      };
+    case actionTypes.GET_NOTE.DONE:
+      return {
+        ...state,
+        note: action.payload.note,
+        isFetching: false,
+      };
+    case actionTypes.GET_NOTE.FAILED:
+      return {
+        ...state,
+        note: null,
+        isFetching: false,
+      };
+    
+    case actionTypes.UPDATE_NOTE.STARTED:
+      return {
+        ...state,
+        note: null,
+        isFetching: true,
+      };
+    case actionTypes.UPDATE_NOTE.DONE:
+      return {
+        ...state,
+        note: action.payload.note,
+        isFetching: false,
+      };
+    case actionTypes.UPDATE_NOTE.FAILED:
+      return {
+        ...state,
+        note: null,
+        isFetching: false,
+      };
+    
     default:
       const _: never = action;
       return state;

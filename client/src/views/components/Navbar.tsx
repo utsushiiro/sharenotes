@@ -29,10 +29,10 @@ const NoteList: React.FC<Props> = ({
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <Link to="/components/" className="nav-link">Components</Link>
+            <Link to="/notes/new" className="nav-link">New Note</Link>
           </NavItem>
           <NavItem>
-            <ReactstrapNavLink href="https://github.com/reactstrap/reactstrap">GitHub</ReactstrapNavLink>
+            <ReactstrapNavLink href="https://github.com/utsushiiro">GitHub</ReactstrapNavLink>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>

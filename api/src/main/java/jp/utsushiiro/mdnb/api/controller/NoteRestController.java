@@ -6,6 +6,8 @@ import jp.utsushiiro.mdnb.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+// TODO devのときだけなるように(もしくはwebpackのproxyつかうとか)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/notes")
 public class NoteRestController {

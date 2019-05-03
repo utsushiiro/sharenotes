@@ -6,8 +6,11 @@ export type Note = {
 
 export type NotesState = {
   notes: Note[];
+  note: Note | null;
+  isFetching: boolean;
 }
 
+// TODO /notesの外に出す
 export type State = {
   notesState: NotesState;
 }
