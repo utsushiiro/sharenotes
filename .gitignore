@@ -29,8 +29,6 @@ HELP.md
 .vscode/
 
 ### My Settings
-/client/node/
-/client/node_modules/
 /public/js/bundle.js
 
 
