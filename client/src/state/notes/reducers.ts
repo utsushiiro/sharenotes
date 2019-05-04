@@ -10,12 +10,6 @@ const initialState: NotesState = {
 
 const note: Reducer<NotesState, Action> = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.DELETE_NOTE:
-      return {
-        ...state,
-        notes: state.notes.filter(note => note.id !== action.payload.id)
-      };
-    
     case actionTypes.CREATE_NOTE.STARTED:
       return {
         ...state,
@@ -92,6 +86,22 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
         isFetching: false,
       };
     
+    case actionTypes.DELETE_NOTE.STARTED:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case actionTypes.DELETE_NOTE.DONE:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case actionTypes.DELETE_NOTE.FAILED:
+      return {
+        ...state,
+        isFetching: false,
+      };
+
     default:
       const _: never = action;
       return state;

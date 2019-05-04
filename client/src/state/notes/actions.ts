@@ -1,16 +1,15 @@
 import { Note } from "./types";
 
 export type Action = ReturnType<
-  typeof deleteNote |
   uniteProperties<typeof createNote> |
   uniteProperties<typeof getNotes> | 
   uniteProperties<typeof getNote> |
-  uniteProperties<typeof updateNote>
+  uniteProperties<typeof updateNote> |
+  uniteProperties<typeof deleteNote>
 >;
 type uniteProperties<T> = T[keyof T];
 
 export const actionTypes =  {
-  DELETE_NOTE: "DELETE_NOTE",
   CREATE_NOTE: {
     STARTED: "CREATE_NOTE.STARTED",
     DONE: "CREATE_NOTE.DONE",
@@ -30,6 +29,11 @@ export const actionTypes =  {
     STARTED: "UPDATE_NOTE.STARTED",
     DONE: "UPDATE_NOTE.DONE",
     FAILED: "UPDATE_NOTE.FAILED"
+  },
+  DELETE_NOTE: {
+    STARTED: "DELETE_NOTE.STARTED",
+    DONE: "DELETE_NOTE.DONE",
+    FAILED: "DELETE_NOTE.FAILED"
   },
 } as const;
 
@@ -101,12 +105,19 @@ const updateNote = {
   })
 };
 
-const deleteNote = (id: number) => ({
-  type: actionTypes.DELETE_NOTE,
-  payload: {
-    id: id
-  }
-});
+const deleteNote = {
+  started: () => ({
+    type: actionTypes.DELETE_NOTE.STARTED,
+  }),
+
+  done: () => ({
+    type: actionTypes.DELETE_NOTE.DONE,
+  }),
+
+  failed: () => ({
+    type: actionTypes.DELETE_NOTE.FAILED
+  })
+};
 
 export default {
   createNote,

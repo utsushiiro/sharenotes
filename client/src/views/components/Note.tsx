@@ -12,6 +12,7 @@ type Props = {
   note: Note;
   onClick: () => void;
   onMount: () => void;
+  deleteButtonHandler: () => void;
   isFetching: boolean;
 };
 
@@ -19,6 +20,7 @@ const Note: React.FC<Props> = ({
   note,
   onClick,
   onMount,
+  deleteButtonHandler,
   isFetching,
 }) => {
   useEffect(() => {
@@ -35,7 +37,8 @@ const Note: React.FC<Props> = ({
           <div className="py-2">
             {note.content}
           </div>
-          <Button color="primary" onClick={onClick} >Edit</Button>
+          <Button color="primary" onClick={onClick}>Edit</Button>
+          <Button color="danger" onClick={deleteButtonHandler}>Delete</Button>
         </div>
   );
 };
@@ -57,6 +60,9 @@ const mapDispatchToProps = (
       },
       onMount() {
         dispatch(notesOperations.fetchNote(parseInt(ownProps.id)));
+      },
+      deleteButtonHandler() {
+        dispatch(notesOperations.deleteNoteAndRedirect(parseInt(ownProps.id)));
       }
     };
 };

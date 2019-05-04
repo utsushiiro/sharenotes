@@ -69,9 +69,24 @@ const updateNoteAndRedirect = (id: number, title: string, content: string) => {
   }
 };
 
+const deleteNoteAndRedirect = (id: number) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(actions.deleteNote.started());
+
+    try{
+      const response = await axios.delete(`http://localhost:3001/api/notes/${id}`);
+      dispatch(actions.deleteNote.done());
+      dispatch(push("/notes/"));
+    }catch(err) {
+      dispatch(actions.deleteNote.failed());
+    }
+  }
+};
+
 export default {
   createNoteAndRedirect,
   fetchNotes,
   fetchNote,
   updateNoteAndRedirect,
+  deleteNoteAndRedirect,
 };
