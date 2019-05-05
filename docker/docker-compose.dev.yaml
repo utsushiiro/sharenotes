@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: markdown_notebook_dev
+      MYSQL_USER: markdown_notebook
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    command: mysqld
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./initdb.d:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 3002:3306
+    networks:
+      - db_network
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOSTS=mysql
+      - PMA_PORT=3306
+      - PMA_USER=markdown_notebook
+      - PMA_PASSWORD=password
+    ports:
+      - 3003:80
+    networks:
+      - db_network
+
+networks:
+  db_network:
+
+volumes:
+  mysql_data:
+    driver: local
