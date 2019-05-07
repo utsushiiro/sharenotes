@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
- * TODO log stacktrace if dev
+ * TODO use logger for stack traces
  */
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -22,6 +22,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request
     ) {
+        ex.printStackTrace();
         return super.handleExceptionInternal(ex, new ApiError(ex), headers, status, request);
     }
 
@@ -30,6 +31,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             ApiException ex,
             WebRequest request
     ) {
+        ex.printStackTrace();
         return super.handleExceptionInternal(ex, new ApiError(ex), null, ex.getHttpStatus(), request);
     }
 
@@ -38,6 +40,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             DataAccessException ex,
             WebRequest request
     ) {
+        ex.printStackTrace();
         return super.handleExceptionInternal(ex, new ApiError(ex), null, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }
