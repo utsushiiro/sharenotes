@@ -21,6 +21,6 @@ public class LoginUserDetailService implements UserDetailsService  {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountService.findOneByUsername(username);
-        return new LoginUserDetails(account, null);
+        return new LoginUserDetails(account);
     }
 }
