@@ -32,9 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().mvcMatchers("/**").permitAll();
+        http.authorizeRequests()
+                .anyRequest().authenticated();
         http.formLogin()
-                .loginProcessingUrl("/api/login")
+                .loginProcessingUrl("/api/login").permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
         http.csrf().disable();
