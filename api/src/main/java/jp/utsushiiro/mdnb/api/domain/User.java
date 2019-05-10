@@ -5,14 +5,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class Account {
+public class User {
     private int id;
 
-    private String username;
+    private String name;
 
     private String password;
 
-    private AccountRole accountRole;
+    private UserRole userRole;
 
     private LocalDateTime updatedAt;
 

@@ -1,6 +1,6 @@
 package jp.utsushiiro.mdnb.api.domain;
 
-public enum AccountRole {
+public enum UserRole {
     ADMIN,
     USER
 }

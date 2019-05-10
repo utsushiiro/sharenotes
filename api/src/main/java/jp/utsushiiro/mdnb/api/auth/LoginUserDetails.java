@@ -1,21 +1,20 @@
 package jp.utsushiiro.mdnb.api.auth;
 
-import jp.utsushiiro.mdnb.api.domain.Account;
+import jp.utsushiiro.mdnb.api.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 
-public class LoginUserDetails extends User {
+public class LoginUserDetails extends org.springframework.security.core.userdetails.User {
 
-    private final Account account;
+    private final User user;
 
     @Autowired
-    LoginUserDetails(Account account) {
+    LoginUserDetails(User user) {
         super(
-                account.getUsername(),
-                account.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_" + account.getAccountRole().name())
+                user.getName(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList("ROLE_" + user.getUserRole().name())
         );
-        this.account = account;
+        this.user = user;
     }
 }

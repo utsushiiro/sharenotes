@@ -45,10 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .mvcMatchers("/api/sign_up").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginProcessingUrl("/api/login").permitAll()
-                .usernameParameter("username")
+                .usernameParameter("name")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
