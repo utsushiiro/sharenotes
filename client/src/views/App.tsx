@@ -5,6 +5,7 @@ import Note from "./components/Note";
 import Editor from "./components/Editor";
 import { Container } from "reactstrap";
 import Navbar from "./components/Navbar";
+import Login from "./components/Login";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Navbar />
       <Container>
         <Switch>
+          <Route exact path="/login" component={Login} />
           <Route exact path="/(notes)?" component={NoteList} />
           <Route
             exact
