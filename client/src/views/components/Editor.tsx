@@ -1,12 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Note, State } from "../../state/notes/types";
+import { Note } from "../../state/notes/types";
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "../../state/notes/actions";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useState, useEffect } from "react";
 import { notesOperations } from "../../state/notes";
 import { push, CallHistoryMethodAction } from "connected-react-router";
+import { State } from "../../state/types";
 
 type Props = {
   note: Note | null;

@@ -2,11 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import { Note, State } from "../../state/notes/types";
+import { Note } from "../../state/notes/types";
 import { Action } from "../../state/notes/actions";
 import { Media } from "reactstrap";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
+import { State } from "../../state/types";
 
 type Props = {
   notes: Note[];

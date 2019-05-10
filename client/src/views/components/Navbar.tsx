@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import { State } from "../../state/notes/types";
+import { State } from "../../state/types";
 import { Action } from "../../state/notes/actions";
 import {
   Collapse,

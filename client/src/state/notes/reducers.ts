@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { NotesState, State } from "./types";
+import { NotesState } from "./types";
 import { Action, actionTypes } from "./actions";
 
 const initialState: NotesState = {

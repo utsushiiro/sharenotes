@@ -9,8 +9,3 @@ export type NotesState = {
   note: Note | null;
   isFetching: boolean;
 };
-
-// TODO /notesの外に出す
-export type State = {
-  notesState: NotesState;
-};
