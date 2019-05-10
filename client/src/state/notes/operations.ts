@@ -1,6 +1,6 @@
 import actions from "./actions";
 import { Dispatch } from "redux";
-import axios from "axios";
+import api from "../api";
 import { push } from "connected-react-router";
 
 const createNoteAndRedirect = (title: string, content: string) => {
@@ -8,7 +8,7 @@ const createNoteAndRedirect = (title: string, content: string) => {
     dispatch(actions.createNote.started());
 
     try {
-      const response = await axios.post("http://localhost:3001/api/notes/", {
+      const response = await api.post("http://localhost:3001/api/notes/", {
         title,
         content
       });
@@ -25,7 +25,7 @@ const fetchNotes = () => {
     dispatch(actions.getNotes.started());
 
     try {
-      const response = await axios.get("http://localhost:3001/api/notes/");
+      const response = await api.get("http://localhost:3001/api/notes/");
       dispatch(actions.getNotes.done(response.data.notes));
     } catch (err) {
       dispatch(actions.getNotes.failed());
@@ -38,7 +38,7 @@ const fetchNote = (id: number) => {
     dispatch(actions.getNote.started());
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/notes/${id}`);
+      const response = await api.get(`http://localhost:3001/api/notes/${id}`);
       dispatch(actions.getNote.done(response.data));
     } catch (err) {
       dispatch(actions.getNote.failed());
@@ -51,7 +51,7 @@ const updateNoteAndRedirect = (id: number, title: string, content: string) => {
     dispatch(actions.updateNote.started());
 
     try {
-      const response = await axios.patch(
+      const response = await api.patch(
         `http://localhost:3001/api/notes/${id}`,
         {
           title,
@@ -71,7 +71,7 @@ const deleteNoteAndRedirect = (id: number) => {
     dispatch(actions.deleteNote.started());
 
     try {
-      const response = await axios.delete(
+      const response = await api.delete(
         `http://localhost:3001/api/notes/${id}`
       );
       dispatch(actions.deleteNote.done());
