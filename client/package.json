@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server",
-    "fmt": "prettier --write src/**/*.ts"
+    "fmt": "prettier --parser typescript --write \"./**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "@types/react": "^16.8.8",
