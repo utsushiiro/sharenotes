@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
-import { ThunkDispatch } from 'redux-thunk';
-import { State } from '../../state/notes/types';
+import { Link } from "react-router-dom";
+import { ThunkDispatch } from "redux-thunk";
+import { State } from "../../state/notes/types";
 import { Action } from "../../state/notes/actions";
 import {
   Collapse,
@@ -14,12 +14,12 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from "reactstrap";
 
 type Props = {};
 
-const NoteList: React.FC<Props> = ({
-}) => {
+const NoteList: React.FC<Props> = ({}) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -29,26 +29,24 @@ const NoteList: React.FC<Props> = ({
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <Link to="/notes/new" className="nav-link">New Note</Link>
+            <Link to="/notes/new" className="nav-link">
+              New Note
+            </Link>
           </NavItem>
           <NavItem>
-            <ReactstrapNavLink href="https://github.com/utsushiiro">GitHub</ReactstrapNavLink>
+            <ReactstrapNavLink href="https://github.com/utsushiiro">
+              GitHub
+            </ReactstrapNavLink>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Options
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>
-                Option 1
-              </DropdownItem>
-              <DropdownItem>
-                Option 2
-              </DropdownItem>
+              <DropdownItem>Option 1</DropdownItem>
+              <DropdownItem>Option 2</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>
-                Reset
-              </DropdownItem>
+              <DropdownItem>Reset</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
@@ -61,7 +59,7 @@ const mapStateToProps = (state: State) => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch:  ThunkDispatch<State, void, Action>)=> {
+const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
   return {};
 };
 
