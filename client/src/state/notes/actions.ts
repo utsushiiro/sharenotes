@@ -1,4 +1,5 @@
 import { Note } from "./types";
+import { uniteProperties } from "../types";
 
 export type Action = ReturnType<
   | uniteProperties<typeof createNote>
@@ -7,7 +8,6 @@ export type Action = ReturnType<
   | uniteProperties<typeof updateNote>
   | uniteProperties<typeof deleteNote>
 >;
-type uniteProperties<T> = T[keyof T];
 
 export const actionTypes = {
   CREATE_NOTE: {
