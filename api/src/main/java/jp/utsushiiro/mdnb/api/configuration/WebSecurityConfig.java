@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginProcessingUrl("/api/login").permitAll()
-                .usernameParameter("name")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
