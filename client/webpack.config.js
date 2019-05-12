@@ -15,6 +15,8 @@ module.exports = {
     publicPath: "js"
   },
 
+  devtool: 'source-map',
+
   module: {
     rules: [
       {
