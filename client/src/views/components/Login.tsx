@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button, Container } from "reactstrap";
 import { ThunkDispatch } from "redux-thunk";
 import { State } from "../../state/types";
 import { Action } from "redux";
@@ -21,7 +21,7 @@ const Login: React.FC<Props> = ({ onSubmit }) => {
   };
 
   return (
-    <div className="mt-3">
+    <Container className="pt-4">
       <h2 className="mb-4">Login Page</h2>
       <Form onSubmit={onSubmitHandler}>
         <FormGroup>
@@ -44,7 +44,7 @@ const Login: React.FC<Props> = ({ onSubmit }) => {
         </FormGroup>
         <Button color="primary">Login</Button>
       </Form>
-    </div>
+    </Container>
   );
 };
 
