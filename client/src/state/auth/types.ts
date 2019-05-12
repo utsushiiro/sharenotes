@@ -1,8 +1,8 @@
-type User = {
-    name: string
-}
+export type User = {
+  name: string;
+};
 
-type AuthState = {
-    isLogined: boolean,
-    loginUser: User | null
-}
+export type AuthState = {
+  loginUser: User | null;
+  isLoading: boolean;
+};
