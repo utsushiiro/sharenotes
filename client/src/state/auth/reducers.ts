@@ -25,6 +25,23 @@ const auth: Reducer<AuthState, Action> = (state = initialState, action) => {
         ...state,
         isLoading: false
       };
+
+    case actionTypes.LOGOUT.STARTED:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case actionTypes.LOGOUT.DONE:
+      return {
+        ...state,
+        loginUser: null,
+        isLoading: false
+      };
+    case actionTypes.LOGOUT.FAILED:
+      return {
+        ...state,
+        isLoading: false
+      };
     default:
       const _: never = action;
       return state;
