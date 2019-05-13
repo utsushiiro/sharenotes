@@ -36,6 +36,7 @@ const Login: React.FC<Props> = ({ onSubmit }) => {
         <FormGroup>
           <Label>Password</Label>
           <Input
+            type="password"
             name="password"
             onChange={e => {
               setPassword(e.currentTarget.value);
