@@ -8,7 +8,12 @@ export const actionTypes = {
     STARTED: "LOGIN.STARTED",
     DONE: "LOGIN.DONE",
     FAILED: "LOGIN.FAILED"
-  }
+  },
+  LOGOUT: {
+    STARTED: "LOGOUT.STARTED",
+    DONE: "LOGOUT.DONE",
+    FAILED: "LOGOUT.FAILED"
+  },
 } as const;
 
 const login = {
@@ -28,6 +33,21 @@ const login = {
   })
 };
 
+const logout = {
+  started: () => ({
+    type: actionTypes.LOGOUT.STARTED
+  }),
+
+  done: () => ({
+    type: actionTypes.LOGOUT.DONE,
+  }),
+
+  failed: () => ({
+    type: actionTypes.LOGOUT.FAILED
+  })
+}
+
 export default {
-  login
+  login,
+  logout,
 };
