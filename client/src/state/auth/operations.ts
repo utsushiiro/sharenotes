@@ -11,7 +11,6 @@ const login = (username: string, password: string) => {
       const params = new URLSearchParams();
       params.append("username", username);
       params.append("password", password);
-      console.log(params);
       const response = await axios.post(
         "http://localhost:3001/api/login",
         params,
@@ -20,7 +19,6 @@ const login = (username: string, password: string) => {
         }
       );
       dispatch(actions.login.done(response.data));
-      console.log("logged in ");
       dispatch(push("/"));
     } catch (err) {
       dispatch(actions.login.failed());

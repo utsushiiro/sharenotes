@@ -1,6 +1,5 @@
 const path = require("path");
 
-console.log(__dirname);
 const client_path = path.resolve(__dirname);
 const public_path = path.resolve(__dirname, "..", "public");
 
