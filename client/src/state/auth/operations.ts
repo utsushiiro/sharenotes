@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import axios from "axios";
 import { push } from "connected-react-router";
 import api from "../api";
+import storage from "../storage";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
@@ -19,7 +20,10 @@ const login = (username: string, password: string) => {
           withCredentials: true
         }
       );
-      dispatch(actions.login.done({ name: username }));
+      // TODO? fetch login User info
+      const user = { name: username };
+      dispatch(actions.login.done(user));
+      storage.setLoginUser(user);
       dispatch(push("/"));
     } catch (err) {
       dispatch(actions.login.failed());

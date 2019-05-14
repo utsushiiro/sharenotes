@@ -1,9 +1,10 @@
 import { Reducer } from "redux";
 import { AuthState } from "./types";
 import { Action, actionTypes } from "./actions";
+import storage from "../storage";
 
 const initialState: AuthState = {
-  loginUser: null,
+  loginUser: storage.getLoginUser(),
   isLoading: false
 };
 
