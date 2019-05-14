@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { AuthState, User } from "./types";
 
 const loginUserSelector = (state: AuthState) => state.loginUser;
-const isLogined = createSelector(
+const isLoggedIn = createSelector(
   [loginUserSelector],
   (loginUser: User) => {
     return loginUser != null;
@@ -10,5 +10,5 @@ const isLogined = createSelector(
 );
 
 export default {
-  isLogined
+  isLoggedIn
 };

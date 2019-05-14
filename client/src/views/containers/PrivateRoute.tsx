@@ -7,19 +7,19 @@ import { RouteProps } from "react-router";
 
 type Props = {
   component: React.FC;
-  isLogined: boolean;
+  isLoggedIn: boolean;
 } & RouteProps;
 
 const PrivateRoute: React.FC<Props> = ({
   component: Component,
-  isLogined,
+  isLoggedIn,
   ...rest
 }) => {
   return (
     <Route
       {...rest}
       render={props =>
-        isLogined ? (
+        isLoggedIn ? (
           <Component />
         ) : (
           <Redirect
@@ -36,7 +36,7 @@ const PrivateRoute: React.FC<Props> = ({
 
 const mapStateToProps = ({ authState }: State) => {
   return {
-    isLogined: authSelectors.isLogined(authState)
+    isLoggedIn: authSelectors.isLoggedIn(authState)
   };
 };
 
