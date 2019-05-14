@@ -28,6 +28,9 @@ public class ErrorPathController implements ErrorController {
         String message;
         if (exception != null) {
             message = exception.getMessage();
+
+            // TODO use logger
+            exception.printStackTrace();
         } else {
             message = status.getReasonPhrase();
         }

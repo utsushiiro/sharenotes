@@ -1,11 +1,11 @@
 import { Reducer } from "redux";
-import { NotesState, State } from "./types";
+import { NotesState } from "./types";
 import { Action, actionTypes } from "./actions";
 
 const initialState: NotesState = {
   notes: [],
   note: null,
-  isFetching: false,
+  isFetching: false
 };
 
 const note: Reducer<NotesState, Action> = (state = initialState, action) => {
@@ -14,92 +14,92 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
       return {
         ...state,
         note: null,
-        isFetching: true,
+        isFetching: true
       };
     case actionTypes.CREATE_NOTE.DONE:
       return {
         ...state,
         note: action.payload.note,
-        isFetching: false,
+        isFetching: false
       };
     case actionTypes.CREATE_NOTE.FAILED:
       return {
         ...state,
         note: null,
-        isFetching: false,
+        isFetching: false
       };
-    
+
     case actionTypes.GET_NOTES.STARTED:
       return {
         ...state,
         notes: [],
-        isFetching: true,
+        isFetching: true
       };
     case actionTypes.GET_NOTES.DONE:
       return {
         ...state,
         notes: action.payload.notes,
-        isFetching: false,
+        isFetching: false
       };
     case actionTypes.GET_NOTES.FAILED:
       return {
         ...state,
         notes: [],
-        isFetching: false,
+        isFetching: false
       };
-    
+
     case actionTypes.GET_NOTE.STARTED:
       return {
         ...state,
         note: null,
-        isFetching: true,
+        isFetching: true
       };
     case actionTypes.GET_NOTE.DONE:
       return {
         ...state,
         note: action.payload.note,
-        isFetching: false,
+        isFetching: false
       };
     case actionTypes.GET_NOTE.FAILED:
       return {
         ...state,
         note: null,
-        isFetching: false,
+        isFetching: false
       };
-    
+
     case actionTypes.UPDATE_NOTE.STARTED:
       return {
         ...state,
         note: null,
-        isFetching: true,
+        isFetching: true
       };
     case actionTypes.UPDATE_NOTE.DONE:
       return {
         ...state,
         note: action.payload.note,
-        isFetching: false,
+        isFetching: false
       };
     case actionTypes.UPDATE_NOTE.FAILED:
       return {
         ...state,
         note: null,
-        isFetching: false,
+        isFetching: false
       };
-    
+
     case actionTypes.DELETE_NOTE.STARTED:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
     case actionTypes.DELETE_NOTE.DONE:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
     case actionTypes.DELETE_NOTE.FAILED:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     default:

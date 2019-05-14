@@ -1,15 +1,15 @@
 import { Note } from "./types";
+import { uniteProperties } from "../types";
 
 export type Action = ReturnType<
-  uniteProperties<typeof createNote> |
-  uniteProperties<typeof getNotes> | 
-  uniteProperties<typeof getNote> |
-  uniteProperties<typeof updateNote> |
-  uniteProperties<typeof deleteNote>
+  | uniteProperties<typeof createNote>
+  | uniteProperties<typeof getNotes>
+  | uniteProperties<typeof getNote>
+  | uniteProperties<typeof updateNote>
+  | uniteProperties<typeof deleteNote>
 >;
-type uniteProperties<T> = T[keyof T];
 
-export const actionTypes =  {
+export const actionTypes = {
   CREATE_NOTE: {
     STARTED: "CREATE_NOTE.STARTED",
     DONE: "CREATE_NOTE.DONE",
@@ -34,7 +34,7 @@ export const actionTypes =  {
     STARTED: "DELETE_NOTE.STARTED",
     DONE: "DELETE_NOTE.DONE",
     FAILED: "DELETE_NOTE.FAILED"
-  },
+  }
 } as const;
 
 const createNote = {
@@ -90,7 +90,7 @@ const getNotes = {
 
 const updateNote = {
   started: () => ({
-    type: actionTypes.UPDATE_NOTE.STARTED,
+    type: actionTypes.UPDATE_NOTE.STARTED
   }),
 
   done: (note: Note) => ({
@@ -107,11 +107,11 @@ const updateNote = {
 
 const deleteNote = {
   started: () => ({
-    type: actionTypes.DELETE_NOTE.STARTED,
+    type: actionTypes.DELETE_NOTE.STARTED
   }),
 
   done: () => ({
-    type: actionTypes.DELETE_NOTE.DONE,
+    type: actionTypes.DELETE_NOTE.DONE
   }),
 
   failed: () => ({
@@ -124,5 +124,5 @@ export default {
   getNotes,
   getNote,
   updateNote,
-  deleteNote,
+  deleteNote
 };

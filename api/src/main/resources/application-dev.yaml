@@ -5,3 +5,6 @@ spring:
     password: password
     driverClassName: com.mysql.cj.jdbc.Driver
     initialization-mode: always
+
+client:
+  origin: http://localhost:3000
