@@ -12,6 +12,8 @@ public class Note{
 
     private String content;
 
+    private int userId;
+
     private LocalDateTime updatedAt;
 
     private LocalDateTime createdAt;
