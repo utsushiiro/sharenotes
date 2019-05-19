@@ -43,8 +43,8 @@ services:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     environment:
-      - PMA_HOSTS=mysql-dev
-      - PMA_PORT=3306
+      - PMA_HOSTS=mysql-dev,mysql-test
+      - PMA_PORTS=3306,3307
       - PMA_USER=markdown_notebook
       - PMA_PASSWORD=password
     ports:
