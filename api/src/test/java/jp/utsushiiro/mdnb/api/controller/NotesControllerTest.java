@@ -22,9 +22,8 @@ import java.net.URI;
 
 @SpringBootTest(classes = MarkdownNotebookAPIServer.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-// TODO
-//@Sql(scripts = "/create-test-data.sql")
-//@Sql(scripts = "/delete-test-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "/create-test-data.sql")
+@Sql(scripts = "/delete-test-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class NotesControllerTest {
     @LocalServerPort
     private int port;
