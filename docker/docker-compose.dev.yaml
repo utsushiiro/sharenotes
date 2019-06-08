@@ -6,8 +6,8 @@ services:
     container_name: mysql-dev
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: markdown_notebook_dev
-      MYSQL_USER: markdown_notebook
+      MYSQL_DATABASE: sharenotes_dev
+      MYSQL_USER: sharenotes
       MYSQL_PASSWORD: password
       TZ: 'Asia/Tokyo'
     command: mysqld
@@ -25,8 +25,8 @@ services:
     container_name: mysql-test
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: markdown_notebook_test
-      MYSQL_USER: markdown_notebook
+      MYSQL_DATABASE: sharenotes_test
+      MYSQL_USER: sharenotes
       MYSQL_PASSWORD: password
       TZ: 'Asia/Tokyo'
     command: mysqld
@@ -45,7 +45,7 @@ services:
     environment:
       - PMA_HOSTS=mysql-dev,mysql-test
       - PMA_PORTS=3306,3307
-      - PMA_USER=markdown_notebook
+      - PMA_USER=sharenotes
       - PMA_PASSWORD=password
     ports:
       - 3004:80

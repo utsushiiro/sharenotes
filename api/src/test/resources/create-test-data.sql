@@ -1,4 +1,4 @@
-use markdown_notebook_test;
+use sharenotes_test;
 
 -- Insert data
 insert into users (name, password, role)

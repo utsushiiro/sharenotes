@@ -28,7 +28,7 @@ const NoteList: React.FC<Props> = ({ onClick, loginUser }) => {
 
   return (
     <Navbar color="light" light expand="md">
-      <Link to="/">MarkdownNotebook</Link>
+      <Link to="/">ShareNotes</Link>
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>

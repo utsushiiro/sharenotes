@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3003/markdown_notebook_test
-    username: markdown_notebook
+    url: jdbc:mysql://localhost:3003/sharenotes_test
+    username: sharenotes
     password: password
     driverClassName: com.mysql.cj.jdbc.Driver
     initialization-mode: always
