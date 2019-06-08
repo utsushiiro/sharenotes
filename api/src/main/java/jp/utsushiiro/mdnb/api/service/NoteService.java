@@ -2,6 +2,7 @@ package jp.utsushiiro.mdnb.api.service;
 
 import jp.utsushiiro.mdnb.api.domain.Note;
 import jp.utsushiiro.mdnb.api.domain.Notes;
+import jp.utsushiiro.mdnb.api.domain.User;
 import jp.utsushiiro.mdnb.api.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,11 @@ public class NoteService {
         return noteRepository.findAll();
     }
 
-    public Note create(Note note) {
+    /**
+     * Create a note belongs to specified user
+     */
+    public Note create(Note note, User user) {
+        note.setUserId(user.getId());
         noteRepository.insert(note);
         return noteRepository.findOne(note.getId());
     }

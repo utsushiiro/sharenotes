@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  mysql:
+  mysql-dev:
     image: mysql:5.7
-    container_name: mysql
+    container_name: mysql-dev
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: markdown_notebook_dev
@@ -12,11 +12,30 @@ services:
       TZ: 'Asia/Tokyo'
     command: mysqld
     volumes:
-      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./my.dev.cnf:/etc/mysql/conf.d/my.cnf
       - ./initdb.d:/docker-entrypoint-initdb.d
-      - mysql_data:/var/lib/mysql
+      - mysql_dev_data:/var/lib/mysql
     ports:
       - 3002:3306
+    networks:
+      - db_network
+
+  mysql-test:
+    image: mysql:5.7
+    container_name: mysql-test
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: markdown_notebook_test
+      MYSQL_USER: markdown_notebook
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    command: mysqld
+    volumes:
+      - ./my.test.cnf:/etc/mysql/conf.d/my.cnf
+      - ./initdb.d:/docker-entrypoint-initdb.d
+      - mysql_test_data:/var/lib/mysql
+    ports:
+      - 3003:3307
     networks:
       - db_network
 
@@ -24,12 +43,12 @@ services:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     environment:
-      - PMA_HOSTS=mysql
-      - PMA_PORT=3306
+      - PMA_HOSTS=mysql-dev,mysql-test
+      - PMA_PORTS=3306,3307
       - PMA_USER=markdown_notebook
       - PMA_PASSWORD=password
     ports:
-      - 3003:80
+      - 3004:80
     networks:
       - db_network
 
@@ -37,5 +56,7 @@ networks:
   db_network:
 
 volumes:
-  mysql_data:
+  mysql_dev_data:
+    driver: local
+  mysql_test_data:
     driver: local
