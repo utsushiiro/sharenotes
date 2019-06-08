@@ -1,9 +1,12 @@
 spring:
   profiles:
     active: dev
+  jpa:
+    properties:
+      hibernate:
+        # The SQL dialect makes Hibernate generate better SQL for the chosen database
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 server:
   port: 3001
 
-mybatis:
-  type-aliases-package: jp.utsushiiro.sharenotes.api.domain

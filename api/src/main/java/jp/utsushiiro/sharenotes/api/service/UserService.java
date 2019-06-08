@@ -5,6 +5,8 @@ import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -14,24 +16,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findOne(int id) {
-        return userRepository.findOne(id);
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
     }
 
-    public User findOneByUsername(String username) {
-        return userRepository.findOneByUsername(username);
+    public User findByName(String name) {
+        return userRepository.findByName(name).get(0);
     }
 
     public User create(User user) {
-        userRepository.insert(user);
-        return userRepository.findOne(user.getId());
+        userRepository.save(user);
+        return user;
     }
 
     public void update(User user) {
-        userRepository.update(user);
+        userRepository.save(user);
     }
 
     public void delete(int id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }
