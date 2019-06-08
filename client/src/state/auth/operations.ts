@@ -23,7 +23,8 @@ const login = (username: string, password: string) => {
       );
       const user = {
         id: response.data.id,
-        name: response.data.name
+        name: response.data.name,
+        email: response.data.email
       };
       dispatch(actions.login.done(user));
       storage.setLoginUser(user);

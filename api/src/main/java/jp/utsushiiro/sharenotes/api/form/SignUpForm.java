@@ -7,11 +7,14 @@ import lombok.Data;
 public class SignUpForm {
     private String name;
 
+    private String email;
+
     private String password;
 
     public User toUser() {
         User user = new User();
         user.setName(name);
+        user.setEmail(email);
         return user;
     }
 }
