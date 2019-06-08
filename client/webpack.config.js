@@ -34,7 +34,6 @@ module.exports = {
     contentBase: public_path,
     openPage: "index.html",
     watchContentBase: true,
-    open: true,
     historyApiFallback: true
   }
 };

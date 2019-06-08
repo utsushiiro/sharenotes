@@ -8,3 +8,16 @@ spring:
 
 client:
   origin: http://localhost:3000
+
+# Logs sql statements
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+          EnumType: TRACE
+

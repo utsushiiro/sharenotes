@@ -2,6 +2,8 @@ import actions from "./actions";
 import { Dispatch } from "redux";
 import api from "../api";
 import { push } from "connected-react-router";
+import { authSelectors } from "../auth";
+import { State } from "../types";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
@@ -47,7 +49,11 @@ const fetchNote = (id: number) => {
 };
 
 const updateNoteAndRedirect = (id: number, title: string, content: string) => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch, getState: () => State) => {
+    const state = getState();
+    console.log(state);
+    const userId = authSelectors.getUserId(state.authState);
+
     dispatch(actions.updateNote.started());
 
     try {
@@ -55,7 +61,8 @@ const updateNoteAndRedirect = (id: number, title: string, content: string) => {
         `http://localhost:3001/api/notes/${id}`,
         {
           title,
-          content
+          content,
+          userId
         }
       );
       dispatch(actions.updateNote.done(response.data));
