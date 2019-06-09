@@ -50,7 +50,14 @@ const setLoginUser = (user: User) => {
   }
 };
 
+const deleteLoginUser = () => {
+  if (storageAvailable("localStorage")) {
+    localStorage.removeItem("loginUser");
+  }
+};
+
 export default {
   getLoginUser,
-  setLoginUser
+  setLoginUser,
+  deleteLoginUser
 };

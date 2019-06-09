@@ -26,8 +26,8 @@ const login = (username: string, password: string) => {
         name: response.data.name,
         email: response.data.email
       };
-      dispatch(actions.login.done(user));
       storage.setLoginUser(user);
+      dispatch(actions.login.done(user));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actions.login.failed());
@@ -41,6 +41,7 @@ const logout = () => {
 
     try {
       await api.post("http://localhost:3001/api/logout");
+      storage.deleteLoginUser();
       dispatch(actions.logout.done());
       dispatch(push("/login"));
     } catch (err) {
