@@ -1,6 +1,7 @@
 create table users (
     id integer not null auto_increment,
-    name varchar(255) not null,
+    name varchar(255) unique not null,
+    email varchar(255) unique not null,
     password char(60) not null,
     role varchar(20) not null,
     updated_at timestamp not null default current_timestamp,

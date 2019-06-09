@@ -2,7 +2,9 @@ import { uniteProperties } from "../types";
 import { User } from "./types";
 
 export type Action = ReturnType<
-  uniteProperties<typeof login> | uniteProperties<typeof logout>
+  | uniteProperties<typeof login>
+  | uniteProperties<typeof logout>
+  | uniteProperties<typeof signUp>
 >;
 
 export const actionTypes = {
@@ -15,6 +17,11 @@ export const actionTypes = {
     STARTED: "LOGOUT.STARTED",
     DONE: "LOGOUT.DONE",
     FAILED: "LOGOUT.FAILED"
+  },
+  SIGN_UP: {
+    STARTED: "SIGN_UP.STARTED",
+    DONE: "SIGN_UP.DONE",
+    FAILED: "SIGN_UP.FAILED"
   }
 } as const;
 
@@ -49,7 +56,25 @@ const logout = {
   })
 };
 
+const signUp = {
+  started: () => ({
+    type: actionTypes.SIGN_UP.STARTED
+  }),
+
+  done: (user: User) => ({
+    type: actionTypes.SIGN_UP.DONE,
+    payload: {
+      user
+    }
+  }),
+
+  failed: () => ({
+    type: actionTypes.SIGN_UP.FAILED
+  })
+};
+
 export default {
   login,
-  logout
+  logout,
+  signUp
 };

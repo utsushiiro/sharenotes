@@ -1,4 +1,5 @@
 import axios from "axios";
+import storage from "./storage";
 
 // TODO use only dev
 const api = axios.create({
@@ -11,6 +12,7 @@ api.interceptors.response.use(
   },
   error => {
     if (401 === error.response.status) {
+      storage.deleteLoginUser();
       window.location.href = "/login";
     }
     return Promise.reject(error);

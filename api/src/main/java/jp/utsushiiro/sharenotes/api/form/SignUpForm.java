@@ -5,13 +5,16 @@ import lombok.Data;
 
 @Data
 public class SignUpForm {
-    private String name;
+    private String username;
+
+    private String email;
 
     private String password;
 
     public User toUser() {
         User user = new User();
-        user.setName(name);
+        user.setName(username);
+        user.setEmail(email);
         return user;
     }
 }

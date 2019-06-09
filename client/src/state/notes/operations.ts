@@ -51,7 +51,6 @@ const fetchNote = (id: number) => {
 const updateNoteAndRedirect = (id: number, title: string, content: string) => {
   return async (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
-    console.log(state);
     const userId = authSelectors.getUserId(state.authState);
 
     dispatch(actions.updateNote.started());
