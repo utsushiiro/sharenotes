@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -24,14 +27,15 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * TODO create a new domain for response
-     */
     @PostMapping(path = "/sign_up")
-    public User signUp(@RequestBody SignUpForm signUpForm) {
+    public User signUp(HttpServletRequest request,  @RequestBody SignUpForm signUpForm) throws ServletException {
         User user = signUpForm.toUser();
         user.setUserRole(UserRole.USER);
         user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
-        return this.userService.create(user);
+        User createdUser = this.userService.create(user);
+
+        // TODO catch ServletException and return a response that says sign up succeeded but log in failed
+        request.login(signUpForm.getName(), signUpForm.getPassword());
+        return createdUser;
     }
 }
