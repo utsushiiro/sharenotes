@@ -35,7 +35,7 @@ public class AuthController {
         User createdUser = this.userService.create(user);
 
         // TODO catch ServletException and return a response that says sign up succeeded but log in failed
-        request.login(signUpForm.getName(), signUpForm.getPassword());
+        request.login(signUpForm.getUsername(), signUpForm.getPassword());
         return createdUser;
     }
 }

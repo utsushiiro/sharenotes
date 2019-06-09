@@ -43,6 +43,23 @@ const auth: Reducer<AuthState, Action> = (state = initialState, action) => {
         ...state,
         isLoading: false
       };
+
+    case actionTypes.SIGN_UP.STARTED:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case actionTypes.SIGN_UP.DONE:
+      return {
+        ...state,
+        loginUser: action.payload.user,
+        isLoading: false
+      };
+    case actionTypes.SIGN_UP.FAILED:
+      return {
+        ...state,
+        isLoading: false
+      };
     default:
       const _: never = action;
       return state;

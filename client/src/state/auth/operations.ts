@@ -50,7 +50,39 @@ const logout = () => {
   };
 };
 
+const signUp = (username: string, email: string, password: string) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(actions.signUp.started());
+
+    try {
+      const response: AxiosResponse<User> = await axios.post(
+        "http://localhost:3001/api/sign_up",
+        {
+          username: username,
+          email: email,
+          password: password
+        },
+        {
+          withCredentials: true
+        }
+      );
+
+      const user = {
+        id: response.data.id,
+        name: response.data.name,
+        email: response.data.email
+      };
+      storage.setLoginUser(user);
+      dispatch(actions.signUp.done(user));
+      dispatch(push("/"));
+    } catch (err) {
+      dispatch(actions.signUp.failed());
+    }
+  };
+};
+
 export default {
   login,
-  logout
+  logout,
+  signUp
 };
