@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { State } from "../../state/types";
 import { Action } from "../../state/notes/actions";
@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,10 +49,18 @@ const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            ShareNotes
+          <Typography variant="h6" component="h1" className={classes.title}>
+            {/* TODO use styled-component */}
+            <Link
+              color="inherit"
+              component={RouterLink}
+              to="/notes"
+              style={{ textDecoration: "none" }}
+            >
+              ShareNotes
+            </Link>
           </Typography>
-          <Button color="inherit" component={Link} to="/notes/new">
+          <Button color="inherit" component={RouterLink} to="/notes/new">
             New
           </Button>
           <Button color="inherit" onClick={logoutButtonHandler}>
