@@ -31,9 +31,9 @@ const Note: React.FC<Props> = ({
   return isFetching || note == null ? (
     <div>Loading...</div>
   ) : (
-    <div className="p-3">
+    <div>
       <h2>{note.title}</h2>
-      <div className="py-2">{note.content}</div>
+      <div>{note.content}</div>
       <Button color="primary" onClick={onClick}>
         Edit
       </Button>

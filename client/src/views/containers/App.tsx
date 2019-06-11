@@ -3,12 +3,14 @@ import { Route, Switch } from "react-router-dom";
 import NoteList from "../components/NoteList";
 import Note from "../components/Note";
 import Editor from "../components/Editor";
-import { Container } from "reactstrap";
 import Navbar from "../components/Navbar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 
 const App: React.FC = () => {
   return (
     <>
+      <CssBaseline />
       <Navbar />
       <Container>
         <Switch>

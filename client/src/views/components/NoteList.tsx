@@ -21,7 +21,7 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching }) => {
   }, []);
 
   return (
-    <div className="p-3">
+    <div>
       {isFetching ? (
         <div>Loading...</div>
       ) : (

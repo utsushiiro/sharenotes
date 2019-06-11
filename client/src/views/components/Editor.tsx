@@ -46,7 +46,7 @@ const Editor: React.FC<Props> = ({
   const submitButtonText = isNew ? "Create" : "Update";
 
   return (
-    <div className="p-3">
+    <div>
       <Form onSubmit={onSubmitHandler}>
         <FormGroup>
           <Label>Title</Label>
