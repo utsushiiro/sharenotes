@@ -40,7 +40,7 @@ const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar variant="dense">
           <IconButton
             edge="start"
             className={classes.menuButton}
