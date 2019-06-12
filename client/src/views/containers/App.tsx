@@ -6,6 +6,7 @@ import Editor from "../components/Editor";
 import Navbar from "../components/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
+import NoteContainer from "./NoteContainer";
 
 const App: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const App: React.FC = () => {
           <Route
             exact
             path="/notes/:id"
-            render={({ match }) => <Note id={match.params.id} />}
+            render={({ match }) => <NoteContainer id={match.params.id} />}
           />
           <Route render={() => <div>Not Found</div>} />
         </Switch>

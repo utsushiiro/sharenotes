@@ -10,24 +10,8 @@ import { State } from "../../state/types";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
-import { Button } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
-
-interface TabContainerProps {
-  children?: React.ReactNode;
-}
-
-function TabContainer(props: TabContainerProps) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,19 +27,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const editorModeStyle = {
+  height: "100vh",
+  position: "absolute",
+  zIndex: 1,
+  width: "100%",
+  top: 0,
+  left: 0,
+  border: "none"
+};
+
 type Props = {
   note: Note;
   onMount: () => void;
-  deleteButtonHandler: () => void;
   isFetching: boolean;
 };
 
-const Note: React.FC<Props> = ({
-  note,
-  onMount,
-  deleteButtonHandler,
-  isFetching
-}) => {
+const NoteContainer: React.FC<Props> = ({ note, onMount, isFetching }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -67,13 +55,15 @@ const Note: React.FC<Props> = ({
     onMount();
   }, []);
 
+  const s = value === 1 ? editorModeStyle : {};
+
   return isFetching || note == null ? (
     <div>Loading...</div>
   ) : (
     <div>
-      <h2>{note.title}</h2>
+      {/* <h2>{note.title}</h2> */}
 
-      <Paper className={classes.root}>
+      <Paper className={classes.root} style={s}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -85,29 +75,9 @@ const Note: React.FC<Props> = ({
           <Tab label="Others" />
         </Tabs>
         <Divider />
-        <Typography variant="body1" gutterBottom className={classes.content}>
-          {note.content}
-        </Typography>
-        <Divider />
-        <Box p={1}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            component={Link}
-            to={`/notes/${note.id}/edit`}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            onClick={deleteButtonHandler}
-          >
-            Delete
-          </Button>
-        </Box>
+        {value === 0 && <p>Item One</p>}
+        {value === 1 && <p>Item Two</p>}
+        {value === 2 && <p>Item Three</p>}
       </Paper>
     </div>
   );
@@ -137,4 +107,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Note);
+)(NoteContainer);
