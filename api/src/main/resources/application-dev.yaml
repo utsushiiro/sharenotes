@@ -5,11 +5,16 @@ spring:
     password: password
     driverClassName: com.mysql.cj.jdbc.Driver
     initialization-mode: always
+  # pretty print for sql logs
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
 
 client:
   origin: http://localhost:3000
 
-# Logs sql statements
+# logs sql statements
 logging:
   level:
     org:
@@ -20,4 +25,3 @@ logging:
             sql:
               BasicBinder: TRACE
           EnumType: TRACE
-
