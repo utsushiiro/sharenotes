@@ -1,5 +1,6 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
+import jp.utsushiiro.sharenotes.api.auth.LoginUserDetails;
 import jp.utsushiiro.sharenotes.api.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.Notes;
@@ -8,7 +9,7 @@ import jp.utsushiiro.sharenotes.api.error.exceptions.ForbiddenOperationException
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,13 +34,13 @@ public class NotesRestController {
     }
 
     @PostMapping(path = "")
-    public Note create(@RequestBody NoteForm noteForm, @ModelAttribute("loggedInUser") User loggedInUser) {
-        return noteService.create(noteForm.toNote(), loggedInUser);
+    public Note create(@RequestBody NoteForm noteForm) {
+        return noteService.create(noteForm.toNote(), getLoggedInUser());
     }
 
     @PatchMapping(path = "/{id}")
-    public void update(@PathVariable int id, @RequestBody NoteForm noteForm, @ModelAttribute("loggedInUser") User loggedInUser) {
-        if (noteForm.getUserId() != loggedInUser.getId()) {
+    public void update(@PathVariable int id, @RequestBody NoteForm noteForm) {
+        if (noteForm.getUserId() != getLoggedInUser().getId()) {
             throw new ForbiddenOperationException();
         }
 
@@ -49,17 +50,16 @@ public class NotesRestController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable int id, @ModelAttribute("loggedInUser") User loggedInUser) {
+    public void delete(@PathVariable int id) {
         Note note = noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
-        if (note.getUser().getId() != loggedInUser.getId()) {
+        if (note.getUser().getId() != getLoggedInUser().getId()) {
             throw new ForbiddenOperationException();
         }
 
         noteService.delete(id);
     }
 
-    @ModelAttribute("loggedInUser")
-    public User getLoggedInUser(@AuthenticationPrincipal(expression = "user") User user) {
-        return user;
+    private User getLoggedInUser() {
+        return ((LoginUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
     }
 }
