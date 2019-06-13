@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import NoteList from "../components/NoteList";
-import Note from "../components/Note";
 import Editor from "../components/Editor";
 import Navbar from "../components/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
