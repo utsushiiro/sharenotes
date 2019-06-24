@@ -26,10 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   note: Note;
+  updateButtonHandler: (content: string) => void;
 };
 
 const Editor: React.FC<Props> = ({
-  note
+  note,
+  updateButtonHandler
 }) => {
   const classes = useStyles();
   const [content, setContent] = useState(note.content);
@@ -48,6 +50,7 @@ const Editor: React.FC<Props> = ({
           <Button
             variant="contained"
             color="primary"
+            onClick={() => updateButtonHandler(content)}
           >
             Update
           </Button>

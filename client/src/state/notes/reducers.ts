@@ -51,7 +51,6 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
     case actionTypes.GET_NOTE.STARTED:
       return {
         ...state,
-        note: null,
         isFetching: true
       };
     case actionTypes.GET_NOTE.DONE:
@@ -63,27 +62,21 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
     case actionTypes.GET_NOTE.FAILED:
       return {
         ...state,
-        note: null,
         isFetching: false
       };
 
     case actionTypes.UPDATE_NOTE.STARTED:
       return {
         ...state,
-        note: null,
-        isFetching: true
       };
     case actionTypes.UPDATE_NOTE.DONE:
       return {
         ...state,
         note: action.payload.note,
-        isFetching: false
       };
     case actionTypes.UPDATE_NOTE.FAILED:
       return {
         ...state,
-        note: null,
-        isFetching: false
       };
 
     case actionTypes.DELETE_NOTE.STARTED:
