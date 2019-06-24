@@ -17,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import { Note } from "../components/Note";
+import { Editor } from "../components/Editor";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,10 +53,11 @@ type Props = {
   note: NoteType;
   onMount: () => void;
   deleteButtonHandler: () => void;
+  updateButtonHandler: (title: string, content: string) => void;
   isFetching: boolean;
 };
 
-const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, isFetching }) => {
+const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, isFetching, updateButtonHandler }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -75,7 +77,10 @@ const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, is
         {value === 0 && (
           <Note note={note} deleteButtonHandler={deleteButtonHandler} />
         )}
-        {value !== 0 && (
+        {value === 1 && (
+          <Editor note={note} updateButtonHandler={(content) => updateButtonHandler(note.title, content)} />
+        )}
+        {value !== 0 && value !== 1 && (
           <Typography variant="body1" style={{padding: "20px"}}>
             {"TBD"}
           </Typography>
@@ -85,7 +90,7 @@ const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, is
   };
 
   return isFetching || note == null ? (
-    <div>Loading...</div>
+    <></>
   ) : (
     <>
       <Box mt={2}>
@@ -145,6 +150,9 @@ const mapDispatchToProps = (
     },
     deleteButtonHandler() {
       dispatch(notesOperations.deleteNoteAndRedirect(parseInt(ownProps.id)));
+    },
+    updateButtonHandler(title: string, content: string) {
+      dispatch(notesOperations.updateNote(parseInt(ownProps.id), title, content));
     }
   };
 };
