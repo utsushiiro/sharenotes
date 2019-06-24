@@ -4,10 +4,36 @@ import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { Note } from "../../state/notes/types";
 import { Action } from "../../state/notes/actions";
-import { Media } from "reactstrap";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";
+
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { Box } from "@material-ui/core";
+
+const useStyles = makeStyles(
+  createStyles({
+    card: {
+      minWidth: 275
+    },
+    bullet: {
+      display: "inline-block",
+      margin: "0 2px",
+      transform: "scale(0.8)"
+    },
+    title: {
+      fontSize: 14
+    },
+    pos: {
+      marginBottom: 12
+    }
+  })
+);
 
 type Props = {
   notes: Note[];
@@ -20,28 +46,42 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching }) => {
     onMount();
   }, []);
 
+  const classes = useStyles();
   return (
-    <div className="p-3">
+    <div>
       {isFetching ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <h2>Note List</h2>
-          <ul>
+        <Box mt={4}>
+          <Typography variant="h5" component="h1">
+            Note List
+          </Typography>
+          <ul style={{ listStyle: "none", paddingLeft: "0" }}>
             {notes.map(note => (
-              <li key={note.id}>
-                <Media>
-                  <Media body>
-                    <Media heading>
-                      <Link to={`/notes/${note.id}`}>{note.title}</Link>
-                    </Media>
-                    {note.content}
-                  </Media>
-                </Media>
+              <li key={note.id} style={{ marginBottom: "20px" }}>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                      {note.title}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      {note.content}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      component={Link}
+                      to={`/notes/${note.id}`}
+                    >
+                      Read More
+                    </Button>
+                  </CardActions>
+                </Card>
               </li>
             ))}
           </ul>
-        </>
+        </Box>
       )}
     </div>
   );

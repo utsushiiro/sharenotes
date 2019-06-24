@@ -1,56 +1,74 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { State } from "../../state/types";
 import { Action } from "../../state/notes/actions";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
 import { authOperations } from "../../state/auth";
 import { User } from "../../state/auth/types";
 
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Link from "@material-ui/core/Link";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1
+    },
+    menuButton: {
+      marginRight: theme.spacing(2)
+    },
+    title: {
+      flexGrow: 1
+    }
+  })
+);
 type Props = {
   loginUser: User;
-  onClick: () => void;
+  logoutButtonHandler: () => void;
 };
 
-const NoteList: React.FC<Props> = ({ onClick, loginUser }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
+  const classes = useStyles();
 
   return (
-    <Navbar color="light" light expand="md">
-      <Link to="/">ShareNotes</Link>
-      <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
-      <Collapse isOpen={isOpen} navbar>
-        <Nav className="ml-auto" navbar>
-          <NavItem>
-            <Link to="/notes/new" className="nav-link">
-              New Note
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="h1" className={classes.title}>
+            {/* TODO use styled-component */}
+            <Link
+              color="inherit"
+              component={RouterLink}
+              to="/notes"
+              style={{ textDecoration: "none" }}
+            >
+              ShareNotes
             </Link>
-          </NavItem>
-          <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-              {loginUser.name}
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem onClick={onClick}>Logout</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </Nav>
-      </Collapse>
-    </Navbar>
+          </Typography>
+          <Button color="inherit" component={RouterLink} to="/notes/new">
+            New
+          </Button>
+          <Button color="inherit" onClick={logoutButtonHandler}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
@@ -62,7 +80,7 @@ const mapStateToProps = ({ authState }: State) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
   return {
-    onClick: () => {
+    logoutButtonHandler: () => {
       dispatch(authOperations.logout());
     }
   };
@@ -71,4 +89,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NoteList);
+)(Navbar);
