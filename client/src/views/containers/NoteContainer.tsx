@@ -17,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import { Note } from "../components/Note";
+import { Editor } from "../components/Editor";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,7 +76,10 @@ const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, is
         {value === 0 && (
           <Note note={note} deleteButtonHandler={deleteButtonHandler} />
         )}
-        {value !== 0 && (
+        {value === 1 && (
+          <Editor note={note} />
+        )}
+        {value !== 0 && value !== 1 && (
           <Typography variant="body1" style={{padding: "20px"}}>
             {"TBD"}
           </Typography>
