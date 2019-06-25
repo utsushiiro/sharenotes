@@ -50,7 +50,7 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching }) => {
   return (
     <div>
       {isFetching ? (
-        <div>Loading...</div>
+        <></>
       ) : (
         <Box mt={4}>
           <Typography variant="h5" component="h1">

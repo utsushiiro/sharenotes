@@ -55,6 +55,7 @@ type Props = {
   deleteButtonHandler: () => void;
   updateButtonHandler: (title: string, content: string) => void;
   isFetching: boolean;
+  isEditorMode: boolean;
 };
 
 const NoteContainer: React.FC<Props> = ({
@@ -62,10 +63,13 @@ const NoteContainer: React.FC<Props> = ({
   onMount,
   deleteButtonHandler,
   isFetching,
-  updateButtonHandler
+  updateButtonHandler,
+  isEditorMode
 }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(
+    isEditorMode ? 1 : 0
+  );
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -77,7 +81,7 @@ const NoteContainer: React.FC<Props> = ({
 
   const modeStyle = value === 1 ? editorModeStyle : {};
 
-  const tabComponentSwitcher = value => {
+  const tabComponentSwitcher = (value: number) => {
     return (
       <>
         {value === 0 && (
