@@ -35,5 +35,10 @@ module.exports = {
     openPage: "index.html",
     watchContentBase: true,
     historyApiFallback: true
+  },
+
+  watchOptions: {
+    aggregateTimeout: 300,
+    ignored: /node_modules/
   }
 };

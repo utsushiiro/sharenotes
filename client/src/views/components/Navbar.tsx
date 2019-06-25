@@ -15,6 +15,14 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Link from "@material-ui/core/Link";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions
+} from "@material-ui/core";
+import { notesOperations } from "../../state/notes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,10 +40,26 @@ const useStyles = makeStyles((theme: Theme) =>
 type Props = {
   loginUser: User;
   logoutButtonHandler: () => void;
+  newButtonHandler: (title: string) => void;
 };
 
-const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
+const Navbar: React.FC<Props> = ({
+  logoutButtonHandler,
+  loginUser,
+  newButtonHandler
+}) => {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState("");
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
 
   return (
     <div className={classes.root}>
@@ -60,7 +84,7 @@ const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
               ShareNotes
             </Link>
           </Typography>
-          <Button color="inherit" component={RouterLink} to="/notes/new">
+          <Button color="inherit" onClick={handleClickOpen}>
             New
           </Button>
           <Button color="inherit" onClick={logoutButtonHandler}>
@@ -68,6 +92,26 @@ const Navbar: React.FC<Props> = ({ logoutButtonHandler, loginUser }) => {
           </Button>
         </Toolbar>
       </AppBar>
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
+        <DialogTitle>Create New Note</DialogTitle>
+        <DialogContent>
+          <TextField
+            name="title"
+            label="Note Title"
+            type="text"
+            fullWidth
+            onChange={e => setTitle(e.currentTarget.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={() => newButtonHandler(title)} color="primary">
+            New
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
@@ -82,6 +126,10 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
   return {
     logoutButtonHandler: () => {
       dispatch(authOperations.logout());
+    },
+    newButtonHandler: (title: string) => {
+      console.log(title);
+      dispatch(notesOperations.createNoteAndRedirect(title, ""));
     }
   };
 };

@@ -4,7 +4,6 @@ import api from "../api";
 import { push } from "connected-react-router";
 import { authSelectors } from "../auth";
 import { State } from "../types";
-import { Note } from "./types";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
@@ -16,7 +15,9 @@ const createNoteAndRedirect = (title: string, content: string) => {
         content
       });
       dispatch(actions.createNote.done(response.data));
-      dispatch(push(`/notes/${response.data.id}`));
+      dispatch(
+        push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
+      );
     } catch (err) {
       dispatch(actions.createNote.failed());
     }
@@ -49,7 +50,7 @@ const fetchNote = (id: number) => {
   };
 };
 
-const updateNote= (id: number, title: string, content: string) => {
+const updateNote = (id: number, title: string, content: string) => {
   return async (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const userId = authSelectors.getUserId(state.authState);
@@ -63,15 +64,15 @@ const updateNote= (id: number, title: string, content: string) => {
           title,
           content,
           userId
-      }
+        }
       );
-      dispatch(actions.updateNote.done(
-        {
+      dispatch(
+        actions.updateNote.done({
           id,
           title,
           content
-        }
-      ));
+        })
+      );
       dispatch(push(`/notes/${id}`));
     } catch (err) {
       dispatch(actions.updateNote.failed());

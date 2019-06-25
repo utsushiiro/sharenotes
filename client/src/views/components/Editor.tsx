@@ -7,15 +7,15 @@ import { Divider, Box, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    textarea: { 
+    textarea: {
       display: "block",
       boxSizing: "border-box",
-      width: "100%", 
-      height: "calc(100vh - 48px - 1px - 1px - 52px)", 
+      width: "100%",
+      height: "calc(100vh - 48px - 1px - 1px - 52px)",
       resize: "none",
       padding: "20px",
       border: "none",
-      outline: "none",
+      outline: "none"
     },
     footer: {
       display: "flex",
@@ -29,10 +29,7 @@ type Props = {
   updateButtonHandler: (content: string) => void;
 };
 
-const Editor: React.FC<Props> = ({
-  note,
-  updateButtonHandler
-}) => {
+const Editor: React.FC<Props> = ({ note, updateButtonHandler }) => {
   const classes = useStyles();
   const [content, setContent] = useState(note.content);
   return (
@@ -46,17 +43,17 @@ const Editor: React.FC<Props> = ({
         />
       </form>
       <Divider />
-        <Box p={1} className={classes.footer}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => updateButtonHandler(content)}
-          >
-            Update
-          </Button>
-        </Box>
+      <Box p={1} className={classes.footer}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => updateButtonHandler(content)}
+        >
+          Update
+        </Button>
+      </Box>
     </div>
   );
 };
 
-export {Editor};
+export { Editor };

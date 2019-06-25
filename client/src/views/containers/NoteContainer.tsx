@@ -57,7 +57,13 @@ type Props = {
   isFetching: boolean;
 };
 
-const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, isFetching, updateButtonHandler }) => {
+const NoteContainer: React.FC<Props> = ({
+  note,
+  onMount,
+  deleteButtonHandler,
+  isFetching,
+  updateButtonHandler
+}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -78,10 +84,15 @@ const NoteContainer: React.FC<Props> = ({ note, onMount, deleteButtonHandler, is
           <Note note={note} deleteButtonHandler={deleteButtonHandler} />
         )}
         {value === 1 && (
-          <Editor note={note} updateButtonHandler={(content) => updateButtonHandler(note.title, content)} />
+          <Editor
+            note={note}
+            updateButtonHandler={content =>
+              updateButtonHandler(note.title, content)
+            }
+          />
         )}
         {value !== 0 && value !== 1 && (
-          <Typography variant="body1" style={{padding: "20px"}}>
+          <Typography variant="body1" style={{ padding: "20px" }}>
             {"TBD"}
           </Typography>
         )}
@@ -152,7 +163,9 @@ const mapDispatchToProps = (
       dispatch(notesOperations.deleteNoteAndRedirect(parseInt(ownProps.id)));
     },
     updateButtonHandler(title: string, content: string) {
-      dispatch(notesOperations.updateNote(parseInt(ownProps.id), title, content));
+      dispatch(
+        notesOperations.updateNote(parseInt(ownProps.id), title, content)
+      );
     }
   };
 };
