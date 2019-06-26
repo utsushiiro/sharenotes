@@ -67,16 +67,16 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
 
     case actionTypes.UPDATE_NOTE.STARTED:
       return {
-        ...state,
+        ...state
       };
     case actionTypes.UPDATE_NOTE.DONE:
       return {
         ...state,
-        note: action.payload.note,
+        note: action.payload.note
       };
     case actionTypes.UPDATE_NOTE.FAILED:
       return {
-        ...state,
+        ...state
       };
 
     case actionTypes.DELETE_NOTE.STARTED:
