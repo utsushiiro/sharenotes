@@ -1,4 +1,4 @@
-import { Note } from "./types";
+import { Note, NoteEventType } from "./types";
 import { uniteProperties } from "../types";
 
 export type Action = ReturnType<
@@ -7,6 +7,8 @@ export type Action = ReturnType<
   | uniteProperties<typeof getNote>
   | uniteProperties<typeof updateNote>
   | uniteProperties<typeof deleteNote>
+  | typeof createNoteEvent
+  | typeof deleteNoteEvent
 >;
 
 export const actionTypes = {
@@ -34,7 +36,9 @@ export const actionTypes = {
     STARTED: "DELETE_NOTE.STARTED",
     DONE: "DELETE_NOTE.DONE",
     FAILED: "DELETE_NOTE.FAILED"
-  }
+  },
+  CREATE_NOTE_EVENT: "CREATE_NOTE_EVENT",
+  DELETE_NOTE_EVENT: "DELETE_NOTE_EVENT"
 } as const;
 
 const createNote = {
@@ -119,10 +123,26 @@ const deleteNote = {
   })
 };
 
+const createNoteEvent = (type: NoteEventType) => ({
+  type: actionTypes.CREATE_NOTE_EVENT,
+  payload: {
+    type
+  }
+});
+
+const deleteNoteEvent = (id: string) => ({
+  type: actionTypes.DELETE_NOTE_EVENT,
+  payload: {
+    id
+  }
+});
+
 export default {
   createNote,
   getNotes,
   getNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  createNoteEvent,
+  deleteNoteEvent
 };

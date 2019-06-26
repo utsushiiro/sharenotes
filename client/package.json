@@ -17,6 +17,7 @@
     "@types/reactstrap": "^8.0.1",
     "@types/redux": "^3.6.0",
     "@types/redux-logger": "^3.0.7",
+    "@types/uuid": "^3.4.4",
     "redux-logger": "^3.0.6",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.4000",
@@ -40,6 +41,7 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "uuid": "^3.3.2"
   }
 }

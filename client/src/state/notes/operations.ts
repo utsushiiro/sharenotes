@@ -4,6 +4,7 @@ import api from "../api";
 import { push } from "connected-react-router";
 import { authSelectors } from "../auth";
 import { State } from "../types";
+import { noteEventTypes } from "./constants";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
@@ -15,11 +16,13 @@ const createNoteAndRedirect = (title: string, content: string) => {
         content
       });
       dispatch(actions.createNote.done(response.data));
+      dispatch(actions.createNoteEvent(noteEventTypes.CREATED_NOTE));
       dispatch(
         push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
       );
     } catch (err) {
       dispatch(actions.createNote.failed());
+      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_CREATE_NOTE));
     }
   };
 };
@@ -73,9 +76,11 @@ const updateNote = (id: number, title: string, content: string) => {
           content
         })
       );
+      dispatch(actions.createNoteEvent(noteEventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
     } catch (err) {
       dispatch(actions.updateNote.failed());
+      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_UPDATE_NOTE));
     }
   };
 };
@@ -89,9 +94,11 @@ const deleteNoteAndRedirect = (id: number) => {
         `http://localhost:3001/api/notes/${id}`
       );
       dispatch(actions.deleteNote.done());
+      dispatch(actions.createNoteEvent(noteEventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));
     } catch (err) {
       dispatch(actions.deleteNote.failed());
+      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_DELETE_NOTE));
     }
   };
 };
