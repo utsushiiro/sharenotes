@@ -1,4 +1,4 @@
-import {noteEventTypes} from "./constants";
+import { noteEventTypes } from "./constants";
 
 export type Note = {
   id: number;
@@ -11,7 +11,7 @@ export type NoteEventType = keyof (typeof noteEventTypes);
 export type NoteEvent = {
   id: string;
   type: NoteEventType;
-  createdAt:string;
+  createdAt: string;
 };
 
 export type NotesState = {

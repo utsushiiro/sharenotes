@@ -31,6 +31,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.4.0",
+    "notistack": "^0.8.7",
     "prettier": "^1.17.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",

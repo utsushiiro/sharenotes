@@ -9,6 +9,7 @@ import { Switch, Route } from "react-router";
 import Login from "./views/components/Login";
 import SignUp from "./views/components/SignUp";
 import PrivateRoute from "./views/containers/PrivateRoute";
+import { SnackbarProvider } from "notistack";
 
 const store = configureStore();
 
@@ -16,11 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
   render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/sign_up" component={SignUp} />
-          <PrivateRoute component={App} />
-        </Switch>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+        >
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/sign_up" component={SignUp} />
+            <PrivateRoute component={App} />
+          </Switch>
+        </SnackbarProvider>
       </ConnectedRouter>
     </Provider>,
     document.getElementById("app-root")

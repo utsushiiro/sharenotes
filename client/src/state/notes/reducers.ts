@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { NotesState } from "./types";
 import { Action, actionTypes } from "./actions";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 const initialState: NotesState = {
   notes: [],
@@ -100,17 +100,20 @@ const note: Reducer<NotesState, Action> = (state = initialState, action) => {
     case actionTypes.CREATE_NOTE_EVENT:
       return {
         ...state,
-        events: state.events.concat([{
-          id: uuid(),
-          type: action.payload.type,
-          createdAt: (new Date()).toISOString()
-        }])
+        events: state.events.concat([
+          {
+            id: uuid(),
+            type: action.payload.type,
+            createdAt: new Date().toISOString()
+          }
+        ])
       };
     case actionTypes.DELETE_NOTE_EVENT:
       return {
         ...state,
         events: state.events.filter(event => event.id !== action.payload.id)
-      };0
+      };
+      0;
 
     default:
       const _: never = action;

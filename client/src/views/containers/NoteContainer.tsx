@@ -18,6 +18,7 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import { Note } from "../components/Note";
 import { Editor } from "../components/Editor";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,12 +68,19 @@ const NoteContainer: React.FC<Props> = ({
   isEditorMode
 }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(
-    isEditorMode ? 1 : 0
-  );
+  const [value, setValue] = React.useState(isEditorMode ? 1 : 0);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+  };
+
+  const updateButtonHandlerWithSnack = (title: string, content: string) => {
+    enqueueSnackbar("Successfuly Updated", {
+      variant: "success",
+      autoHideDuration: 2000
+    });
+    updateButtonHandler(title, content);
   };
 
   useEffect(() => {
@@ -91,7 +99,7 @@ const NoteContainer: React.FC<Props> = ({
           <Editor
             note={note}
             updateButtonHandler={content =>
-              updateButtonHandler(note.title, content)
+              updateButtonHandlerWithSnack(note.title, content)
             }
           />
         )}
