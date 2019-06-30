@@ -161,7 +161,6 @@ const NoteContainer: React.FC<Props> = ({
               <Tab label="View" />
               <Tab label="Edit" />
               <Tab label="History" />
-              <Tab label="Children" />
               <Tab label="Others" />
             </Tabs>
             <Divider />
