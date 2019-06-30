@@ -17,7 +17,15 @@ const App: React.FC = () => {
           <Route
             exact
             path="/notes/:id"
-            render={({ match, location: {state: fromCreateNoteOperation} }) => <NoteContainer id={match.params.id} isEditorMode={!!fromCreateNoteOperation} />}
+            render={({
+              match,
+              location: { state: fromCreateNoteOperation }
+            }) => (
+              <NoteContainer
+                id={match.params.id}
+                isEditorMode={!!fromCreateNoteOperation}
+              />
+            )}
           />
           <Route render={() => <div>Not Found</div>} />
         </Switch>
