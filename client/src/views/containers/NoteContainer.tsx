@@ -82,7 +82,13 @@ const NoteContainer: React.FC<Props> = ({
 
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === noteEventTypes.UPDATED_NOTE) {
+      if (event.type === noteEventTypes.CREATED_NOTE) {
+        enqueueSnackbar("Successfuly created", {
+          variant: "success",
+          autoHideDuration: 1500
+        });
+        deleteEvent(event.id);
+      }else if (event.type === noteEventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfuly updated", {
           variant: "success",
           autoHideDuration: 1500

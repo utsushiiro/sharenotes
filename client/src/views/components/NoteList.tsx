@@ -2,12 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import { Note } from "../../state/notes/types";
+import { Note, NoteEvent } from "../../state/notes/types";
 import { Action } from "../../state/notes/actions";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";
-
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -15,6 +14,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
+import { noteEventTypes } from "../../state/notes/constants";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles(
   createStyles({
@@ -39,12 +40,28 @@ type Props = {
   notes: Note[];
   onMount: () => void;
   isFetching: boolean;
+  events: NoteEvent[];
+  deleteEvent: (eventId: string) => void;
 };
 
-const NoteList: React.FC<Props> = ({ notes, onMount, isFetching }) => {
+const NoteList: React.FC<Props> = ({ notes, onMount, isFetching, events, deleteEvent}) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     onMount();
   }, []);
+
+  useEffect(() => {
+    events.forEach(event => {
+      if (event.type === noteEventTypes.DELETED_NOTE) {
+        enqueueSnackbar("Successfuly deleted", {
+          variant: "success",
+          autoHideDuration: 1500
+        });
+        deleteEvent(event.id);
+      }
+    });
+  });
 
   const classes = useStyles();
   return (
@@ -90,13 +107,17 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching }) => {
 const mapStateToProps = ({ notesState }: State) => {
   return {
     notes: notesState.notes,
-    isFetching: notesState.isFetching
+    isFetching: notesState.isFetching,
+    events: notesState.events
   };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
   return {
-    onMount: () => dispatch(notesOperations.fetchNotes())
+    onMount: () => dispatch(notesOperations.fetchNotes()),
+    deleteEvent(eventId: string) {
+      dispatch(notesOperations.deleteNoteEvent(eventId));
+    }
   };
 };
 
