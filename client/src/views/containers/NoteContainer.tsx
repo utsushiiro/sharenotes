@@ -5,8 +5,7 @@ import { Action } from "../../state/notes/actions";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";
-import { Note as NoteType } from "../../state/notes/types";
-
+import { Note as NoteType, NoteEvent } from "../../state/notes/types";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -19,6 +18,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import { Note } from "../components/Note";
 import { Editor } from "../components/Editor";
 import { useSnackbar } from "notistack";
+import { noteEventTypes } from "../../state/notes/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,45 +51,54 @@ const editorModeStyle = {
 };
 
 type Props = {
-  note: NoteType;
+  note: NoteType | null;
   onMount: () => void;
   deleteButtonHandler: () => void;
   updateButtonHandler: (title: string, content: string) => void;
   isFetching: boolean;
   isEditorMode: boolean;
+  events: NoteEvent[];
+  deleteEvent: (eventId: string) => void;
 };
 
 const NoteContainer: React.FC<Props> = ({
   note,
   onMount,
+  updateButtonHandler,
   deleteButtonHandler,
   isFetching,
-  updateButtonHandler,
-  isEditorMode
+  isEditorMode,
+  events,
+  deleteEvent
 }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(isEditorMode ? 1 : 0);
+  const [tabValue, setTabValue] = React.useState(isEditorMode ? 1 : 0);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const updateButtonHandlerWithSnack = (title: string, content: string) => {
-    enqueueSnackbar("Successfuly Updated", {
-      variant: "success",
-      autoHideDuration: 2000
-    });
-    updateButtonHandler(title, content);
-  };
+  const modeStyle = tabValue === 1 ? editorModeStyle : {};
 
   useEffect(() => {
     onMount();
   }, []);
 
-  const modeStyle = value === 1 ? editorModeStyle : {};
+  useEffect(() => {
+    events.forEach(event => {
+      if (event.type === noteEventTypes.UPDATED_NOTE) {
+        enqueueSnackbar("Successfuly updated", {
+          variant: "success",
+          autoHideDuration: 1500
+        });
+        deleteEvent(event.id);
+      } else if (event.type === noteEventTypes.FAILED_TO_UPDATE_NOTE) {
+        enqueueSnackbar("Failed to update", {
+          variant: "error",
+          autoHideDuration: 1500
+        });
+        deleteEvent(event.id);
+      }
+    });
+  });
 
-  const tabComponentSwitcher = (value: number) => {
+  const tabComponentSwitcher = (value: number, note: NoteType) => {
     return (
       <>
         {value === 0 && (
@@ -99,7 +108,7 @@ const NoteContainer: React.FC<Props> = ({
           <Editor
             note={note}
             updateButtonHandler={content =>
-              updateButtonHandlerWithSnack(note.title, content)
+              updateButtonHandler(note.title, content)
             }
           />
         )}
@@ -136,8 +145,10 @@ const NoteContainer: React.FC<Props> = ({
           <Divider />
           <Box style={modeStyle}>
             <Tabs
-              value={value}
-              onChange={handleChange}
+              value={tabValue}
+              onChange={(event: React.ChangeEvent<{}>, newValue: number) =>
+                setTabValue(newValue)
+              }
               indicatorColor="primary"
               textColor="primary"
             >
@@ -148,7 +159,7 @@ const NoteContainer: React.FC<Props> = ({
               <Tab label="Others" />
             </Tabs>
             <Divider />
-            {tabComponentSwitcher(value)}
+            {tabComponentSwitcher(tabValue, note)}
           </Box>
         </Paper>
       </Box>
@@ -159,7 +170,8 @@ const NoteContainer: React.FC<Props> = ({
 const mapStateToProps = ({ notesState }: State) => {
   return {
     note: notesState.note,
-    isFetching: notesState.isFetching
+    isFetching: notesState.isFetching,
+    events: notesState.events
   };
 };
 
@@ -178,6 +190,9 @@ const mapDispatchToProps = (
       dispatch(
         notesOperations.updateNote(parseInt(ownProps.id), title, content)
       );
+    },
+    deleteEvent(eventId: string) {
+      dispatch(notesOperations.deleteNoteEvent(eventId));
     }
   };
 };

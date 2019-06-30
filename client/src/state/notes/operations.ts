@@ -108,5 +108,7 @@ export default {
   fetchNotes,
   fetchNote,
   updateNote,
-  deleteNoteAndRedirect
+  deleteNoteAndRedirect,
+  createNoteEvent: actions.createNoteEvent,
+  deleteNoteEvent: actions.deleteNoteEvent
 };
