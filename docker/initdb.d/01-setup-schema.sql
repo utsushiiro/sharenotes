@@ -1,4 +1,4 @@
-create table users (
+create table user (
     id integer not null auto_increment,
     name varchar(255) unique not null,
     email varchar(255) unique not null,
@@ -9,7 +9,7 @@ create table users (
     primary key (id)
 );
 
-create table notes (
+create table note (
     id integer not null auto_increment,
     title text not null,
     content text not null,
@@ -17,5 +17,5 @@ create table notes (
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
     primary key (id),
-    foreign key (user_id) references users (id)
+    foreign key (user_id) references user (id)
 );
