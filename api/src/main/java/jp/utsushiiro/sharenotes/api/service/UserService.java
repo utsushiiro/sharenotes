@@ -1,10 +1,12 @@
 package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +23,11 @@ public class UserService {
     }
 
     public User findByName(String name) {
-        return userRepository.findByName(name).get(0);
+        List<User> users = userRepository.findByName(name);
+        if (users.isEmpty()) {
+            throw new ResourceNotFoundException(User.class, name);
+        }
+        return users.get(0);
     }
 
     public User create(User user) {
