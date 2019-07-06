@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/user")
 public class UserRestController {
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public User find(@AuthenticationPrincipal(expression = "user") User user) {
         return user;
     }
