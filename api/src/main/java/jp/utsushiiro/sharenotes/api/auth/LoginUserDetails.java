@@ -13,7 +13,8 @@ public class LoginUserDetails extends org.springframework.security.core.userdeta
         super(
                 user.getName(),
                 user.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_" + user.getUserRole().name())
+                // This application do not use GrantedAuthority for authorization process but uses UseGroup.
+                AuthorityUtils.createAuthorityList("ROLE_NONE")
         );
         this.user = user;
     }

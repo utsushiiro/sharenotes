@@ -28,7 +28,7 @@ class NoteServiceTest {
 
     @Test
     void findById() {
-        int id = 1;
+        Long id = 1L;
         Optional<Note> expected = Optional.of(new Note());
         Mockito.doReturn(expected).when(noteRepository).findById(id);
 
@@ -63,7 +63,7 @@ class NoteServiceTest {
 
     @Test
     void update() {
-        int id = 1;
+        Long id = 1L;
         Note note = new Note();
         note.setId(id);
         note.setTitle("testTitle");
@@ -81,7 +81,7 @@ class NoteServiceTest {
 
     @Test
     void delete() {
-        int id = 1;
+        Long id = 1L;
 
         noteService.delete(id);
 

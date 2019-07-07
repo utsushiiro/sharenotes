@@ -1,7 +1,7 @@
 -- Delete all table data
-delete from users;
-delete from notes;
+delete from user;
+delete from note;
 
 -- Reset auto_increment of all tables
-alter table users auto_increment = 1;
-alter table notes auto_increment = 1;
+alter table user auto_increment = 1;
+alter table note auto_increment = 1;

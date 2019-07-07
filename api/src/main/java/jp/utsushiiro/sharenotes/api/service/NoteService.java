@@ -22,7 +22,7 @@ public class NoteService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Note> findById(int id) {
+    public Optional<Note> findById(Long id) {
         return noteRepository.findById(id);
     }
 
@@ -52,7 +52,7 @@ public class NoteService {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(Long id) {
         noteRepository.deleteById(id);
     }
 }

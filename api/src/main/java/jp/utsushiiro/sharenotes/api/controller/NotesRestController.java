@@ -29,7 +29,7 @@ public class NotesRestController {
     }
 
     @GetMapping(path = "/{id}")
-    public Note find(@PathVariable int id) {
+    public Note find(@PathVariable Long id) {
         return noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
     }
 
@@ -39,8 +39,8 @@ public class NotesRestController {
     }
 
     @PatchMapping(path = "/{id}")
-    public void update(@PathVariable int id, @RequestBody NoteForm noteForm) {
-        if (noteForm.getUserId() != getLoggedInUser().getId()) {
+    public void update(@PathVariable Long id, @RequestBody NoteForm noteForm) {
+        if (!noteForm.getUserId().equals(getLoggedInUser().getId())) {
             throw new ForbiddenOperationException();
         }
 
@@ -50,9 +50,9 @@ public class NotesRestController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         Note note = noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
-        if (note.getUser().getId() != getLoggedInUser().getId()) {
+        if (!note.getUser().getId().equals(getLoggedInUser().getId())) {
             throw new ForbiddenOperationException();
         }
 

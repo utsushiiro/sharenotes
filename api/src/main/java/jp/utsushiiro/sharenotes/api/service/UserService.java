@@ -5,6 +5,7 @@ import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +19,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(int id) {
+    @Transactional(readOnly = true)
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public User findByName(String name) {
         List<User> users = userRepository.findByName(name);
         if (users.isEmpty()) {
@@ -30,16 +33,19 @@ public class UserService {
         return users.get(0);
     }
 
+    @Transactional
     public User create(User user) {
         userRepository.save(user);
         return user;
     }
 
+    @Transactional
     public void update(User user) {
         userRepository.save(user);
     }
 
-    public void delete(int id) {
+    @Transactional
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 }
