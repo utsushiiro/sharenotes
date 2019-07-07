@@ -1,6 +1,5 @@
 package jp.utsushiiro.sharenotes.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,31 +8,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "user_group")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class UserGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name="password")
-    @JsonIgnore
-    private String password;
-
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "userGroup",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
@@ -47,22 +40,41 @@ public class User {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
+    public void addUser(User user) {
+        UserGroupMapping userGroupMapping = new UserGroupMapping(user, this);
+        userGroupMappings.add(userGroupMapping);
+        user.getUserGroupMappings().add(userGroupMapping);
+    }
+
+    public void removeUser(User user) {
+        Iterator<UserGroupMapping> iterator = userGroupMappings.iterator();
+        while(iterator.hasNext()) {
+            UserGroupMapping mapping = iterator.next();
+            if (mapping.getUserGroup().equals(this) && mapping.getUser().equals(user)) {
+                iterator.remove();
+                mapping.getUser().getUserGroupMappings().remove(mapping);
+                mapping.setUserGroup(null);
+                mapping.setUser(null);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(email, user.email);
+        UserGroup userGroup = (UserGroup) o;
+        return Objects.equals(name, userGroup.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
+        final StringBuilder sb = new StringBuilder("UserGroup{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append('}');
