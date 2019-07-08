@@ -33,6 +33,17 @@ public class User {
     private String password;
 
     @JsonIgnore
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "self_group_id",
+            nullable = false
+    )
+    private UserGroup selfGroup;
+
+    @JsonIgnore
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

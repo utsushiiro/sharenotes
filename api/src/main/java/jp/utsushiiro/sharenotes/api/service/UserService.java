@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -41,12 +42,15 @@ public class UserService {
 
     @Transactional
     public User create(User user) {
+        UserGroup selfGroup = new UserGroup();
+        selfGroup.setName(UUID.randomUUID().toString());
+        userGroupRepository.save(selfGroup);
+
+        user.setSelfGroup(selfGroup);
         userRepository.save(user);
 
-        UserGroup selfGroup = new UserGroup();
-        selfGroup.setName(String.format("__userId__%s", user.getId()));
         selfGroup.addUser(user);
-        userGroupRepository.save(selfGroup);
+        selfGroup.setName(String.format("__userId__%s", user.getId()));
 
         UserGroup everyOneGroup = userGroupRepository.findByName("__everyone").get(0);
         everyOneGroup.addUser(user);

@@ -1,13 +1,17 @@
+SET FOREIGN_KEY_CHECKS=0;
+
 create table user (
     id bigint not null auto_increment,
     name varchar(255) not null,
     email varchar(255) not null,
     password char(60) not null,
+    self_group_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
     primary key (id),
     unique (name),
-    unique (email)
+    unique (email),
+    foreign key (self_group_id) references user_group (id)
 );
 
 create table user_group (
@@ -38,3 +42,5 @@ create table note (
     primary key (id),
     foreign key (owner_id) references user (id)
 );
+
+SET FOREIGN_KEY_CHECKS=1;
