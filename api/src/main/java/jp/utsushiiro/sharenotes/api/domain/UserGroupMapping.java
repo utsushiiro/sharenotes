@@ -1,6 +1,7 @@
 package jp.utsushiiro.sharenotes.api.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_group_mapping")
 @Data
+@NoArgsConstructor
 public class UserGroupMapping {
     @EmbeddedId
     private UserGroupMappingId id;

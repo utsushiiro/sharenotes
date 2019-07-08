@@ -1,6 +1,7 @@
 package jp.utsushiiro.sharenotes.api.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Embeddable
 @Data
+@NoArgsConstructor
 public class UserGroupMappingId implements Serializable {
     @Column(name = "user_id")
     private Long userId;

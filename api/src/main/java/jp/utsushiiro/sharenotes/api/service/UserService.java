@@ -61,6 +61,15 @@ public class UserService {
 
     @Transactional
     public void delete(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
+
+        UserGroup selfGroup = userGroupRepository.findByName(String.format("__userId__%s", user.getId())).get(0);
+        selfGroup.removeUser(user);
+        userGroupRepository.delete(selfGroup);
+
+        UserGroup everyOneGroup = userGroupRepository.findByName("__everyone").get(0);
+        everyOneGroup.removeUser(user);
+
         userRepository.deleteById(id);
     }
 }
