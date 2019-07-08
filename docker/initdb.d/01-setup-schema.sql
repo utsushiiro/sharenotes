@@ -32,9 +32,9 @@ create table note (
     id bigint not null auto_increment,
     title text not null,
     content text not null,
-    user_id bigint not null,
+    owner_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
     primary key (id),
-    foreign key (user_id) references user (id)
+    foreign key (owner_id) references user (id)
 );

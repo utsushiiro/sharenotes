@@ -57,7 +57,7 @@ class NoteServiceTest {
         Note result = noteService.create(note, user);
 
         assertThat(result).isEqualTo(note);
-        assertThat(note.getUser()).isEqualTo(user);
+        assertThat(note.getOwner()).isEqualTo(user);
         Mockito.verify(noteRepository, Mockito.times(1)).save(note);
     }
 

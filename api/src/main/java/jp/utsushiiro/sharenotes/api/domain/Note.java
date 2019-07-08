@@ -37,8 +37,8 @@ public class Note{
             optional = false
     )
     @JoinColumn(
-            name = "userId",
+            name = "owner_id",
             nullable = false
     )
-    private User user;
+    private User owner;
 }

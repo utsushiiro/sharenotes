@@ -38,7 +38,7 @@ public class NoteService {
      */
     @Transactional
     public Note create(Note note, User user) {
-        note.setUser(user);
+        note.setOwner(user);
         noteRepository.save(note);
         return note;
     }
