@@ -32,6 +32,7 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

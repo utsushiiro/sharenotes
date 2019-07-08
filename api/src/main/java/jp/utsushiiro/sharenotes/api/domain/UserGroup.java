@@ -40,10 +40,14 @@ public class UserGroup {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    public void addUser(User user) {
-        UserGroupMapping userGroupMapping = new UserGroupMapping(user, this);
+    public void addUser(User user, boolean isAdmin) {
+        UserGroupMapping userGroupMapping = new UserGroupMapping(user, this, isAdmin);
         userGroupMappings.add(userGroupMapping);
         user.getUserGroupMappings().add(userGroupMapping);
+    }
+
+    public void addUser(User user) {
+        this.addUser(user, false);
     }
 
     public void removeUser(User user) {

@@ -1,9 +1,10 @@
 package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.domain.UserGroup;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
+import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +15,14 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
+    private final UserGroupRepository userGroupRepository;
+
+    public UserService(
+            UserRepository userRepository,
+            UserGroupRepository userGroupRepository
+    ) {
         this.userRepository = userRepository;
+        this.userGroupRepository = userGroupRepository;
     }
 
     @Transactional(readOnly = true)
@@ -36,6 +42,15 @@ public class UserService {
     @Transactional
     public User create(User user) {
         userRepository.save(user);
+
+        UserGroup selfGroup = new UserGroup();
+        selfGroup.setName(String.format("__userId__%s", user.getId()));
+        selfGroup.addUser(user);
+        userGroupRepository.save(selfGroup);
+
+        UserGroup everyOneGroup = userGroupRepository.findByName("__everyone").get(0);
+        everyOneGroup.addUser(user);
+
         return user;
     }
 

@@ -23,9 +23,10 @@ public class UserGroupMapping {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-    public UserGroupMapping(User user, UserGroup userGroup) {
+    public UserGroupMapping(User user, UserGroup userGroup, boolean isAdmin) {
         this.user = user;
         this.userGroup = userGroup;
+        this.isAdmin = isAdmin;
         this.id = new UserGroupMappingId(user.getId(), userGroup.getId());
     }
 
