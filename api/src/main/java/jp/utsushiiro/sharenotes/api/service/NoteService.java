@@ -3,8 +3,10 @@ package jp.utsushiiro.sharenotes.api.service;
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.Notes;
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.domain.UserGroup;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
+import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +18,12 @@ import java.util.Optional;
 public class NoteService {
     private final NoteRepository noteRepository;
 
+    private final UserGroupRepository userGroupRepository;
+
     @Autowired
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository, UserGroupRepository userGroupRepository) {
         this.noteRepository = noteRepository;
+        this.userGroupRepository = userGroupRepository;
     }
 
     @Transactional(readOnly = true)
@@ -33,12 +38,16 @@ public class NoteService {
         return notes;
     }
 
-    /**
-     * Create a note belongs to specified user
-     */
     @Transactional
     public Note create(Note note, User user) {
+        UserGroup ownerGroup = user.getSelfGroup();
+        UserGroup everyoneGroup = userGroupRepository.fetchEveryoneGroup();
+
         note.setOwner(user);
+        note.setGroupWithReadAuthority(everyoneGroup);
+        note.setGroupWithEditAuthority(everyoneGroup);
+        note.setGroupWithAdminAuthority(ownerGroup);
+
         noteRepository.save(note);
         return note;
     }

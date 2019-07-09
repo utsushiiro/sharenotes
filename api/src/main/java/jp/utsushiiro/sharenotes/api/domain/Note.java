@@ -1,5 +1,6 @@
 package jp.utsushiiro.sharenotes.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -42,6 +43,7 @@ public class Note{
     )
     private User owner;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
@@ -52,23 +54,25 @@ public class Note{
     )
     private UserGroup groupWithReadAuthority;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
     )
     @JoinColumn(
-            name = "user_group_with_update_authority_id",
+            name = "user_group_with_edit_authority_id",
             nullable = false
     )
-    private UserGroup groupWithUpdateAuthority;
+    private UserGroup groupWithEditAuthority;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
     )
     @JoinColumn(
-            name = "user_group_with_delete_authority_id",
+            name = "user_group_with_admin_authority_id",
             nullable = false
     )
-    private UserGroup groupWithDeleteAuthority;
+    private UserGroup groupWithAdminAuthority;
 }
