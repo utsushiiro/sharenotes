@@ -37,10 +37,16 @@ create table note (
     title text not null,
     content text not null,
     owner_id bigint not null,
+    user_group_with_read_authority_id bigint not null,
+    user_group_with_update_authority_id bigint not null,
+    user_group_with_delete_authority_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
     primary key (id),
-    foreign key (owner_id) references user (id)
+    foreign key (owner_id) references user (id),
+    foreign key (user_group_with_read_authority_id) references user_group (id),
+    foreign key (user_group_with_update_authority_id) references user_group (id),
+    foreign key (user_group_with_delete_authority_id) references user_group (id)
 );
 
 SET FOREIGN_KEY_CHECKS=1;

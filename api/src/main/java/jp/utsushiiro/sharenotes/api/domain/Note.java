@@ -41,4 +41,34 @@ public class Note{
             nullable = false
     )
     private User owner;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_read_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithReadAuthority;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_update_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithUpdateAuthority;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_delete_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithDeleteAuthority;
 }
