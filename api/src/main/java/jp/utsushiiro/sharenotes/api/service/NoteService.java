@@ -41,7 +41,7 @@ public class NoteService {
     @Transactional
     public Note create(Note note, User user) {
         UserGroup ownerGroup = user.getSelfGroup();
-        UserGroup everyoneGroup = userGroupRepository.fetchEveryoneGroup();
+        UserGroup everyoneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
         note.setOwner(user);
         note.setGroupWithReadAuthority(everyoneGroup);

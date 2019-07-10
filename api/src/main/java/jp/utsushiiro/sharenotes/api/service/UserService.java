@@ -50,9 +50,9 @@ public class UserService {
         userRepository.save(user);
 
         selfGroup.addUser(user);
-        selfGroup.setName(String.format("__userId__%s", user.getId()));
+        selfGroup.setName(UserGroup.getSelfUserGroupName(user));
 
-        UserGroup everyOneGroup = userGroupRepository.findByName("__everyone").get(0);
+        UserGroup everyOneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
         everyOneGroup.addUser(user);
 
         return user;
@@ -67,13 +67,13 @@ public class UserService {
     public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
 
-        UserGroup selfGroup = userGroupRepository.findByName(String.format("__userId__%s", user.getId())).get(0);
+        UserGroup selfGroup = user.getSelfGroup();
         selfGroup.removeUser(user);
-        userGroupRepository.delete(selfGroup);
 
-        UserGroup everyOneGroup = userGroupRepository.findByName("__everyone").get(0);
+        UserGroup everyOneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
         everyOneGroup.removeUser(user);
 
-        userRepository.deleteById(id);
+        userRepository.delete(user);
+        userGroupRepository.delete(selfGroup);
     }
 }

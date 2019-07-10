@@ -17,6 +17,8 @@ import java.util.Objects;
 @Table(name = "user_group")
 @EntityListeners(AuditingEntityListener.class)
 public class UserGroup {
+    public static final String EVERYONE_USER_GROUP_NAME = "__everyone";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -83,5 +85,12 @@ public class UserGroup {
         sb.append(", name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public static String getSelfUserGroupName(User user) {
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("User id should not be null");
+        }
+        return String.format("__userId__%s", user.getId());
     }
 }
