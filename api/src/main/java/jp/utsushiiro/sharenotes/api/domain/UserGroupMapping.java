@@ -2,14 +2,19 @@ package jp.utsushiiro.sharenotes.api.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user_group_mapping")
 @Data
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class UserGroupMapping {
     @EmbeddedId
     private UserGroupMappingId id;
@@ -24,6 +29,14 @@ public class UserGroupMapping {
 
     @Column(name = "is_admin")
     private boolean isAdmin;
+
+    @LastModifiedDate
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
+
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
     public UserGroupMapping(User user, UserGroup userGroup, boolean isAdmin) {
         this.user = user;

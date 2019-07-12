@@ -27,6 +27,8 @@ create table user_group_mapping (
     user_id bigint not null,
     user_group_id bigint not null,
     is_admin boolean not null default false,
+    updated_at timestamp not null default current_timestamp,
+    created_at timestamp not null default current_timestamp,
     unique (user_id, user_group_id),
     foreign key (user_id) references user (id),
     foreign key (user_group_id) references user_group (id)
