@@ -52,6 +52,15 @@ public class UserGroup {
         this.addUser(user, false);
     }
 
+    public boolean hasUser(User user) {
+        for (UserGroupMapping userGroupMapping: userGroupMappings) {
+            if (userGroupMapping.getId().getUserId().equals(user.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void removeUser(User user) {
         Iterator<UserGroupMapping> iterator = userGroupMappings.iterator();
         while(iterator.hasNext()) {

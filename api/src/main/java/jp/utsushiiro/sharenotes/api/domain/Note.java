@@ -89,4 +89,10 @@ public class Note{
             nullable = false
     )
     private User createdBy;
+
+    public enum AuthorityType {
+        READ,
+        EDIT,
+        ADMIN
+    }
 }

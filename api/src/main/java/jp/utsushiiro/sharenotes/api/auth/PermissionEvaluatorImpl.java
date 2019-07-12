@@ -1,6 +1,8 @@
 package jp.utsushiiro.sharenotes.api.auth;
 
+import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -8,7 +10,15 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 @Component
-public class UserGroupBasedPermissionEvaluator implements PermissionEvaluator {
+public class PermissionEvaluatorImpl implements PermissionEvaluator {
+
+    private final NotePermissionEvaluator notePermissionEvaluator;
+
+    @Autowired
+    public PermissionEvaluatorImpl(NotePermissionEvaluator notePermissionEvaluator) {
+        this.notePermissionEvaluator = notePermissionEvaluator;
+    }
+
     @Override
     public boolean hasPermission(
             Authentication authentication,
@@ -18,7 +28,11 @@ public class UserGroupBasedPermissionEvaluator implements PermissionEvaluator {
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
         User user = loginUserDetails.getUser();
 
-        return true;
+        if (targetDomainObject instanceof Note) {
+            return notePermissionEvaluator.hasPermission(user, (Note) targetDomainObject, permission);
+        }
+
+        return false;
     }
 
     @Override
