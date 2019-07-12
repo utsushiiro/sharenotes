@@ -2,7 +2,9 @@ package jp.utsushiiro.sharenotes.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,24 +26,6 @@ public class Note{
 
     @Column(name="content")
     private String content;
-
-    @LastModifiedDate
-    @Column(name="updated_at")
-    private LocalDateTime updatedAt;
-
-    @CreatedDate
-    @Column(name="created_at")
-    private LocalDateTime createdAt;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    @JoinColumn(
-            name = "owner_id",
-            nullable = false
-    )
-    private User owner;
 
     @JsonIgnore
     @ManyToOne(
@@ -75,4 +59,34 @@ public class Note{
             nullable = false
     )
     private UserGroup groupWithAdminAuthority;
+
+    @LastModifiedDate
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
+
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedBy
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "updated_by",
+            nullable = false
+    )
+    private User updatedBy;
+
+    @CreatedBy
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "created_by",
+            nullable = false
+    )
+    private User createdBy;
 }

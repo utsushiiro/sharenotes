@@ -38,17 +38,19 @@ create table note (
     id bigint not null auto_increment,
     title text not null,
     content text not null,
-    owner_id bigint not null,
     user_group_with_read_authority_id bigint not null,
     user_group_with_edit_authority_id bigint not null,
     user_group_with_admin_authority_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
+    updated_by bigint not null,
+    created_by bigint not null,
     primary key (id),
-    foreign key (owner_id) references user (id),
     foreign key (user_group_with_read_authority_id) references user_group (id),
     foreign key (user_group_with_edit_authority_id) references user_group (id),
-    foreign key (user_group_with_admin_authority_id) references user_group (id)
+    foreign key (user_group_with_admin_authority_id) references user_group (id),
+    foreign key (updated_by) references user (id),
+    foreign key (created_by) references user (id)
 );
 
 SET FOREIGN_KEY_CHECKS=1;

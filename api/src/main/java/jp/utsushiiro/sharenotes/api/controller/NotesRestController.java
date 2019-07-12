@@ -52,7 +52,7 @@ public class NotesRestController {
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         Note note = noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
-        if (!note.getOwner().getId().equals(getLoggedInUser().getId())) {
+        if (!note.getCreatedBy().getId().equals(getLoggedInUser().getId())) {
             throw new ForbiddenOperationException();
         }
 

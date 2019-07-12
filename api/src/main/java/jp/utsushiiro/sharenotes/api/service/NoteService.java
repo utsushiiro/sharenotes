@@ -43,7 +43,6 @@ public class NoteService {
         UserGroup ownerGroup = user.getSelfGroup();
         UserGroup everyoneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
-        note.setOwner(user);
         note.setGroupWithReadAuthority(everyoneGroup);
         note.setGroupWithEditAuthority(everyoneGroup);
         note.setGroupWithAdminAuthority(ownerGroup);
