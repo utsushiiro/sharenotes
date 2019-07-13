@@ -44,10 +44,10 @@ public class Note{
             optional = false
     )
     @JoinColumn(
-            name = "user_group_with_edit_authority_id",
+            name = "user_group_with_read_write_authority_id",
             nullable = false
     )
-    private UserGroup groupWithEditAuthority;
+    private UserGroup groupWithReadWriteAuthority;
 
     @JsonIgnore
     @ManyToOne(
@@ -92,7 +92,7 @@ public class Note{
 
     public enum AuthorityType {
         READ,
-        EDIT,
+        READ_WRITE,
         ADMIN
     }
 }

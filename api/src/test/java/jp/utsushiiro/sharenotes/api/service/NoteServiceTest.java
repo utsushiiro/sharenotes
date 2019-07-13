@@ -29,10 +29,10 @@ class NoteServiceTest {
     @Test
     void findById() {
         Long id = 1L;
-        Optional<Note> expected = Optional.of(new Note());
+        Note expected = new Note();
         Mockito.doReturn(expected).when(noteRepository).findById(id);
 
-        Optional<Note> result = noteService.findById(id);
+        Note result = noteService.findById(id);
 
         assertThat(result).isEqualTo(expected);
         Mockito.verify(noteRepository, Mockito.times(1)).findById(id);

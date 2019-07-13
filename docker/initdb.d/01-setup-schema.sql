@@ -39,7 +39,7 @@ create table note (
     title text not null,
     content text not null,
     user_group_with_read_authority_id bigint not null,
-    user_group_with_edit_authority_id bigint not null,
+    user_group_with_read_write_authority_id bigint not null,
     user_group_with_admin_authority_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
@@ -47,7 +47,7 @@ create table note (
     created_by bigint not null,
     primary key (id),
     foreign key (user_group_with_read_authority_id) references user_group (id),
-    foreign key (user_group_with_edit_authority_id) references user_group (id),
+    foreign key (user_group_with_read_write_authority_id) references user_group (id),
     foreign key (user_group_with_admin_authority_id) references user_group (id),
     foreign key (updated_by) references user (id),
     foreign key (created_by) references user (id)

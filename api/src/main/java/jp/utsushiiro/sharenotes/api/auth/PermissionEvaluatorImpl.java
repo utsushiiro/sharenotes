@@ -32,7 +32,9 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             return notePermissionEvaluator.hasPermission(user, (Note) targetDomainObject, permission);
         }
 
-        return false;
+        throw new RuntimeException(
+                String.format("%s is a unsupported targetDomainObject type", targetDomainObject.getClass().getName())
+        );
     }
 
     @Override
@@ -42,6 +44,13 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             String targetType,
             Object permission
     ) {
-        throw new UnsupportedOperationException();
+        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
+        User user = loginUserDetails.getUser();
+
+        if (targetType.equals(Note.class.getName())) {
+            return notePermissionEvaluator.hasPermission(user, targetId, permission);
+        }
+
+        throw new RuntimeException(String.format("%s is a unsupported target type", targetType));
     }
 }

@@ -5,8 +5,6 @@ import jp.utsushiiro.sharenotes.api.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.Notes;
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ForbiddenOperationException;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +28,7 @@ public class NotesRestController {
 
     @GetMapping(path = "/{id}")
     public Note find(@PathVariable Long id) {
-        return noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
+        return noteService.findById(id);
     }
 
     @PostMapping(path = "")
@@ -40,10 +38,6 @@ public class NotesRestController {
 
     @PatchMapping(path = "/{id}")
     public void update(@PathVariable Long id, @RequestBody NoteForm noteForm) {
-        if (!noteForm.getUserId().equals(getLoggedInUser().getId())) {
-            throw new ForbiddenOperationException();
-        }
-
         Note note = noteForm.toNote();
         note.setId(id);
         noteService.update(note);
@@ -51,11 +45,6 @@ public class NotesRestController {
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
-        Note note = noteService.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
-        if (!note.getCreatedBy().getId().equals(getLoggedInUser().getId())) {
-            throw new ForbiddenOperationException();
-        }
-
         noteService.delete(id);
     }
 
