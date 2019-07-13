@@ -46,15 +46,15 @@ public class NotePermissionEvaluator {
     private boolean _hasPermission(User user, Note note, Note.AuthorityType authorityType) {
         switch (authorityType) {
             case READ: {
-                return note.getGroupWithReadAuthority().hasUser(user);
+                return note.getLatestRevision().getGroupWithReadAuthority().hasUser(user);
             }
 
             case READ_WRITE: {
-                return note.getGroupWithReadWriteAuthority().hasUser(user);
+                return note.getLatestRevision().getGroupWithReadWriteAuthority().hasUser(user);
             }
 
             case ADMIN: {
-                return note.getGroupWithAdminAuthority().hasUser(user);
+                return note.getLatestRevision().getGroupWithAdminAuthority().hasUser(user);
             }
             default: {
                 throw new IllegalArgumentException();

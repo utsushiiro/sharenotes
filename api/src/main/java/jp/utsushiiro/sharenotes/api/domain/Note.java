@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -21,63 +19,18 @@ public class Note{
     @Column(name="id")
     private Long id;
 
-    @Column(name="title")
-    private String title;
-
-    @Column(name="content")
-    private String content;
-
     @JsonIgnore
-    @ManyToOne(
+    @OneToOne(
+            mappedBy = "note",
             fetch = FetchType.EAGER,
-            optional = false
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    @JoinColumn(
-            name = "user_group_with_read_authority_id",
-            nullable = false
-    )
-    private UserGroup groupWithReadAuthority;
-
-    @JsonIgnore
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    @JoinColumn(
-            name = "user_group_with_read_write_authority_id",
-            nullable = false
-    )
-    private UserGroup groupWithReadWriteAuthority;
-
-    @JsonIgnore
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    @JoinColumn(
-            name = "user_group_with_admin_authority_id",
-            nullable = false
-    )
-    private UserGroup groupWithAdminAuthority;
-
-    @LastModifiedDate
-    @Column(name="updated_at")
-    private LocalDateTime updatedAt;
+    private LatestNoteRevisionMapping latestNoteRevisionMapping;
 
     @CreatedDate
     @Column(name="created_at")
     private LocalDateTime createdAt;
-
-    @LastModifiedBy
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    @JoinColumn(
-            name = "updated_by",
-            nullable = false
-    )
-    private User updatedBy;
 
     @CreatedBy
     @ManyToOne(
@@ -94,5 +47,23 @@ public class Note{
         READ,
         READ_WRITE,
         ADMIN
+    }
+
+    @JsonIgnore
+    public NoteRevision getLatestRevision() {
+        return latestNoteRevisionMapping.getNoteRevision();
+    }
+
+    public void updateLatestRevision(NoteRevision revision) {
+        revision.setNote(this);
+        latestNoteRevisionMapping.setNoteRevision(revision);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Note{");
+        sb.append("id=").append(id);
+        sb.append('}');
+        return sb.toString();
     }
 }

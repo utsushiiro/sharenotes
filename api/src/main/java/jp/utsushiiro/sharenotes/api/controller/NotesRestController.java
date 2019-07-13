@@ -33,14 +33,12 @@ public class NotesRestController {
 
     @PostMapping(path = "")
     public Note create(@RequestBody NoteForm noteForm) {
-        return noteService.create(noteForm.toNote(), getLoggedInUser());
+        return noteService.create(noteForm, getLoggedInUser());
     }
 
     @PatchMapping(path = "/{id}")
     public void update(@PathVariable Long id, @RequestBody NoteForm noteForm) {
-        Note note = noteForm.toNote();
-        note.setId(id);
-        noteService.update(note);
+        noteService.update(id, noteForm);
     }
 
     @DeleteMapping(path = "/{id}")
