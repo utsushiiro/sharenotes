@@ -24,7 +24,6 @@ public class LatestNoteRevisionMapping {
 
     public LatestNoteRevisionMapping(Note note, NoteRevision noteRevision) {
         this.note = note;
-        note.setLatestNoteRevisionMapping(this);
         this.noteRevision = noteRevision;
     }
 }

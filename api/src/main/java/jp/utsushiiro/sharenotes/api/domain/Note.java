@@ -49,6 +49,10 @@ public class Note{
         ADMIN
     }
 
+    public void initRevision(NoteRevision revision) {
+        latestNoteRevisionMapping = new LatestNoteRevisionMapping(this, revision);
+    }
+
     @JsonIgnore
     public NoteRevision getLatestRevision() {
         return latestNoteRevisionMapping.getNoteRevision();

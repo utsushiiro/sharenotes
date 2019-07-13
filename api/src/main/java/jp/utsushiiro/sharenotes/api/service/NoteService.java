@@ -3,7 +3,6 @@ package jp.utsushiiro.sharenotes.api.service;
 import jp.utsushiiro.sharenotes.api.domain.*;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.form.NoteForm;
-import jp.utsushiiro.sharenotes.api.repository.LatestNoteRevisionMappingRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRevisionRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
@@ -20,19 +19,15 @@ public class NoteService {
 
     private final NoteRevisionRepository noteRevisionRepository;
 
-    private final LatestNoteRevisionMappingRepository latestNoteRevisionMapping;
-
     @Autowired
     public NoteService(
             NoteRepository noteRepository,
             UserGroupRepository userGroupRepository,
-            NoteRevisionRepository noteRevisionRepository,
-            LatestNoteRevisionMappingRepository latestNoteRevisionMapping
+            NoteRevisionRepository noteRevisionRepository
     ) {
         this.noteRepository = noteRepository;
         this.userGroupRepository = userGroupRepository;
         this.noteRevisionRepository = noteRevisionRepository;
-        this.latestNoteRevisionMapping = latestNoteRevisionMapping;
     }
 
     @PreAuthorize("isAuthenticated() and hasPermission(#id, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).READ)")
@@ -65,8 +60,8 @@ public class NoteService {
         revision.setGroupWithAdminAuthority(ownerGroup);
         noteRevisionRepository.save(revision);
 
-        LatestNoteRevisionMapping mapping = new LatestNoteRevisionMapping(note, revision);
-        latestNoteRevisionMapping.save(mapping);
+        note.initRevision(revision);
+        noteRepository.save(note);
 
         return note;
     }
@@ -88,7 +83,6 @@ public class NoteService {
         noteRevisionRepository.save(next);
 
         note.updateLatestRevision(next);
-
         noteRepository.save(note);
     }
 
