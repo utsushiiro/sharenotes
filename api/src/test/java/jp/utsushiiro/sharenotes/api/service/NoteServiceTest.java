@@ -28,11 +28,11 @@ class NoteServiceTest {
 
     @Test
     void findById() {
-        int id = 1;
-        Optional<Note> expected = Optional.of(new Note());
+        Long id = 1L;
+        Note expected = new Note();
         Mockito.doReturn(expected).when(noteRepository).findById(id);
 
-        Optional<Note> result = noteService.findById(id);
+        Note result = noteService.findById(id);
 
         assertThat(result).isEqualTo(expected);
         Mockito.verify(noteRepository, Mockito.times(1)).findById(id);
@@ -57,13 +57,13 @@ class NoteServiceTest {
         Note result = noteService.create(note, user);
 
         assertThat(result).isEqualTo(note);
-        assertThat(note.getUser()).isEqualTo(user);
+        assertThat(note.getCreatedBy()).isEqualTo(user);
         Mockito.verify(noteRepository, Mockito.times(1)).save(note);
     }
 
     @Test
     void update() {
-        int id = 1;
+        Long id = 1L;
         Note note = new Note();
         note.setId(id);
         note.setTitle("testTitle");
@@ -81,7 +81,7 @@ class NoteServiceTest {
 
     @Test
     void delete() {
-        int id = 1;
+        Long id = 1L;
 
         noteService.delete(id);
 

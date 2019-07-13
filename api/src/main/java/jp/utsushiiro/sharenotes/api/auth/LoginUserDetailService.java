@@ -1,6 +1,7 @@
 package jp.utsushiiro.sharenotes.api.auth;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,11 @@ public class LoginUserDetailService implements UserDetailsService  {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByName(username);
-        return new LoginUserDetails(user);
+        try {
+            User user = userService.findByName(username);
+            return new LoginUserDetails(user);
+        }catch (ResourceNotFoundException e) {
+            throw new UsernameNotFoundException(String.format("User(username=%s) not found", username));
+        }
     }
 }

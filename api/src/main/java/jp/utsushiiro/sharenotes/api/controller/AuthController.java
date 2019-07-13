@@ -1,7 +1,6 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.domain.UserRole;
 import jp.utsushiiro.sharenotes.api.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ public class AuthController {
     @PostMapping(path = "/sign_up")
     public User signUp(HttpServletRequest request,  @RequestBody SignUpForm signUpForm) throws ServletException {
         User user = signUpForm.toUser();
-        user.setUserRole(UserRole.USER);
         user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
         User createdUser = this.userService.create(user);
 

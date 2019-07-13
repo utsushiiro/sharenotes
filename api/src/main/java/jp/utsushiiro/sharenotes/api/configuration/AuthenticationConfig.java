@@ -21,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
     private final AccessDeniedHandler accessDeniedHandler;
@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
-    public WebSecurityConfig(
+    public AuthenticationConfig(
             AuthenticationEntryPoint authenticationEntryPoint,
             AccessDeniedHandler accessDeniedHandler,
             AuthenticationSuccessHandler authenticationSuccessHandler,
@@ -70,27 +70,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-
-    @Profile("dev")
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Value("${client.origin}")
-            private String clientOrigin;
-
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedMethods(
-                                Arrays.stream(HttpMethod.class.getEnumConstants())
-                                        .map(Enum::name)
-                                        .toArray(String[]::new)
-                        )
-                        .allowedOrigins(clientOrigin)
-                        .allowCredentials(true);
-            }
-        };
     }
 }

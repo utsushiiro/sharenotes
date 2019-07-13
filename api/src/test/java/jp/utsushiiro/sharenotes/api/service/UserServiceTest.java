@@ -25,7 +25,7 @@ public class UserServiceTest {
 
     @Test
     void findByIdTest() {
-        int id = 1;
+        Long id = 1L;
         Optional<User> expected = Optional.of(new User());
         Mockito.doReturn(expected).when(userRepository).findById(id);
 
@@ -71,7 +71,7 @@ public class UserServiceTest {
 
     @Test
     void deleteTest() {
-        int id = 1;
+        Long id = 1L;
 
         userService.delete(id);
 

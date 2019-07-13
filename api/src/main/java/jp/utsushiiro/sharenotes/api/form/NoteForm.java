@@ -9,7 +9,7 @@ public class NoteForm {
 
     private String content;
 
-    private int userId;
+    private Long userId;
 
     public Note toNote() {
         Note note = new Note();

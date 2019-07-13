@@ -73,7 +73,7 @@ class NotesRestControllerTest {
     @Test
     @WithMockUser
     void findTest() throws Exception {
-        int noteId = 1;
+        Long noteId = 1L;
         Note expected = new Note();
         Mockito.doReturn(Optional.of(expected)).when(noteService).findById(noteId);
 
@@ -90,7 +90,7 @@ class NotesRestControllerTest {
     void createTest() throws Exception {
         NoteForm noteForm = createNoteForm();
         Note note = noteForm.toNote();
-        int userId = 1;
+        Long userId = 1L;
         note.setId(userId);
         Mockito.doReturn(note).when(noteService).create(ArgumentMatchers.any(Note.class), ArgumentMatchers.any(User.class));
 
