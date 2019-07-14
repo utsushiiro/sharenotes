@@ -1,7 +1,7 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.auth.LoginUserDetails;
-import jp.utsushiiro.sharenotes.api.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.Notes;
 import jp.utsushiiro.sharenotes.api.domain.User;
