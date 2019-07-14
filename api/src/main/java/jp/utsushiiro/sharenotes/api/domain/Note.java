@@ -51,6 +51,7 @@ public class Note{
 
     public void initRevision(NoteRevision revision) {
         latestNoteRevisionMapping = new LatestNoteRevisionMapping(this, revision);
+        revision.setCreatedAt(this.createdAt);
     }
 
     @JsonIgnore
