@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class NoteService {
     private final NoteRepository noteRepository;
@@ -36,11 +38,11 @@ public class NoteService {
         return noteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Note.class, id));
     }
 
+    // TODO check each note authority
+    @PreAuthorize("isAuthenticated()")
     @Transactional(readOnly = true)
-    public Notes findAll() {
-        Notes notes = new Notes();
-        notes.setNotes(noteRepository.findAll());
-        return notes;
+    public List<Note> findAll() {
+        return noteRepository.findAll();
     }
 
     @PreAuthorize("isAuthenticated()")

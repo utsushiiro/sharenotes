@@ -1,6 +1,5 @@
 package jp.utsushiiro.sharenotes.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,7 +34,6 @@ public class NoteRevision {
     @Column(name="content")
     private String content;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
@@ -46,7 +44,6 @@ public class NoteRevision {
     )
     private UserGroup groupWithReadAuthority;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
@@ -57,7 +54,6 @@ public class NoteRevision {
     )
     private UserGroup groupWithReadWriteAuthority;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false

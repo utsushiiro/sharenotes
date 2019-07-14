@@ -2,6 +2,7 @@ package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
+import jp.utsushiiro.sharenotes.api.dto.response.UserResponse;
 import jp.utsushiiro.sharenotes.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,13 +28,13 @@ public class AuthController {
     }
 
     @PostMapping(path = "/sign_up")
-    public User signUp(HttpServletRequest request,  @RequestBody SignUpForm signUpForm) throws ServletException {
+    public UserResponse signUp(HttpServletRequest request,  @RequestBody SignUpForm signUpForm) throws ServletException {
         User user = signUpForm.toUser();
         user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
         User createdUser = this.userService.create(user);
 
         // TODO catch ServletException and return a response that says sign up succeeded but log in failed
         request.login(signUpForm.getUsername(), signUpForm.getPassword());
-        return createdUser;
+        return new UserResponse(createdUser);
     }
 }
