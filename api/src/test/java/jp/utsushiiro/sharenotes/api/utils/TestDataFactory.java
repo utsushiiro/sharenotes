@@ -28,7 +28,7 @@ public class TestDataFactory {
 
         UserGroup selfGroup = new UserGroup();
         selfGroup.setId(10L);
-        selfGroup.setName(UserGroup.getSelfUserGroupName(user));
+        selfGroup.setName("test-user-self-group");
         selfGroup.addUser(user);
 
         return new UsernamePasswordAuthenticationToken(

@@ -2,6 +2,7 @@ package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
+import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,9 @@ public class UserServiceTest {
 
     @Mock
     private UserGroupRepository userGroupRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void findByIdTest() {
@@ -57,30 +62,19 @@ public class UserServiceTest {
 
     @Test
     void createTest() {
-        User expected = new User();
-        expected.setId(1L);
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setUsername("test-user");
+        signUpForm.setEmail("test@example.com");
 
         UserGroup mockEveryoneGroup = Mockito.mock(UserGroup.class);
         Mockito.doReturn(mockEveryoneGroup).when(userGroupRepository).findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
-        User result = userService.create(expected);
+        User result = userService.create(signUpForm);
 
-        assertThat(result).isEqualTo(expected);
-        assertThat(result.getSelfGroup().hasUser(result)).isTrue();
-        assertThat(result.getSelfGroup().getName()).isEqualTo(UserGroup.getSelfUserGroupName(expected));
+        assertThat(result.getName()).isEqualTo(signUpForm.getUsername());
         Mockito.verify(userGroupRepository, Mockito.times(1)).save(ArgumentMatchers.any(UserGroup.class));
-        Mockito.verify(userRepository, Mockito.times(1)).save(expected);
-        Mockito.verify(mockEveryoneGroup, Mockito.times(1)).addUser(expected);
-    }
-
-
-    @Test
-    void updateTest() {
-        User expected = new User();
-
-        userService.update(expected);
-
-        Mockito.verify(userRepository, Mockito.times(1)).save(expected);
+        Mockito.verify(userRepository, Mockito.times(1)).save(ArgumentMatchers.any(User.class));
+        Mockito.verify(mockEveryoneGroup, Mockito.times(1)).addUser(ArgumentMatchers.any(User.class));
     }
 
     @Test

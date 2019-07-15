@@ -2,9 +2,11 @@ package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
+import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +20,16 @@ public class UserService {
 
     private final UserGroupRepository userGroupRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public UserService(
             UserRepository userRepository,
-            UserGroupRepository userGroupRepository
+            UserGroupRepository userGroupRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.userGroupRepository = userGroupRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -41,26 +47,25 @@ public class UserService {
     }
 
     @Transactional
-    public User create(User user) {
+    public User create(SignUpForm signUpForm) {
         UserGroup selfGroup = new UserGroup();
         selfGroup.setName(UUID.randomUUID().toString());
         userGroupRepository.save(selfGroup);
 
+        User user = new User();
+        user.setName(signUpForm.getUsername());
+        user.setEmail(signUpForm.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
         user.setSelfGroup(selfGroup);
         userRepository.save(user);
 
         selfGroup.addUser(user);
-        selfGroup.setName(UserGroup.getSelfUserGroupName(user));
+        selfGroup.setName(String.format("__userId__%s", user.getId()));
 
         UserGroup everyOneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
         everyOneGroup.addUser(user);
 
         return user;
-    }
-
-    @Transactional
-    public void update(User user) {
-        userRepository.save(user);
     }
 
     @Transactional
