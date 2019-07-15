@@ -32,7 +32,6 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
@@ -43,7 +42,6 @@ public class User {
     )
     private UserGroup selfGroup;
 
-    @JsonIgnore
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

@@ -1,4 +1,4 @@
-package jp.utsushiiro.sharenotes.api.form;
+package jp.utsushiiro.sharenotes.api.dto.form;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import lombok.Data;

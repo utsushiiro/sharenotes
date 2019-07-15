@@ -1,9 +1,12 @@
 package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.domain.UserGroup;
+import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,6 +25,9 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private UserGroupRepository userGroupRepository;
 
     @Test
     void findByIdTest() {
@@ -52,11 +58,19 @@ public class UserServiceTest {
     @Test
     void createTest() {
         User expected = new User();
+        expected.setId(1L);
+
+        UserGroup mockEveryoneGroup = Mockito.mock(UserGroup.class);
+        Mockito.doReturn(mockEveryoneGroup).when(userGroupRepository).findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
         User result = userService.create(expected);
 
         assertThat(result).isEqualTo(expected);
+        assertThat(result.getSelfGroup().hasUser(result)).isTrue();
+        assertThat(result.getSelfGroup().getName()).isEqualTo(UserGroup.getSelfUserGroupName(expected));
+        Mockito.verify(userGroupRepository, Mockito.times(1)).save(ArgumentMatchers.any(UserGroup.class));
         Mockito.verify(userRepository, Mockito.times(1)).save(expected);
+        Mockito.verify(mockEveryoneGroup, Mockito.times(1)).addUser(expected);
     }
 
 
@@ -71,11 +85,26 @@ public class UserServiceTest {
 
     @Test
     void deleteTest() {
+        // setup
         Long id = 1L;
 
+        User mockUser = Mockito.mock(User.class);
+        Mockito.doReturn(Optional.of(mockUser)).when(userRepository).findById(id);
+
+        UserGroup mockSelfGroup = Mockito.mock(UserGroup.class);
+        Mockito.doReturn(mockSelfGroup).when(mockUser).getSelfGroup();
+
+        UserGroup mockEveryoneGroup = Mockito.mock(UserGroup.class);
+        Mockito.doReturn(mockEveryoneGroup).when(userGroupRepository).findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
+
+        // do
         userService.delete(id);
 
-        Mockito.verify(userRepository, Mockito.times(1)).deleteById(id);
+        // check
+        Mockito.verify(mockSelfGroup, Mockito.times(1)).removeUser(mockUser);
+        Mockito.verify(mockEveryoneGroup, Mockito.times(1)).removeUser(mockUser);
+        Mockito.verify(userRepository, Mockito.times(1)).delete(mockUser);
+        Mockito.verify(userGroupRepository, Mockito.times(1)).delete(mockSelfGroup);
     }
 
 }

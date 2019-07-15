@@ -1,13 +1,12 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
-import jp.utsushiiro.sharenotes.api.auth.LoginUserDetails;
-import jp.utsushiiro.sharenotes.api.form.NoteForm;
-import jp.utsushiiro.sharenotes.api.domain.Note;
-import jp.utsushiiro.sharenotes.api.domain.Notes;
+import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.dto.response.NoteResponse;
+import jp.utsushiiro.sharenotes.api.dto.response.NotesResponse;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,33 +21,27 @@ public class NotesRestController {
     }
 
     @GetMapping(path = "")
-    public Notes findAll() {
-        return noteService.findAll();
+    public NotesResponse findAll() {
+        return new NotesResponse(noteService.findAll());
     }
 
     @GetMapping(path = "/{id}")
-    public Note find(@PathVariable Long id) {
-        return noteService.findById(id);
+    public NoteResponse find(@PathVariable Long id) {
+        return new NoteResponse(noteService.findById(id));
     }
 
     @PostMapping(path = "")
-    public Note create(@RequestBody NoteForm noteForm) {
-        return noteService.create(noteForm.toNote(), getLoggedInUser());
+    public NoteResponse create(@RequestBody NoteForm noteForm, @AuthenticationPrincipal(expression = "user") User user) {
+        return new NoteResponse(noteService.create(noteForm, user));
     }
 
     @PatchMapping(path = "/{id}")
     public void update(@PathVariable Long id, @RequestBody NoteForm noteForm) {
-        Note note = noteForm.toNote();
-        note.setId(id);
-        noteService.update(note);
+        noteService.update(id, noteForm);
     }
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         noteService.delete(id);
-    }
-
-    private User getLoggedInUser() {
-        return ((LoginUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
     }
 }

@@ -1,9 +1,9 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
-import jp.utsushiiro.sharenotes.api.form.SignUpForm;
+import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
+import jp.utsushiiro.sharenotes.api.dto.response.UserResponse;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jp.utsushiiro.sharenotes.api.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,7 +60,7 @@ class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        User createdUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
-        assertThat(createdUser.getName()).isEqualTo("test-user-2");
+        UserResponse userResponse = mapper.readValue(result.getResponse().getContentAsString(), UserResponse.class);
+        assertThat(userResponse.getName()).isEqualTo("test-user-2");
     }
 }

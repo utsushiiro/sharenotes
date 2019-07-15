@@ -9,7 +9,7 @@ public class LoginUserDetails extends org.springframework.security.core.userdeta
     @Getter
     private User user;
 
-    LoginUserDetails(User user) {
+    public LoginUserDetails(User user) {
         super(
                 user.getName(),
                 user.getPassword(),
