@@ -40,7 +40,7 @@ public class UserServiceTest {
 
         User result = userService.findById(id);
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected.get());
         Mockito.verify(userRepository, Mockito.times(1)).findById(id);
     }
 
