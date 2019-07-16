@@ -14,9 +14,15 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
     private final NotePermissionEvaluator notePermissionEvaluator;
 
+    private final UserPermissionEvaluator userPermissionEvaluator;
+
     @Autowired
-    public PermissionEvaluatorImpl(NotePermissionEvaluator notePermissionEvaluator) {
+    public PermissionEvaluatorImpl(
+            NotePermissionEvaluator notePermissionEvaluator,
+            UserPermissionEvaluator userPermissionEvaluator
+    ) {
         this.notePermissionEvaluator = notePermissionEvaluator;
+        this.userPermissionEvaluator = userPermissionEvaluator;
     }
 
     @Override
@@ -30,6 +36,10 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
         if (targetDomainObject instanceof Note) {
             return notePermissionEvaluator.hasPermission(user, (Note) targetDomainObject, permission);
+        }
+
+        if (targetDomainObject instanceof User) {
+            return userPermissionEvaluator.hasPermission(user, (User) targetDomainObject, permission);
         }
 
         throw new RuntimeException(
@@ -49,6 +59,10 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
 
         if (targetType.equals(Note.class.getName())) {
             return notePermissionEvaluator.hasPermission(user, targetId, permission);
+        }
+
+        if (targetType.equals(User.class.getName())) {
+            return userPermissionEvaluator.hasPermission(user, targetId, permission);
         }
 
         throw new RuntimeException(String.format("%s is a unsupported target type", targetType));

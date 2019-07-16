@@ -57,6 +57,12 @@ public class User {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
+    public enum AuthorityType {
+        READ,
+        READ_WRITE,
+        ADMIN
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

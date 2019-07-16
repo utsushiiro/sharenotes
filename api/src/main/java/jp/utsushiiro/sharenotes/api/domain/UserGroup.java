@@ -95,11 +95,4 @@ public class UserGroup {
         sb.append('}');
         return sb.toString();
     }
-
-    public static String getSelfUserGroupName(User user) {
-        if (user.getId() == null) {
-            throw new IllegalArgumentException("User id should not be null");
-        }
-        return String.format("__userId__%s", user.getId());
-    }
 }

@@ -56,7 +56,7 @@ const signUp = (username: string, email: string, password: string) => {
 
     try {
       const response: AxiosResponse<User> = await axios.post(
-        "http://localhost:3001/api/sign_up",
+        "http://localhost:3001/api/user",
         {
           username: username,
           email: email,
