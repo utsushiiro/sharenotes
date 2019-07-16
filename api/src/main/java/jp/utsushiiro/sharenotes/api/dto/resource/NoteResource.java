@@ -1,4 +1,4 @@
-package jp.utsushiiro.sharenotes.api.dto.response;
+package jp.utsushiiro.sharenotes.api.dto.resource;
 
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.NoteRevision;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class NoteResponse {
+public class NoteResource {
     private Long id;
 
     private String title;
@@ -24,7 +24,7 @@ public class NoteResponse {
 
     private String createdBy;
 
-    public NoteResponse(Note note) {
+    public NoteResource(Note note) {
         this.id = note.getId();
 
         NoteRevision latestRevision = note.getLatestRevision();

@@ -5,8 +5,8 @@ import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.NoteRevision;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
-import jp.utsushiiro.sharenotes.api.dto.response.NoteResponse;
-import jp.utsushiiro.sharenotes.api.dto.response.NotesResponse;
+import jp.utsushiiro.sharenotes.api.dto.resource.NoteResource;
+import jp.utsushiiro.sharenotes.api.dto.resource.NotesResource;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import jp.utsushiiro.sharenotes.api.utils.TestDataFactory;
 import org.junit.jupiter.api.AfterEach;
@@ -82,8 +82,8 @@ class NotesRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        NotesResponse response = mapper.readValue(result.getResponse().getContentAsString(), NotesResponse.class);
-        assertThat(response.getNotes().get(0).getId()).isEqualTo(noteId);
+        NotesResource resource = mapper.readValue(result.getResponse().getContentAsString(), NotesResource.class);
+        assertThat(resource.getNotes().get(0).getId()).isEqualTo(noteId);
         Mockito.verify(noteService, Mockito.times(1)).findAll();
     }
 
@@ -99,8 +99,8 @@ class NotesRestControllerTest {
                 .andReturn();
 
         // check
-        NoteResponse response = mapper.readValue(result.getResponse().getContentAsString(), NoteResponse.class);
-        assertThat(response.getId()).isEqualTo(noteId);
+        NoteResource resource = mapper.readValue(result.getResponse().getContentAsString(), NoteResource.class);
+        assertThat(resource.getId()).isEqualTo(noteId);
         Mockito.verify(noteService, Mockito.times(1)).findById(noteId);
     }
 
@@ -124,8 +124,8 @@ class NotesRestControllerTest {
                 .andReturn();
 
         // check
-        NoteResponse response = mapper.readValue(result.getResponse().getContentAsString(), NoteResponse.class);
-        assertThat(response.getId()).isEqualTo(noteId);
+        NoteResource resource = mapper.readValue(result.getResponse().getContentAsString(), NoteResource.class);
+        assertThat(resource.getId()).isEqualTo(noteId);
         Mockito.verify(noteService, Mockito.times(1)).create(
                 ArgumentMatchers.any(NoteForm.class),
                 ArgumentMatchers.any(User.class)

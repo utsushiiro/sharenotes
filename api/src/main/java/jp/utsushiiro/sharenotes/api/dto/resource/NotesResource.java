@@ -1,4 +1,4 @@
-package jp.utsushiiro.sharenotes.api.dto.response;
+package jp.utsushiiro.sharenotes.api.dto.resource;
 
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import lombok.Data;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class NotesResponse {
-    List<NoteResponse> notes = new ArrayList<>();
+public class NotesResource {
+    List<NoteResource> notes = new ArrayList<>();
 
-    public NotesResponse(List<Note> notes) {
+    public NotesResource(List<Note> notes) {
         for (Note note : notes) {
-            this.notes.add(new NoteResponse(note));
+            this.notes.add(new NoteResource(note));
         }
     }
 }

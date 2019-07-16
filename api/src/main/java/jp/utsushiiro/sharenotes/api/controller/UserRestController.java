@@ -1,7 +1,7 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.dto.response.UserResponse;
+import jp.utsushiiro.sharenotes.api.dto.resource.UserResource;
 import jp.utsushiiro.sharenotes.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,8 +19,8 @@ public class UserRestController {
     }
 
     @GetMapping(path = "")
-    public UserResponse find(@AuthenticationPrincipal(expression = "user") User user) {
-        return new UserResponse(user);
+    public UserResource find(@AuthenticationPrincipal(expression = "user") User user) {
+        return new UserResource(user);
     }
 
     @DeleteMapping(path = "")

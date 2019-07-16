@@ -1,8 +1,7 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.dto.response.UserResponse;
+import jp.utsushiiro.sharenotes.api.dto.resource.UserResource;
 import jp.utsushiiro.sharenotes.api.utils.TestDataFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -61,7 +58,7 @@ class UserRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        UserResponse response = mapper.readValue(result.getResponse().getContentAsString(), UserResponse.class);
-        assertThat(response.getName()).isEqualTo("test-user");
+        UserResource resource = mapper.readValue(result.getResponse().getContentAsString(), UserResource.class);
+        assertThat(resource.getName()).isEqualTo("test-user");
     }
 }

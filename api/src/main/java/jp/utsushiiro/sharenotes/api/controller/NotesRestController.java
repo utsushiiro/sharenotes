@@ -2,8 +2,8 @@ package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.dto.response.NoteResponse;
-import jp.utsushiiro.sharenotes.api.dto.response.NotesResponse;
+import jp.utsushiiro.sharenotes.api.dto.resource.NoteResource;
+import jp.utsushiiro.sharenotes.api.dto.resource.NotesResource;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,18 +21,18 @@ public class NotesRestController {
     }
 
     @GetMapping(path = "")
-    public NotesResponse findAll() {
-        return new NotesResponse(noteService.findAll());
+    public NotesResource findAll() {
+        return new NotesResource(noteService.findAll());
     }
 
     @GetMapping(path = "/{id}")
-    public NoteResponse find(@PathVariable Long id) {
-        return new NoteResponse(noteService.findById(id));
+    public NoteResource find(@PathVariable Long id) {
+        return new NoteResource(noteService.findById(id));
     }
 
     @PostMapping(path = "")
-    public NoteResponse create(@RequestBody NoteForm noteForm, @AuthenticationPrincipal(expression = "user") User user) {
-        return new NoteResponse(noteService.create(noteForm, user));
+    public NoteResource create(@RequestBody NoteForm noteForm, @AuthenticationPrincipal(expression = "user") User user) {
+        return new NoteResource(noteService.create(noteForm, user));
     }
 
     @PatchMapping(path = "/{id}")

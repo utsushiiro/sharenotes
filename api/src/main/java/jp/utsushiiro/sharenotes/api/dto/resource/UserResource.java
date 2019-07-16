@@ -1,4 +1,4 @@
-package jp.utsushiiro.sharenotes.api.dto.response;
+package jp.utsushiiro.sharenotes.api.dto.resource;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import lombok.Data;
@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserResponse {
+public class UserResource {
     private Long id;
 
     private String name;
 
     private String email;
 
-    public UserResponse(User user) {
+    public UserResource(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
