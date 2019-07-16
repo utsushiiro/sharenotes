@@ -37,15 +37,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
-    public User findByName(String name) {
-        List<User> users = userRepository.findByName(name);
-        if (users.isEmpty()) {
-            throw new ResourceNotFoundException(User.class, name);
-        }
-        return users.get(0);
-    }
-
     @Transactional
     public User create(SignUpForm signUpForm) {
         UserGroup selfGroup = new UserGroup();

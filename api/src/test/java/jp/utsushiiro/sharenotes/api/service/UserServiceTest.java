@@ -47,20 +47,6 @@ public class UserServiceTest {
     }
 
     @Test
-    void findByNameTest() {
-        String name = "test";
-        User expected = new User();
-        List<User> users = new ArrayList<>();
-        users.add(expected);
-        Mockito.doReturn(users).when(userRepository).findByName(name);
-
-        User result = userService.findByName(name);
-
-        assertThat(result).isEqualTo(expected);
-        Mockito.verify(userRepository, Mockito.times(1)).findByName(name);
-    }
-
-    @Test
     void createTest() {
         SignUpForm signUpForm = new SignUpForm();
         signUpForm.setUsername("test-user");

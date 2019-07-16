@@ -1,6 +1,7 @@
 package jp.utsushiiro.sharenotes.api.auth;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
+import jp.utsushiiro.sharenotes.api.dto.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ApiLoginSuccessHandler implements AuthenticationSuccessHandler {
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
         User user = loginUserDetails.getUser();
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
-        httpMessageConverter.write(user, MediaType.APPLICATION_JSON_UTF8, outputMessage);
+        httpMessageConverter.write(new UserResponse(user), MediaType.APPLICATION_JSON_UTF8, outputMessage);
         response.setStatus(HttpStatus.OK.value());
     }
 }

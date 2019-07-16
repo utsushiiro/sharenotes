@@ -1,31 +1,33 @@
 package jp.utsushiiro.sharenotes.api.auth;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
-import jp.utsushiiro.sharenotes.api.service.UserService;
+import jp.utsushiiro.sharenotes.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class LoginUserDetailService implements UserDetailsService  {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public LoginUserDetailService(UserService userService) {
-        this.userService = userService;
+    public LoginUserDetailService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            User user = userService.findByName(username);
-            return new LoginUserDetails(user);
-        }catch (ResourceNotFoundException e) {
+        List<User> users = userRepository.findByName(username);
+        if (users.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User(username=%s) not found", username));
         }
+        return new LoginUserDetails(users.get(0));
     }
 }
