@@ -14,8 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +38,7 @@ public class UserServiceTest {
         Optional<User> expected = Optional.of(new User());
         Mockito.doReturn(expected).when(userRepository).findById(id);
 
-        Optional<User> result = userService.findById(id);
+        User result = userService.findById(id);
 
         assertThat(result).isEqualTo(expected);
         Mockito.verify(userRepository, Mockito.times(1)).findById(id);
