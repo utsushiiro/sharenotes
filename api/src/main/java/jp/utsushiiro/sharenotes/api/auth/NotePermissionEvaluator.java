@@ -36,25 +36,25 @@ public class NotePermissionEvaluator {
             throw new IllegalArgumentException("permission should be an instance of Note.AuthorityType");
         }
 
-        Long noteId = (Long) targetId;
-        Note note = noteRepository.findById((Long) noteId)
-                .orElseThrow(() -> new ResourceNotFoundException(Note.class, noteId));
+        Long targetNoteId = (Long) targetId;
+        Note targetNote = noteRepository.findById(targetNoteId)
+                .orElseThrow(() -> new ResourceNotFoundException(Note.class, targetNoteId));
 
-        return _hasPermission(user, note, (Note.AuthorityType) permission);
+        return _hasPermission(user, targetNote, (Note.AuthorityType) permission);
     }
 
-    private boolean _hasPermission(User user, Note note, Note.AuthorityType authorityType) {
+    private boolean _hasPermission(User user, Note target, Note.AuthorityType authorityType) {
         switch (authorityType) {
             case READ: {
-                return note.getLatestRevision().getGroupWithReadAuthority().hasUser(user);
+                return target.getLatestRevision().getGroupWithReadAuthority().hasUser(user);
             }
 
             case READ_WRITE: {
-                return note.getLatestRevision().getGroupWithReadWriteAuthority().hasUser(user);
+                return target.getLatestRevision().getGroupWithReadWriteAuthority().hasUser(user);
             }
 
             case ADMIN: {
-                return note.getLatestRevision().getGroupWithAdminAuthority().hasUser(user);
+                return target.getLatestRevision().getGroupWithAdminAuthority().hasUser(user);
             }
             default: {
                 throw new IllegalArgumentException();

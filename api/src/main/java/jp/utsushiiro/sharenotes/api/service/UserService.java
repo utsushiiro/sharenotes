@@ -6,6 +6,7 @@ import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @PreAuthorize("isAuthenticated() and hasPermission(#id, 'jp.utsushiiro.sharenotes.api.domain.User', T(jp.utsushiiro.sharenotes.api.domain.User$AuthorityType).READ)")
     @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
@@ -57,6 +59,7 @@ public class UserService {
         return user;
     }
 
+    @PreAuthorize("isAuthenticated() and hasPermission(#id, 'jp.utsushiiro.sharenotes.api.domain.User', T(jp.utsushiiro.sharenotes.api.domain.User$AuthorityType).ADMIN)")
     @Transactional
     public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
