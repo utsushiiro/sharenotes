@@ -7,6 +7,7 @@ import jp.utsushiiro.sharenotes.api.dto.resource.NotesResource;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,12 +32,18 @@ public class NotesRestController {
     }
 
     @PostMapping(path = "")
-    public NoteResource create(@RequestBody NoteForm noteForm, @AuthenticationPrincipal(expression = "user") User user) {
+    public NoteResource create(
+            @RequestBody @Validated NoteForm noteForm,
+            @AuthenticationPrincipal(expression = "user") User user
+    ) {
         return new NoteResource(noteService.create(noteForm, user));
     }
 
     @PatchMapping(path = "/{id}")
-    public void update(@PathVariable Long id, @RequestBody NoteForm noteForm) {
+    public void update(
+            @PathVariable Long id,
+            @RequestBody @Validated NoteForm noteForm
+    ) {
         noteService.update(id, noteForm);
     }
 

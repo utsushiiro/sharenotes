@@ -1,20 +1,18 @@
 package jp.utsushiiro.sharenotes.api.dto.form;
 
-import jp.utsushiiro.sharenotes.api.domain.User;
 import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 @Data
 public class SignUpForm {
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9]+$")
     private String username;
 
+    @Email
     private String email;
 
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,16}$")
     private String password;
-
-    public User toUser() {
-        User user = new User();
-        user.setName(username);
-        user.setEmail(email);
-        return user;
-    }
 }
