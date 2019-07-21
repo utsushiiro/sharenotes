@@ -3,6 +3,7 @@ package jp.utsushiiro.sharenotes.api.service;
 import jp.utsushiiro.sharenotes.api.domain.*;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.repository.FolderRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRevisionRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
@@ -21,15 +22,19 @@ public class NoteService {
 
     private final NoteRevisionRepository noteRevisionRepository;
 
+    private final FolderRepository folderRepository;
+
     @Autowired
     public NoteService(
             NoteRepository noteRepository,
             UserGroupRepository userGroupRepository,
-            NoteRevisionRepository noteRevisionRepository
+            NoteRevisionRepository noteRevisionRepository,
+            FolderRepository folderRepository
     ) {
         this.noteRepository = noteRepository;
         this.userGroupRepository = userGroupRepository;
         this.noteRevisionRepository = noteRevisionRepository;
+        this.folderRepository = folderRepository;
     }
 
     @PreAuthorize("isAuthenticated() and hasPermission(#id, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).READ)")
@@ -48,7 +53,9 @@ public class NoteService {
     @PreAuthorize("isAuthenticated()")
     @Transactional
     public Note create(NoteForm form, User user) {
+        Folder root = folderRepository.findByName(Folder.ROOT_FOLDER_NAME);
         Note note = new Note();
+        root.addNote(note);
         noteRepository.save(note);
 
         NoteRevision revision = new NoteRevision();

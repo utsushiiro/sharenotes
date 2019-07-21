@@ -36,10 +36,12 @@ create table user_group_mapping (
 
 create table note (
     id bigint not null auto_increment,
+    folder_id bigint not null,
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
     primary key (id),
-    foreign key (created_by) references user (id)
+    foreign key (created_by) references user (id),
+    foreign key (folder_id) references folder (id)
 );
 
 create table note_revision (
@@ -62,6 +64,14 @@ create table latest_note_revision_mapping (
     primary key (note_id),
     foreign key (note_id) references note (id),
     foreign key (note_revision_id) references note_revision (id)
+);
+
+create table folder (
+    id bigint not null auto_increment,
+    name varchar(255) not null,
+    parent_folder_id bigint,
+    primary key (id),
+    foreign key (parent_folder_id) references folder (id)
 );
 
 SET FOREIGN_KEY_CHECKS=1;
