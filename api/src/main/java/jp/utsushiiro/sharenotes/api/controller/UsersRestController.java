@@ -5,6 +5,7 @@ import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.dto.resource.UserResource;
 import jp.utsushiiro.sharenotes.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,10 @@ public class UsersRestController {
     }
 
     @PostMapping(path = "")
-    public UserResource create(HttpServletRequest request, @RequestBody SignUpForm signUpForm) throws ServletException {
+    public UserResource create(
+            HttpServletRequest request,
+            @RequestBody @Validated  SignUpForm signUpForm
+    ) throws ServletException {
         User createdUser = this.userService.create(signUpForm);
 
         // TODO catch ServletException and return a response that says sign up succeeded but log in failed
