@@ -53,7 +53,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request
     ) {
-
         ApiError apiError = new ApiError("Validation Error");
         BindingResult bindingResult = ex.getBindingResult();
 
