@@ -70,8 +70,14 @@ create table folder (
     id bigint not null auto_increment,
     name varchar(255) not null,
     parent_folder_id bigint,
+    updated_at timestamp not null default current_timestamp,
+    updated_by bigint not null,
+    created_at timestamp not null default current_timestamp,
+    created_by bigint not null,
     primary key (id),
-    foreign key (parent_folder_id) references folder (id)
+    foreign key (parent_folder_id) references folder (id),
+    foreign key (updated_by) references user (id),
+    foreign key (created_by) references user (id)
 );
 
 SET FOREIGN_KEY_CHECKS=1;
