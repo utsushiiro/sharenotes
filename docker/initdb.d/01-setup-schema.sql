@@ -40,8 +40,8 @@ create table note (
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
     primary key (id),
-    foreign key (created_by) references user (id),
-    foreign key (folder_id) references folder (id)
+    foreign key (folder_id) references folder (id),
+    foreign key (created_by) references user (id)
 );
 
 create table note_revision (
@@ -55,7 +55,8 @@ create table note_revision (
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
     primary key (id),
-    foreign key (note_id) references note (id)
+    foreign key (note_id) references note (id),
+    foreign key (created_by) references user (id)
 );
 
 create table latest_note_revision_mapping (
