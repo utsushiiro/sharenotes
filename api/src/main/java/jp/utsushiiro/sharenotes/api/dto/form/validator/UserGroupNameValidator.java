@@ -8,10 +8,10 @@ import java.util.regex.Pattern;
 
 public class UserGroupNameValidator implements ConstraintValidator<UserGroupName, String> {
 
-    private final static Pattern USER_GROUP_NAME_PATTERN = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]+$");
+    private final static Pattern SYSTEM_USER_GROUP_NAME_PATTERN = Pattern.compile("^__.*$");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return !StringUtils.isBlank(value) && USER_GROUP_NAME_PATTERN.matcher(value).find();
+        return !StringUtils.isBlank(value) && !SYSTEM_USER_GROUP_NAME_PATTERN.matcher(value).find();
     }
 }
