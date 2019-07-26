@@ -32,7 +32,11 @@ public class UsersRestController {
             HttpServletRequest request,
             @RequestBody @Validated  SignUpForm signUpForm
     ) throws ServletException {
-        User createdUser = this.userService.create(signUpForm);
+        User createdUser = this.userService.create(
+                signUpForm.getUsername(),
+                signUpForm.getEmail(),
+                signUpForm.getPassword()
+        );
 
         // TODO catch ServletException and return a response that says sign up succeeded but log in failed
         request.login(signUpForm.getUsername(), signUpForm.getPassword());

@@ -2,7 +2,6 @@ package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
-import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
@@ -38,15 +37,15 @@ public class UserService {
     }
 
     @Transactional
-    public User create(SignUpForm signUpForm) {
+    public User create(String username, String email, String password) {
         UserGroup selfGroup = new UserGroup();
         selfGroup.setName(UUID.randomUUID().toString());
         userGroupRepository.save(selfGroup);
 
         User user = new User();
-        user.setName(signUpForm.getUsername());
-        user.setEmail(signUpForm.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
+        user.setName(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
         user.setSelfGroup(selfGroup);
         userRepository.save(user);
 
