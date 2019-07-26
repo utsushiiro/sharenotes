@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class NotesResource {
+
     List<NoteResource> notes = new ArrayList<>();
 
     public NotesResource(List<Note> notes) {

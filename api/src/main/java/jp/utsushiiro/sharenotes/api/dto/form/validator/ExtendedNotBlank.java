@@ -9,6 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExtendedNotBlank {
+
     String message() default "{javax.validation.constraints.NotBlank.message}";
 
     Class<?>[] groups() default {};

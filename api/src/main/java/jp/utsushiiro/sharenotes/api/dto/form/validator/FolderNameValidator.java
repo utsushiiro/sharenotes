@@ -7,7 +7,8 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
 public class FolderNameValidator implements ConstraintValidator<FolderName, String> {
-    public final static Pattern FOLDER_NAME_PATTERN = Pattern.compile("^[^/]+$");
+
+    private final static Pattern FOLDER_NAME_PATTERN = Pattern.compile("^[^/]+$");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

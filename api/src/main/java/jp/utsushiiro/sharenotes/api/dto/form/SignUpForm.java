@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class SignUpForm {
+
     @Pattern(
             regexp = "^[a-zA-Z][a-zA-Z0-9]+$",
             message = "Please input using half-width English numbers and letters, using more than 2 characters. " +

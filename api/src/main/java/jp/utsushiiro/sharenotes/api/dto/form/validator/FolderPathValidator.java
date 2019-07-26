@@ -5,6 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
 public class FolderPathValidator implements ConstraintValidator<FolderPath, String> {
+
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (!value.startsWith("/")) {

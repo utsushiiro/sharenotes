@@ -9,6 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FolderPath {
+
     String message() default "Please input a valid folder path.";
 
     Class<?>[] groups() default {};
