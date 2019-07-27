@@ -38,6 +38,8 @@ public class SystemService {
 
         Folder rootFolder = new Folder();
         rootFolder.setName(Folder.ROOT_FOLDER_NAME);
+        rootFolder.setCreatedBy(user);
+        rootFolder.setUpdatedBy(user);
         folderRepository.save(rootFolder);
 
         return user;

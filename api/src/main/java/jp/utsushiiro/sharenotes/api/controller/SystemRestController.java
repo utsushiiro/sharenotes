@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api/system")
 public class SystemRestController {
@@ -23,16 +26,24 @@ public class SystemRestController {
     }
 
     @PostMapping(path = "/install")
-    public UserResource install(@RequestBody @Validated SignUpForm signUpForm) {
+    public UserResource install(
+            @RequestBody @Validated SignUpForm signUpForm,
+            HttpServletRequest request
+    ) throws ServletException {
         if (systemService.isInstalled()) {
             throw new ForbiddenOperationException("The application has already been installed");
         }
-        return new UserResource(
+
+        UserResource userResource = new UserResource(
                 systemService.install(
                         signUpForm.getUsername(),
                         signUpForm.getEmail(),
                         signUpForm.getPassword()
                 )
         );
+
+        request.login(signUpForm.getUsername(), signUpForm.getPassword());
+
+        return userResource;
     }
 }
