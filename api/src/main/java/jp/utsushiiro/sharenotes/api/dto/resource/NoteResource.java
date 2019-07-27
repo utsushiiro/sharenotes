@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class NoteResource {
+
     private Long id;
 
     private String title;

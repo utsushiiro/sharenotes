@@ -1,16 +1,15 @@
 package jp.utsushiiro.sharenotes.api.dto.form.validator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ExtendedNotBlankValidator.class)
+@Constraint(validatedBy = FolderNameValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExtendedNotBlank {
+public @interface FolderName {
 
-    String message() default "{javax.validation.constraints.NotBlank.message}";
+    String message() default "Please input a valid folder name.";
 
     Class<?>[] groups() default {};
 
@@ -20,6 +19,6 @@ public @interface ExtendedNotBlank {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {
-        ExtendedNotBlank[] value();
+        FolderName[] value();
     }
 }

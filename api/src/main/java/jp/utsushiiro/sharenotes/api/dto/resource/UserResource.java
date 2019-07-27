@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserResource {
+
     private Long id;
 
     private String name;

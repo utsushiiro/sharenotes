@@ -1,1 +1,0 @@
-insert into user_group (name) values ('__everyone');

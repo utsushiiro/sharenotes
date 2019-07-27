@@ -5,12 +5,12 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ExtendedNotBlankValidator.class)
+@Constraint(validatedBy = UserGroupNameValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExtendedNotBlank {
+public @interface UserGroupName {
 
-    String message() default "{javax.validation.constraints.NotBlank.message}";
+    String message() default "Please input a valid user group name.";
 
     Class<?>[] groups() default {};
 
@@ -20,6 +20,6 @@ public @interface ExtendedNotBlank {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {
-        ExtendedNotBlank[] value();
+        UserGroupName[] value();
     }
 }

@@ -18,6 +18,10 @@ public class Note{
     @Column(name="id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
+
     @OneToOne(
             mappedBy = "note",
             fetch = FetchType.EAGER,

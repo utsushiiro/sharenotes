@@ -17,7 +17,10 @@ import java.util.Objects;
 @Table(name = "user_group")
 @EntityListeners(AuditingEntityListener.class)
 public class UserGroup {
+
     public static final String EVERYONE_USER_GROUP_NAME = "__everyone";
+
+    public static final String ADMIN_USER_GROUP_NAME = "__administrators";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

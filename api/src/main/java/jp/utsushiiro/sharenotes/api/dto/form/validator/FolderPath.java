@@ -5,12 +5,12 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ExtendedNotBlankValidator.class)
+@Constraint(validatedBy = FolderPathValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExtendedNotBlank {
+public @interface FolderPath {
 
-    String message() default "{javax.validation.constraints.NotBlank.message}";
+    String message() default "Please input a valid folder path.";
 
     Class<?>[] groups() default {};
 
@@ -20,6 +20,6 @@ public @interface ExtendedNotBlank {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {
-        ExtendedNotBlank[] value();
+        FolderPath[] value();
     }
 }

@@ -53,7 +53,7 @@ public class UserServiceTest {
         UserGroup mockEveryoneGroup = Mockito.mock(UserGroup.class);
         Mockito.doReturn(mockEveryoneGroup).when(userGroupRepository).findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
-        User result = userService.create(signUpForm);
+        User result = userService.create(signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPassword());
 
         assertThat(result.getName()).isEqualTo(signUpForm.getUsername());
         Mockito.verify(userGroupRepository, Mockito.times(1)).save(ArgumentMatchers.any(UserGroup.class));

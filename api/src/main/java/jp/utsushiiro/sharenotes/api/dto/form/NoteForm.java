@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class NoteForm {
+
     @ExtendedNotBlank
     private String title;
 
