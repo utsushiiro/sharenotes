@@ -3,8 +3,11 @@ package jp.utsushiiro.sharenotes.api.service;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
 import jp.utsushiiro.sharenotes.api.exception.exceptions.ResourceNotFoundException;
+import jp.utsushiiro.sharenotes.api.exception.exceptions.UniqueConstraintViolationException;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,12 @@ public class UserService {
 
     @Transactional
     public User create(String username, String email, String password) {
+        if (exists(username, email)) {
+            throw new UniqueConstraintViolationException(
+                    String.format("username '%s' or email '%s' is already used", username, email)
+            );
+        }
+
         UserGroup selfGroup = new UserGroup();
         selfGroup.setName(UUID.randomUUID().toString());
         userGroupRepository.save(selfGroup);
@@ -71,5 +80,15 @@ public class UserService {
 
         userRepository.delete(user);
         userGroupRepository.delete(selfGroup);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean exists(String username, String email) {
+        User user = new User();
+        user.setName(username);
+        user.setEmail(email);
+        ExampleMatcher matcher = ExampleMatcher.matchingAny();
+        Example<User> example = Example.of(user, matcher);
+        return userRepository.exists(example);
     }
 }

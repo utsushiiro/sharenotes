@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/folders")
+@RequestMapping("/api/v1")
 public class FolderController {
 
     private final FolderService folderService;
@@ -23,7 +23,7 @@ public class FolderController {
         this.folderService = folderService;
     }
 
-    @PostMapping(path = "")
+    @PostMapping("/folders")
     public FolderResource create(
             @RequestBody @Validated FolderForm folderForm,
             @AuthenticationPrincipal(expression = "user") User user

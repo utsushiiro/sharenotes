@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/system")
+@RequestMapping("/api/v1")
 public class SystemRestController {
 
     private final SystemService systemService;
@@ -25,7 +25,7 @@ public class SystemRestController {
         this.systemService = systemService;
     }
 
-    @PostMapping(path = "/install")
+    @PostMapping(path = "/system:install")
     public UserResource install(
             @RequestBody @Validated SignUpForm signUpForm,
             HttpServletRequest request

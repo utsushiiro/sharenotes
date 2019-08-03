@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/api/users")
+@RequestMapping("/api/v1")
 public class UsersRestController {
 
     private final UserService userService;
@@ -22,12 +24,20 @@ public class UsersRestController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/users/{id}")
     public UserResource find(@PathVariable Long id) {
         return new UserResource(userService.findById(id));
     }
 
-    @PostMapping(path = "")
+    @GetMapping("/users:exists")
+    public Map<String, Boolean> exists(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email
+    ) {
+        return Collections.singletonMap("result", userService.exists(username, email));
+    }
+
+    @PostMapping("/users")
     public UserResource create(
             HttpServletRequest request,
             @RequestBody @Validated  SignUpForm signUpForm
@@ -43,7 +53,7 @@ public class UsersRestController {
         return new UserResource(createdUser);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping("/users/{id}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
