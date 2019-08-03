@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class ApiLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
     private MappingJackson2HttpMessageConverter httpMessageConverter;
 
     @Autowired
-    public ApiLoginSuccessHandler(MappingJackson2HttpMessageConverter httpMessageConverter) {
+    public AuthenticationSuccessHandlerImpl(MappingJackson2HttpMessageConverter httpMessageConverter) {
         this.httpMessageConverter = httpMessageConverter;
     }
 
@@ -32,8 +32,8 @@ public class ApiLoginSuccessHandler implements AuthenticationSuccessHandler {
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException, ServletException {
-        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
-        User user = loginUserDetails.getUser();
+        SpringSecurityUser springSecurityUser = (SpringSecurityUser) authentication.getPrincipal();
+        User user = springSecurityUser.getUser();
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
         httpMessageConverter.write(new UserResource(user), MediaType.APPLICATION_JSON_UTF8, outputMessage);
         response.setStatus(HttpStatus.OK.value());

@@ -28,6 +28,6 @@ public class LoginUserDetailService implements UserDetailsService  {
         if (users.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User(username=%s) not found", username));
         }
-        return new LoginUserDetails(users.get(0));
+        return new SpringSecurityUser(users.get(0));
     }
 }

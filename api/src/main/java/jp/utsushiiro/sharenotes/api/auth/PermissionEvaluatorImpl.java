@@ -31,8 +31,8 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             Object targetDomainObject,
             Object permission
     ) {
-        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
-        User user = loginUserDetails.getUser();
+        SpringSecurityUser springSecurityUser = (SpringSecurityUser) authentication.getPrincipal();
+        User user = springSecurityUser.getUser();
 
         if (targetDomainObject instanceof Note) {
             return notePermissionEvaluator.hasPermission(user, (Note) targetDomainObject, permission);
@@ -54,8 +54,8 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
             String targetType,
             Object permission
     ) {
-        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
-        User user = loginUserDetails.getUser();
+        SpringSecurityUser springSecurityUser = (SpringSecurityUser) authentication.getPrincipal();
+        User user = springSecurityUser.getUser();
 
         if (targetType.equals(Note.class.getName())) {
             return notePermissionEvaluator.hasPermission(user, targetId, permission);

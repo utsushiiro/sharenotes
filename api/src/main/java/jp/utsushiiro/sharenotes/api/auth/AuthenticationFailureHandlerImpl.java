@@ -2,7 +2,7 @@ package jp.utsushiiro.sharenotes.api.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class ApiAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
+
     @Override
-    public void commence(
+    public void onAuthenticationFailure(
             HttpServletRequest request,
             HttpServletResponse response,
-            AuthenticationException authException
+            AuthenticationException exception
     ) throws IOException, ServletException {
-        response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+        exception.printStackTrace();
+        response.sendError(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN.getReasonPhrase());
     }
 }

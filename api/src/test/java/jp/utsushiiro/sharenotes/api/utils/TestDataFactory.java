@@ -1,6 +1,6 @@
 package jp.utsushiiro.sharenotes.api.utils;
 
-import jp.utsushiiro.sharenotes.api.auth.LoginUserDetails;
+import jp.utsushiiro.sharenotes.api.auth.SpringSecurityUser;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class TestDataFactory {
         selfGroup.addUser(user);
 
         return new UsernamePasswordAuthenticationToken(
-                new LoginUserDetails(user),
+                new SpringSecurityUser(user),
                 "NONE",
                 AuthorityUtils.createAuthorityList("ROLE_NONE")
         );

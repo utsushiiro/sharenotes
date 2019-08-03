@@ -4,12 +4,12 @@ import jp.utsushiiro.sharenotes.api.domain.User;
 import lombok.Getter;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-public class LoginUserDetails extends org.springframework.security.core.userdetails.User {
+public class SpringSecurityUser extends org.springframework.security.core.userdetails.User {
 
     @Getter
     private User user;
 
-    public LoginUserDetails(User user) {
+    public SpringSecurityUser(User user) {
         super(
                 user.getName(),
                 user.getPassword(),
