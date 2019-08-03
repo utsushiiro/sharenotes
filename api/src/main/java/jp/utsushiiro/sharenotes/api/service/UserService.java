@@ -41,7 +41,7 @@ public class UserService {
 
     @Transactional
     public User create(String username, String email, String password) {
-        if (!isUniqueUsernameAndEmail(username, email)) {
+        if (exists(username, email)) {
             throw new UniqueConstraintViolationException(
                     String.format("username '%s' or email '%s' is already used", username, email)
             );
@@ -83,28 +83,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isUniqueUsername(String username) {
-        User user = new User();
-        user.setName(username);
-        Example<User> example = Example.of(user);
-        return !userRepository.exists(example);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean isUniqueEmail(String email) {
-        User user = new User();
-        user.setEmail(email);
-        Example<User> example = Example.of(user);
-        return !userRepository.exists(example);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean isUniqueUsernameAndEmail(String username, String email) {
+    public boolean exists(String username, String email) {
         User user = new User();
         user.setName(username);
         user.setEmail(email);
         ExampleMatcher matcher = ExampleMatcher.matchingAny();
         Example<User> example = Example.of(user, matcher);
-        return !userRepository.exists(example);
+        return userRepository.exists(example);
     }
 }

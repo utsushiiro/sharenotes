@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,6 +27,14 @@ public class UsersRestController {
     @GetMapping("/users/{id}")
     public UserResource find(@PathVariable Long id) {
         return new UserResource(userService.findById(id));
+    }
+
+    @GetMapping("/users:exists")
+    public Map<String, Boolean> exists(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email
+    ) {
+        return Collections.singletonMap("result", userService.exists(username, email));
     }
 
     @PostMapping("/users")
