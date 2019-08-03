@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class LoginUserDetailService implements UserDetailsService  {
+public class UserDetailsServiceImpl implements UserDetailsService  {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public LoginUserDetailService(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
