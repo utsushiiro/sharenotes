@@ -2,7 +2,7 @@ package jp.utsushiiro.sharenotes.api.auth;
 
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
+import jp.utsushiiro.sharenotes.api.exception.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

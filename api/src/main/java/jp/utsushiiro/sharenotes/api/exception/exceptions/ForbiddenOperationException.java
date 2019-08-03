@@ -1,15 +1,14 @@
-package jp.utsushiiro.sharenotes.api.error.exceptions;
+package jp.utsushiiro.sharenotes.api.exception.exceptions;
 
-import jp.utsushiiro.sharenotes.api.error.ApiException;
 import org.springframework.http.HttpStatus;
 
-public class ForbiddenOperationException extends ApiException {
+public class ForbiddenOperationException extends ApplicationException {
     public ForbiddenOperationException() {
-        super("Forbidden operation detected");
+        setMessage("Forbidden operation detected");
     }
 
     public ForbiddenOperationException(String message) {
-        super(message);
+        setMessage(message);
     }
 
     @Override

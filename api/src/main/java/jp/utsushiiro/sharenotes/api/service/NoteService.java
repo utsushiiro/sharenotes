@@ -1,7 +1,7 @@
 package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.*;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ResourceNotFoundException;
+import jp.utsushiiro.sharenotes.api.exception.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
 import jp.utsushiiro.sharenotes.api.repository.FolderRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;

@@ -2,7 +2,7 @@ package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.dto.form.SignUpForm;
 import jp.utsushiiro.sharenotes.api.dto.resource.UserResource;
-import jp.utsushiiro.sharenotes.api.error.exceptions.ForbiddenOperationException;
+import jp.utsushiiro.sharenotes.api.exception.exceptions.ForbiddenOperationException;
 import jp.utsushiiro.sharenotes.api.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

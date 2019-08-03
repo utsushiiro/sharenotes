@@ -1,8 +1,8 @@
-package jp.utsushiiro.sharenotes.api.error;
+package jp.utsushiiro.sharenotes.api.exception;
 
+import jp.utsushiiro.sharenotes.api.exception.exceptions.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceResolvable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,12 +20,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * TODO use logger for stack traces
  */
 @RestControllerAdvice
-public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+public class ExceptionHandingControllerAdvice extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
     @Autowired
-    public ApiExceptionHandler(MessageSource messageSource) {
+    public ExceptionHandingControllerAdvice(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -39,10 +39,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     ) {
         ex.printStackTrace();
 
-        if (body instanceof ApiError) {
+        if (body instanceof ExceptionResource) {
             return super.handleExceptionInternal(ex, ex, headers, status, request);
         }else {
-            return super.handleExceptionInternal(ex, new ApiError(ex), headers, status, request);
+            return super.handleExceptionInternal(ex, new ExceptionResource(ex), headers, status, request);
         }
     }
 
@@ -53,35 +53,35 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request
     ) {
-        ApiError apiError = new ApiError("Validation Error");
+        ExceptionResource exceptionResource = new ExceptionResource("Validation Error");
         BindingResult bindingResult = ex.getBindingResult();
 
         for (ObjectError error: bindingResult.getGlobalErrors()) {
-            apiError.addDetail(error.getObjectName(), messageSource.getMessage(error, request.getLocale()));
+            exceptionResource.addDetail(error.getObjectName(), messageSource.getMessage(error, request.getLocale()));
         }
 
         for (FieldError error: bindingResult.getFieldErrors()) {
-            apiError.addDetail(error.getField(), messageSource.getMessage(error, request.getLocale()));
+            exceptionResource.addDetail(error.getField(), messageSource.getMessage(error, request.getLocale()));
         }
 
-        return super.handleExceptionInternal(ex, apiError, headers, status, request);
+        return super.handleExceptionInternal(ex, exceptionResource, headers, status, request);
     }
 
     @ExceptionHandler
-    public ResponseEntity<Object> handleApiException(
-            ApiException ex,
+    public ResponseEntity<Object> handleApplicationException(
+            ApplicationException ex,
             WebRequest request
     ) {
         ex.printStackTrace();
-        return super.handleExceptionInternal(ex, new ApiError(ex), null, ex.getHttpStatus(), request);
+        return super.handleExceptionInternal(ex, new ExceptionResource(ex), null, ex.getHttpStatus(), request);
     }
 
     @ExceptionHandler
-    public ResponseEntity<Object> handleApiException(
+    public ResponseEntity<Object> handleDataAccessException(
             DataAccessException ex,
             WebRequest request
     ) {
         ex.printStackTrace();
-        return super.handleExceptionInternal(ex, new ApiError(ex), null, HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return super.handleExceptionInternal(ex, new ExceptionResource("Data Access Error"), null, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

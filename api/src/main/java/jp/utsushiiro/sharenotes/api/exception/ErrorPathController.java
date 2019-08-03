@@ -1,4 +1,4 @@
-package jp.utsushiiro.sharenotes.api.error;
+package jp.utsushiiro.sharenotes.api.exception;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -35,11 +35,11 @@ public class ErrorPathController implements ErrorController {
             message = status.getReasonPhrase();
         }
 
-        return new ResponseEntity<>(new ApiError(message), null, status);
+        return new ResponseEntity<>(new ExceptionResource(message), null, status);
     }
 
     @Override
     public String getErrorPath() {
-        return "/error";
+        return "/exception";
     }
 }
