@@ -11,7 +11,7 @@ const createNoteAndRedirect = (title: string, content: string) => {
     dispatch(actions.createNote.started());
 
     try {
-      const response = await api.post("http://localhost:3001/api/notes/", {
+      const response = await api.post("http://localhost:3001/api/v1/notes/", {
         title,
         content
       });
@@ -32,7 +32,7 @@ const fetchNotes = () => {
     dispatch(actions.getNotes.started());
 
     try {
-      const response = await api.get("http://localhost:3001/api/notes/");
+      const response = await api.get("http://localhost:3001/api/v1/notes/");
       dispatch(actions.getNotes.done(response.data.notes));
     } catch (err) {
       dispatch(actions.getNotes.failed());
@@ -45,7 +45,7 @@ const fetchNote = (id: number) => {
     dispatch(actions.getNote.started());
 
     try {
-      const response = await api.get(`http://localhost:3001/api/notes/${id}`);
+      const response = await api.get(`http://localhost:3001/api/v1/notes/${id}`);
       dispatch(actions.getNote.done(response.data));
     } catch (err) {
       dispatch(actions.getNote.failed());
@@ -62,7 +62,7 @@ const updateNote = (id: number, title: string, content: string) => {
 
     try {
       const response = await api.patch(
-        `http://localhost:3001/api/notes/${id}`,
+        `http://localhost:3001/api/v1/notes/${id}`,
         {
           title,
           content,
@@ -91,7 +91,7 @@ const deleteNoteAndRedirect = (id: number) => {
 
     try {
       const response = await api.delete(
-        `http://localhost:3001/api/notes/${id}`
+        `http://localhost:3001/api/v1/notes/${id}`
       );
       dispatch(actions.deleteNote.done());
       dispatch(actions.createNoteEvent(noteEventTypes.DELETED_NOTE));

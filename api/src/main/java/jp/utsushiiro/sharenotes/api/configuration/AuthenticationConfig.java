@@ -46,17 +46,17 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/system/install").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/system:install").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
-                .loginProcessingUrl("/api/login").permitAll()
+                .loginProcessingUrl("/api/v1/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
         http.logout()
-                .logoutUrl("/api/logout")
+                .logoutUrl("/api/v1/logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
         http.exceptionHandling()

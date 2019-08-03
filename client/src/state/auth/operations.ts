@@ -15,7 +15,7 @@ const login = (username: string, password: string) => {
       params.append("username", username);
       params.append("password", password);
       const response: AxiosResponse<User> = await axios.post(
-        "http://localhost:3001/api/login",
+        "http://localhost:3001/api/v1/login",
         params,
         {
           withCredentials: true
@@ -40,7 +40,7 @@ const logout = () => {
     dispatch(actions.logout.started());
 
     try {
-      await api.post("http://localhost:3001/api/logout");
+      await api.post("http://localhost:3001/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actions.logout.done());
       dispatch(push("/login"));

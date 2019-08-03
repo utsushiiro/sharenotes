@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/user")
+@RequestMapping("/api/v1")
 public class UserRestController {
 
     private final UserService userService;
@@ -18,12 +18,12 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "")
+    @GetMapping("/user")
     public UserResource find(@AuthenticationPrincipal(expression = "user") User user) {
         return new UserResource(user);
     }
 
-    @DeleteMapping(path = "")
+    @DeleteMapping("/user")
     public void delete(@AuthenticationPrincipal(expression = "user") User user) {
         userService.delete(user.getId());
     }
