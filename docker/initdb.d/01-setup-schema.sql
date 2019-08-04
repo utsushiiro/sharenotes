@@ -8,6 +8,7 @@ create table user (
     self_group_id bigint not null,
     updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
+    version bigint not null,
     primary key (id),
     unique (name),
     unique (email),
@@ -39,6 +40,7 @@ create table note (
     folder_id bigint not null,
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
+    version bigint not null,
     primary key (id),
     foreign key (folder_id) references folder (id),
     foreign key (created_by) references user (id)
@@ -75,6 +77,7 @@ create table folder (
     updated_by bigint not null,
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
+    version bigint not null,
     primary key (id),
     foreign key (parent_folder_id) references folder (id),
     foreign key (updated_by) references user (id),

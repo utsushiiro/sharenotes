@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 @Table(name = "note")
 @EntityListeners(AuditingEntityListener.class)
 public class Note{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -31,7 +32,7 @@ public class Note{
     private LatestNoteRevisionMapping latestNoteRevisionMapping;
 
     @CreatedDate
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @CreatedBy
@@ -44,6 +45,10 @@ public class Note{
             nullable = false
     )
     private User createdBy;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     public enum AuthorityType {
         READ,

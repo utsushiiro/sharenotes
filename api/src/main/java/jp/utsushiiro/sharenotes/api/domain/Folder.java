@@ -15,11 +15,12 @@ import java.util.List;
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Folder {
+
     public static final String ROOT_FOLDER_NAME = "__root";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -44,7 +45,7 @@ public class Folder {
     private List<Note> notes = new ArrayList<>();
 
     @CreatedDate
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @CreatedBy
@@ -59,7 +60,7 @@ public class Folder {
     private User updatedBy;
 
     @CreatedDate
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @CreatedBy
@@ -72,6 +73,10 @@ public class Folder {
             nullable = false
     )
     private User createdBy;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     public void addSubFolder(Folder folder) {
         subFolders.add(folder);
