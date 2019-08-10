@@ -43,11 +43,7 @@ type Props = {
   newButtonHandler: (title: string) => void;
 };
 
-const Navbar: React.FC<Props> = ({
-  logoutButtonHandler,
-  loginUser,
-  newButtonHandler
-}) => {
+const Navbar: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -87,7 +83,7 @@ const Navbar: React.FC<Props> = ({
           <Button color="inherit" onClick={handleClickOpen}>
             New
           </Button>
-          <Button color="inherit" onClick={logoutButtonHandler}>
+          <Button color="inherit" onClick={props.logoutButtonHandler}>
             Logout
           </Button>
         </Toolbar>
@@ -107,7 +103,7 @@ const Navbar: React.FC<Props> = ({
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={() => newButtonHandler(title)} color="primary">
+          <Button onClick={() => props.newButtonHandler(title)} color="primary">
             New
           </Button>
         </DialogActions>

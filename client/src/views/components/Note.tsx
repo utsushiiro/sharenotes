@@ -23,13 +23,13 @@ type Props = {
   deleteButtonHandler: () => void;
 };
 
-const Note: React.FC<Props> = ({ note, deleteButtonHandler }) => {
+const Note: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   return (
     <div>
       <Typography variant="body1" gutterBottom className={classes.content}>
-        {note.content}
+        {props.note.content}
       </Typography>
       <Divider />
       <Box p={1}>
@@ -37,7 +37,7 @@ const Note: React.FC<Props> = ({ note, deleteButtonHandler }) => {
           variant="contained"
           color="secondary"
           className={classes.button}
-          onClick={deleteButtonHandler}
+          onClick={props.deleteButtonHandler}
         >
           Delete
         </Button>
