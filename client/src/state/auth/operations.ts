@@ -1,4 +1,4 @@
-import actions from "./actions";
+import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse } from "axios";
 import { push } from "connected-react-router";
@@ -8,7 +8,7 @@ import { User } from "./types";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.login.started());
+    dispatch(actionCreators.login.started());
 
     try {
       const params = new URLSearchParams();
@@ -27,32 +27,32 @@ const login = (username: string, password: string) => {
         email: response.data.email
       };
       storage.setLoginUser(user);
-      dispatch(actions.login.done(user));
+      dispatch(actionCreators.login.done(user));
       dispatch(push("/"));
     } catch (err) {
-      dispatch(actions.login.failed());
+      dispatch(actionCreators.login.failed());
     }
   };
 };
 
 const logout = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.logout.started());
+    dispatch(actionCreators.logout.started());
 
     try {
       await api.post("http://localhost:3001/api/v1/logout");
       storage.deleteLoginUser();
-      dispatch(actions.logout.done());
+      dispatch(actionCreators.logout.done());
       dispatch(push("/login"));
     } catch (err) {
-      dispatch(actions.logout.failed());
+      dispatch(actionCreators.logout.failed());
     }
   };
 };
 
 const signUp = (username: string, email: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.signUp.started());
+    dispatch(actionCreators.signUp.started());
 
     try {
       const response: AxiosResponse<User> = await axios.post(
@@ -73,10 +73,10 @@ const signUp = (username: string, email: string, password: string) => {
         email: response.data.email
       };
       storage.setLoginUser(user);
-      dispatch(actions.signUp.done(user));
+      dispatch(actionCreators.signUp.done(user));
       dispatch(push("/"));
     } catch (err) {
-      dispatch(actions.signUp.failed());
+      dispatch(actionCreators.signUp.failed());
     }
   };
 };

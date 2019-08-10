@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
-import { AuthState } from "./types";
-import { Action, actionTypes } from "./actions";
+import { AuthState, AuthAction } from "./types";
+import { actionTypes } from "./actions";
 import storage from "../storage";
 
 const initialState: AuthState = {
@@ -8,7 +8,7 @@ const initialState: AuthState = {
   isLoading: false
 };
 
-const auth: Reducer<AuthState, Action> = (state = initialState, action) => {
+const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN.STARTED:
       return {

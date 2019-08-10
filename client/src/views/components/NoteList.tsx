@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { Note, NoteEvent } from "../../state/notes/types";
-import { Action } from "../../state/notes/actions";
+import { Action } from "../../state/types";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";

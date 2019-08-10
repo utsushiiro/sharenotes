@@ -1,61 +1,68 @@
-import actions from "./actions";
+import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import api from "../api";
 import { push } from "connected-react-router";
-import { authSelectors } from "../auth";
-import { State } from "../types";
 import { noteEventTypes } from "./constants";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.createNote.started());
+    dispatch(actionCreators.createNote.started());
 
     try {
       const response = await api.post("http://localhost:3001/api/v1/notes/", {
         title,
         content
       });
-      dispatch(actions.createNote.done(response.data));
-      dispatch(actions.createNoteEvent(noteEventTypes.CREATED_NOTE));
+      dispatch(actionCreators.createNote.done(response.data));
+      dispatch(actionCreators.createNoteEvent(noteEventTypes.CREATED_NOTE));
       dispatch(
         push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
       );
     } catch (err) {
-      dispatch(actions.createNote.failed());
-      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_CREATE_NOTE));
+      dispatch(actionCreators.createNote.failed());
+      dispatch(
+        actionCreators.createNoteEvent(noteEventTypes.FAILED_TO_CREATE_NOTE)
+      );
     }
   };
 };
 
 const fetchNotes = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.getNotes.started());
+    dispatch(actionCreators.getNotes.started());
 
     try {
       const response = await api.get("http://localhost:3001/api/v1/notes/");
-      dispatch(actions.getNotes.done(response.data.notes));
+      dispatch(actionCreators.getNotes.done(response.data.notes));
     } catch (err) {
-      dispatch(actions.getNotes.failed());
+      dispatch(actionCreators.getNotes.failed());
     }
   };
 };
 
 const fetchNote = (id: number) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.getNote.started());
+    dispatch(actionCreators.getNote.started());
 
     try {
-      const response = await api.get(`http://localhost:3001/api/v1/notes/${id}`);
-      dispatch(actions.getNote.done(response.data));
+      const response = await api.get(
+        `http://localhost:3001/api/v1/notes/${id}`
+      );
+      dispatch(actionCreators.getNote.done(response.data));
     } catch (err) {
-      dispatch(actions.getNote.failed());
+      dispatch(actionCreators.getNote.failed());
     }
   };
 };
 
-const updateNote = (id: number, title: string, content: string, version: number) => {
+const updateNote = (
+  id: number,
+  title: string,
+  content: string,
+  version: number
+) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.updateNote.started());
+    dispatch(actionCreators.updateNote.started());
 
     try {
       const response = await api.patch(
@@ -66,31 +73,34 @@ const updateNote = (id: number, title: string, content: string, version: number)
           version
         }
       );
-      console.log(response);
-      dispatch(actions.updateNote.done(response.data));
-      dispatch(actions.createNoteEvent(noteEventTypes.UPDATED_NOTE));
+      dispatch(actionCreators.updateNote.done(response.data));
+      dispatch(actionCreators.createNoteEvent(noteEventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
     } catch (err) {
-      dispatch(actions.updateNote.failed());
-      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_UPDATE_NOTE));
+      dispatch(actionCreators.updateNote.failed());
+      dispatch(
+        actionCreators.createNoteEvent(noteEventTypes.FAILED_TO_UPDATE_NOTE)
+      );
     }
   };
 };
 
 const deleteNoteAndRedirect = (id: number) => {
   return async (dispatch: Dispatch) => {
-    dispatch(actions.deleteNote.started());
+    dispatch(actionCreators.deleteNote.started());
 
     try {
       const response = await api.delete(
         `http://localhost:3001/api/v1/notes/${id}`
       );
-      dispatch(actions.deleteNote.done());
-      dispatch(actions.createNoteEvent(noteEventTypes.DELETED_NOTE));
+      dispatch(actionCreators.deleteNote.done());
+      dispatch(actionCreators.createNoteEvent(noteEventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));
     } catch (err) {
-      dispatch(actions.deleteNote.failed());
-      dispatch(actions.createNoteEvent(noteEventTypes.FAILED_TO_DELETE_NOTE));
+      dispatch(actionCreators.deleteNote.failed());
+      dispatch(
+        actionCreators.createNoteEvent(noteEventTypes.FAILED_TO_DELETE_NOTE)
+      );
     }
   };
 };
@@ -101,6 +111,6 @@ export default {
   fetchNote,
   updateNote,
   deleteNoteAndRedirect,
-  createNoteEvent: actions.createNoteEvent,
-  deleteNoteEvent: actions.deleteNoteEvent
+  createNoteEvent: actionCreators.createNoteEvent,
+  deleteNoteEvent: actionCreators.deleteNoteEvent
 };

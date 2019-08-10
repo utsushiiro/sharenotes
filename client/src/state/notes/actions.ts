@@ -1,15 +1,4 @@
 import { Note, NoteEventType } from "./types";
-import { uniteProperties } from "../types";
-
-export type Action = ReturnType<
-  | uniteProperties<typeof createNote>
-  | uniteProperties<typeof getNotes>
-  | uniteProperties<typeof getNote>
-  | uniteProperties<typeof updateNote>
-  | uniteProperties<typeof deleteNote>
-  | typeof createNoteEvent
-  | typeof deleteNoteEvent
->;
 
 export const actionTypes = {
   CREATE_NOTE: {
@@ -41,108 +30,86 @@ export const actionTypes = {
   DELETE_NOTE_EVENT: "DELETE_NOTE_EVENT"
 } as const;
 
-const createNote = {
-  started: () => ({
-    type: actionTypes.CREATE_NOTE.STARTED
-  }),
+export const actionCreators = {
+  createNote: {
+    started: () => ({
+      type: actionTypes.CREATE_NOTE.STARTED
+    }),
+    done: (note: Note) => ({
+      type: actionTypes.CREATE_NOTE.DONE,
+      payload: {
+        note
+      }
+    }),
+    failed: () => ({
+      type: actionTypes.CREATE_NOTE.FAILED
+    })
+  },
+  getNote: {
+    started: () => ({
+      type: actionTypes.GET_NOTE.STARTED
+    }),
+    done: (note: Note) => ({
+      type: actionTypes.GET_NOTE.DONE,
+      payload: {
+        note
+      }
+    }),
+    failed: () => ({
+      type: actionTypes.GET_NOTE.FAILED
+    })
+  },
+  getNotes: {
+    started: () => ({
+      type: actionTypes.GET_NOTES.STARTED
+    }),
+    done: (notes: Note[]) => ({
+      type: actionTypes.GET_NOTES.DONE,
+      payload: {
+        notes
+      }
+    }),
+    failed: () => ({
+      type: actionTypes.GET_NOTES.FAILED
+    })
+  },
+  updateNote: {
+    started: () => ({
+      type: actionTypes.UPDATE_NOTE.STARTED
+    }),
+    done: (note: Note) => ({
+      type: actionTypes.UPDATE_NOTE.DONE,
+      payload: {
+        note
+      }
+    }),
+    failed: () => ({
+      type: actionTypes.UPDATE_NOTE.FAILED
+    })
+  },
+  deleteNote: {
+    started: () => ({
+      type: actionTypes.DELETE_NOTE.STARTED
+    }),
 
-  done: (note: Note) => ({
-    type: actionTypes.CREATE_NOTE.DONE,
+    done: () => ({
+      type: actionTypes.DELETE_NOTE.DONE
+    }),
+
+    failed: () => ({
+      type: actionTypes.DELETE_NOTE.FAILED
+    })
+  },
+  createNoteEvent: (type: NoteEventType) => ({
+    type: actionTypes.CREATE_NOTE_EVENT,
     payload: {
-      note
+      type
     }
   }),
-
-  failed: () => ({
-    type: actionTypes.CREATE_NOTE.FAILED
-  })
-};
-
-const getNote = {
-  started: () => ({
-    type: actionTypes.GET_NOTE.STARTED
-  }),
-
-  done: (note: Note) => ({
-    type: actionTypes.GET_NOTE.DONE,
+  deleteNoteEvent: (id: string) => ({
+    type: actionTypes.DELETE_NOTE_EVENT,
     payload: {
-      note
+      id
     }
-  }),
-
-  failed: () => ({
-    type: actionTypes.GET_NOTE.FAILED
   })
-};
-
-const getNotes = {
-  started: () => ({
-    type: actionTypes.GET_NOTES.STARTED
-  }),
-
-  done: (notes: Note[]) => ({
-    type: actionTypes.GET_NOTES.DONE,
-    payload: {
-      notes
-    }
-  }),
-
-  failed: () => ({
-    type: actionTypes.GET_NOTES.FAILED
-  })
-};
-
-const updateNote = {
-  started: () => ({
-    type: actionTypes.UPDATE_NOTE.STARTED
-  }),
-
-  done: (note: Note) => ({
-    type: actionTypes.UPDATE_NOTE.DONE,
-    payload: {
-      note
-    }
-  }),
-
-  failed: () => ({
-    type: actionTypes.UPDATE_NOTE.FAILED
-  })
-};
-
-const deleteNote = {
-  started: () => ({
-    type: actionTypes.DELETE_NOTE.STARTED
-  }),
-
-  done: () => ({
-    type: actionTypes.DELETE_NOTE.DONE
-  }),
-
-  failed: () => ({
-    type: actionTypes.DELETE_NOTE.FAILED
-  })
-};
-
-const createNoteEvent = (type: NoteEventType) => ({
-  type: actionTypes.CREATE_NOTE_EVENT,
-  payload: {
-    type
-  }
-});
-
-const deleteNoteEvent = (id: string) => ({
-  type: actionTypes.DELETE_NOTE_EVENT,
-  payload: {
-    id
-  }
-});
-
-export default {
-  createNote,
-  getNotes,
-  getNote,
-  updateNote,
-  deleteNote,
-  createNoteEvent,
-  deleteNoteEvent
 };
