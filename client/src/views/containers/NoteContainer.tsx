@@ -185,16 +185,9 @@ const mapDispatchToProps = (
   ownProps: { id: string }
 ) => {
   return {
+    dispatch,
     onMount() {
       dispatch(notesOperations.fetchNote(parseInt(ownProps.id)));
-    },
-    deleteButtonHandler() {
-      dispatch(notesOperations.deleteNoteAndRedirect(parseInt(ownProps.id)));
-    },
-    updateButtonHandler(title: string, content: string) {
-      dispatch(
-        notesOperations.updateNote(parseInt(ownProps.id), title, content)
-      );
     },
     deleteEvent(eventId: string) {
       dispatch(notesOperations.deleteNoteEvent(eventId));
@@ -202,7 +195,30 @@ const mapDispatchToProps = (
   };
 };
 
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: { id: string }
+) => {
+  return Object.assign({}, ownProps, stateProps, {
+    ...dispatchProps,
+    deleteButtonHandler() {
+      if (stateProps.note !== null) {
+        dispatchProps.dispatch(notesOperations.deleteNoteAndRedirect(stateProps.note.id));
+      }
+    },
+    updateButtonHandler(title: string, content: string) {
+      if (stateProps.note !== null) {
+        dispatchProps.dispatch(
+          notesOperations.updateNote(stateProps.note.id, title, content, stateProps.note.version)
+        );
+      }
+    }
+  });
+};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(NoteContainer);

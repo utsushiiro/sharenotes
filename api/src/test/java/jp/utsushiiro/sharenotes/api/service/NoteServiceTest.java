@@ -4,7 +4,8 @@ import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.NoteRevision;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
-import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.CreateNoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.UpdateNoteForm;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRevisionRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
@@ -66,9 +67,9 @@ class NoteServiceTest {
     @Test
     void create() {
         // setup
-        NoteForm noteForm = new NoteForm();
-        noteForm.setTitle("test-title");
-        noteForm.setContent("test-content");
+        CreateNoteForm createNoteForm = new CreateNoteForm();
+        createNoteForm.setTitle("test-title");
+        createNoteForm.setContent("test-content");
 
         User user = new User();
         user.setSelfGroup(new UserGroup());
@@ -77,12 +78,12 @@ class NoteServiceTest {
         Mockito.doReturn(everyoneGroup).when(userGroupRepository).findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
         // do
-        Note result = noteService.create(noteForm, user);
+        Note result = noteService.create(createNoteForm, user);
 
         // check
         NoteRevision revision = result.getLatestRevision();
-        assertThat(revision.getTitle()).isEqualTo(noteForm.getTitle());
-        assertThat(revision.getContent()).isEqualTo(noteForm.getContent());
+        assertThat(revision.getTitle()).isEqualTo(createNoteForm.getTitle());
+        assertThat(revision.getContent()).isEqualTo(createNoteForm.getContent());
         assertThat(revision.getGroupWithReadAuthority()).isEqualTo(everyoneGroup);
         assertThat(revision.getGroupWithReadWriteAuthority()).isEqualTo(everyoneGroup);
         assertThat(revision.getGroupWithAdminAuthority()).isEqualTo(user.getSelfGroup());
@@ -108,18 +109,18 @@ class NoteServiceTest {
         Mockito.doReturn(userGroupWithReadWriteAuthority).when(mockNoteRevision).getGroupWithReadWriteAuthority();
         Mockito.doReturn(userGroupWithAdminAuthority).when(mockNoteRevision).getGroupWithAdminAuthority();
 
-        NoteForm noteForm = new NoteForm();
-        noteForm.setTitle("test-title");
-        noteForm.setContent("test-content");
+        UpdateNoteForm updateNoteForm = new UpdateNoteForm();
+        updateNoteForm.setTitle("test-title");
+        updateNoteForm.setContent("test-content");
 
         // do
-        noteService.update(id, noteForm);
+        noteService.update(id, updateNoteForm);
 
         // check
         Mockito.verify(noteRepository, Mockito.times(1)).findById(id);
         Mockito.verify(noteRevisionRepository, Mockito.times(1)).save(Mockito.argThat(
-                noteRevision -> noteRevision.getTitle().equals(noteForm.getTitle()) &&
-                            noteRevision.getContent().equals(noteForm.getContent()) &&
+                noteRevision -> noteRevision.getTitle().equals(updateNoteForm.getTitle()) &&
+                            noteRevision.getContent().equals(updateNoteForm.getContent()) &&
                             noteRevision.getGroupWithReadAuthority().equals(userGroupWithReadAuthority) &&
                             noteRevision.getGroupWithReadWriteAuthority().equals(userGroupWithReadWriteAuthority) &&
                             noteRevision.getGroupWithAdminAuthority().equals(userGroupWithAdminAuthority) &&

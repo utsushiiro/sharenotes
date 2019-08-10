@@ -4,6 +4,7 @@ export type Note = {
   id: number;
   title: string;
   content: string;
+  version: number;
 };
 
 export type NoteEventType = keyof (typeof noteEventTypes);

@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class NoteForm {
+public class CreateNoteForm {
 
     @ExtendedNotBlank
     private String title;

@@ -1,7 +1,8 @@
 package jp.utsushiiro.sharenotes.api.controller;
 
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.CreateNoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.UpdateNoteForm;
 import jp.utsushiiro.sharenotes.api.dto.resource.NoteResource;
 import jp.utsushiiro.sharenotes.api.dto.resource.NotesResource;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
@@ -33,18 +34,18 @@ public class NotesRestController {
 
     @PostMapping("/notes")
     public NoteResource create(
-            @RequestBody @Validated NoteForm noteForm,
+            @RequestBody @Validated CreateNoteForm createNoteForm,
             @AuthenticationPrincipal(expression = "user") User user
     ) {
-        return new NoteResource(noteService.create(noteForm, user));
+        return new NoteResource(noteService.create(createNoteForm, user));
     }
 
     @PatchMapping("/notes/{id}")
-    public void update(
+    public NoteResource update(
             @PathVariable Long id,
-            @RequestBody @Validated NoteForm noteForm
+            @RequestBody @Validated UpdateNoteForm updateNoteForm
     ) {
-        noteService.update(id, noteForm);
+        return new NoteResource(noteService.update(id, updateNoteForm));
     }
 
     @DeleteMapping("/notes/{id}")

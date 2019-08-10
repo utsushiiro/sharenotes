@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.utsushiiro.sharenotes.api.domain.Note;
 import jp.utsushiiro.sharenotes.api.domain.NoteRevision;
 import jp.utsushiiro.sharenotes.api.domain.User;
-import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.CreateNoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.UpdateNoteForm;
 import jp.utsushiiro.sharenotes.api.dto.resource.NoteResource;
 import jp.utsushiiro.sharenotes.api.dto.resource.NotesResource;
 import jp.utsushiiro.sharenotes.api.service.NoteService;
@@ -107,11 +108,11 @@ class NotesRestControllerTest {
     @Test
     void createTest() throws Exception {
         // setup
-        NoteForm noteForm = new NoteForm();
+        CreateNoteForm createNoteForm = new CreateNoteForm();
 
         Long noteId = 1L;
         Mockito.doReturn(createMockNote(noteId)).when(noteService).create(
-                ArgumentMatchers.any(NoteForm.class),
+                ArgumentMatchers.any(CreateNoteForm.class),
                 ArgumentMatchers.any(User.class)
         );
 
@@ -119,7 +120,7 @@ class NotesRestControllerTest {
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/notes")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(noteForm)))
+                .content(mapper.writeValueAsString(createNoteForm)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -127,7 +128,7 @@ class NotesRestControllerTest {
         NoteResource resource = mapper.readValue(result.getResponse().getContentAsString(), NoteResource.class);
         assertThat(resource.getId()).isEqualTo(noteId);
         Mockito.verify(noteService, Mockito.times(1)).create(
-                ArgumentMatchers.any(NoteForm.class),
+                ArgumentMatchers.any(CreateNoteForm.class),
                 ArgumentMatchers.any(User.class)
         );
     }
@@ -137,19 +138,19 @@ class NotesRestControllerTest {
     void updateTest() throws Exception{
         // setup
         Long noteId = 1L;
-        NoteForm noteForm = new NoteForm();
+        CreateNoteForm createNoteForm = new CreateNoteForm();
 
         // do
         this.mockMvc.perform(MockMvcRequestBuilders
                 .patch(String.format("/api/notes/%s", noteId))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(noteForm)))
+                .content(mapper.writeValueAsString(createNoteForm)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         Mockito.verify(noteService, Mockito.times(1)).update(
                 ArgumentMatchers.anyLong(),
-                ArgumentMatchers.any(NoteForm.class)
+                ArgumentMatchers.any(UpdateNoteForm.class)
         );
     }
 

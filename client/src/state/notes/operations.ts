@@ -53,11 +53,8 @@ const fetchNote = (id: number) => {
   };
 };
 
-const updateNote = (id: number, title: string, content: string) => {
-  return async (dispatch: Dispatch, getState: () => State) => {
-    const state = getState();
-    const userId = authSelectors.getUserId(state.authState);
-
+const updateNote = (id: number, title: string, content: string, version: number) => {
+  return async (dispatch: Dispatch) => {
     dispatch(actions.updateNote.started());
 
     try {
@@ -66,16 +63,11 @@ const updateNote = (id: number, title: string, content: string) => {
         {
           title,
           content,
-          userId
+          version
         }
       );
-      dispatch(
-        actions.updateNote.done({
-          id,
-          title,
-          content
-        })
-      );
+      console.log(response);
+      dispatch(actions.updateNote.done(response.data));
       dispatch(actions.createNoteEvent(noteEventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
     } catch (err) {

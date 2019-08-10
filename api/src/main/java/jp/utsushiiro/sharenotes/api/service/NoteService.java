@@ -1,13 +1,15 @@
 package jp.utsushiiro.sharenotes.api.service;
 
 import jp.utsushiiro.sharenotes.api.domain.*;
-import jp.utsushiiro.sharenotes.api.dto.form.NoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.CreateNoteForm;
+import jp.utsushiiro.sharenotes.api.dto.form.UpdateNoteForm;
 import jp.utsushiiro.sharenotes.api.exception.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.FolderRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRepository;
 import jp.utsushiiro.sharenotes.api.repository.NoteRevisionRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,7 @@ public class NoteService {
 
     @PreAuthorize("isAuthenticated()")
     @Transactional
-    public Note create(NoteForm form, User user) {
+    public Note create(CreateNoteForm form, User user) {
         Folder root = folderRepository.findByName(Folder.ROOT_FOLDER_NAME);
         Note note = new Note();
         root.addNote(note);
@@ -77,11 +79,15 @@ public class NoteService {
 
     @PreAuthorize("isAuthenticated() and hasPermission(#noteId, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).READ_WRITE)")
     @Transactional
-    public void update(Long noteId, NoteForm form) {
+    public Note update(Long noteId, UpdateNoteForm form) {
         Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException(Note.class, noteId));
-        NoteRevision prev = note.getLatestRevision();
 
+        if (!note.getVersion().equals(form.getVersion())) {
+            throw new ObjectOptimisticLockingFailureException(Note.class, note.getId());
+        }
+
+        NoteRevision prev = note.getLatestRevision();
         NoteRevision next = new NoteRevision();
         next.setNote(note);
         next.setTitle(form.getTitle());
@@ -93,6 +99,8 @@ public class NoteService {
 
         note.updateLatestRevision(next);
         noteRepository.save(note);
+
+        return note;
     }
 
     @PreAuthorize("isAuthenticated() and hasPermission(#id, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).ADMIN)")
