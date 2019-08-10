@@ -23,7 +23,7 @@ type Props = {
   deleteButtonHandler: () => void;
 };
 
-const Note: React.FC<Props> = (props) => {
+const Note: React.FC<Props> = props => {
   const classes = useStyles();
 
   return (

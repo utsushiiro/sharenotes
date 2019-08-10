@@ -29,7 +29,7 @@ type Props = {
   updateButtonHandler: (content: string) => void;
 };
 
-const Editor: React.FC<Props> = (props) => {
+const Editor: React.FC<Props> = props => {
   const classes = useStyles();
   const [content, setContent] = useState(props.note.content);
   return (

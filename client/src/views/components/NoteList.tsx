@@ -44,7 +44,7 @@ type Props = {
   deleteEvent: (eventId: string) => void;
 };
 
-const NoteList: React.FC<Props> = (props) => {
+const NoteList: React.FC<Props> = props => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {

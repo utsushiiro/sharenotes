@@ -43,7 +43,7 @@ type Props = {
   newButtonHandler: (title: string) => void;
 };
 
-const Navbar: React.FC<Props> = (props) => {
+const Navbar: React.FC<Props> = props => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);

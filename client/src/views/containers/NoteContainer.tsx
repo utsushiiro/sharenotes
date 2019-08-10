@@ -61,7 +61,7 @@ type Props = {
   deleteEvent: (eventId: string) => void;
 };
 
-const NoteContainer: React.FC<Props> = (props) => {
+const NoteContainer: React.FC<Props> = props => {
   const classes = useStyles();
   const [tabValue, setTabValue] = React.useState(props.isEditorMode ? 1 : 0);
   const { enqueueSnackbar } = useSnackbar();
@@ -79,7 +79,7 @@ const NoteContainer: React.FC<Props> = (props) => {
           autoHideDuration: 1500
         });
         props.deleteEvent(event.id);
-      }else if (event.type === noteEventTypes.UPDATED_NOTE) {
+      } else if (event.type === noteEventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfuly updated", {
           variant: "success",
           autoHideDuration: 1500
@@ -195,13 +195,20 @@ const mergeProps = (
     ...dispatchProps,
     deleteButtonHandler() {
       if (stateProps.note !== null) {
-        dispatchProps.dispatch(notesOperations.deleteNoteAndRedirect(stateProps.note.id));
+        dispatchProps.dispatch(
+          notesOperations.deleteNoteAndRedirect(stateProps.note.id)
+        );
       }
     },
     updateButtonHandler(title: string, content: string) {
       if (stateProps.note !== null) {
         dispatchProps.dispatch(
-          notesOperations.updateNote(stateProps.note.id, title, content, stateProps.note.version)
+          notesOperations.updateNote(
+            stateProps.note.id,
+            title,
+            content,
+            stateProps.note.version
+          )
         );
       }
     }

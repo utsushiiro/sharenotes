@@ -33,7 +33,7 @@ type Props = {
   onSubmit: (username: string, password: string) => void;
 };
 
-const Login: React.FC<Props> = (props) => {
+const Login: React.FC<Props> = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

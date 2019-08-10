@@ -9,8 +9,8 @@ type Props = {
   isAuthenticated: boolean;
 } & RouteProps;
 
-const PrivateRoute: React.FC<Props> = (props) => {
-  const {component: Component, isAuthenticated, ...rest} = props;
+const PrivateRoute: React.FC<Props> = props => {
+  const { component: Component, isAuthenticated, ...rest } = props;
   return (
     <Route
       {...rest}
