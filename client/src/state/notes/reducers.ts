@@ -10,7 +10,10 @@ const initialState: NotesState = {
   events: []
 };
 
-const note: Reducer<NotesState, NotesAction> = (state = initialState, action) => {
+const note: Reducer<NotesState, NotesAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case actionTypes.CREATE_NOTE.STARTED:
       return {

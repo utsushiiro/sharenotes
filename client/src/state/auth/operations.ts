@@ -40,7 +40,7 @@ const logout = () => {
     dispatch(actionCreators.logout.started());
 
     try {
-      await api.post("http://localhost:3001/api/v1/logout");
+      await api.post("/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actionCreators.logout.done());
       dispatch(push("/login"));
@@ -55,17 +55,11 @@ const signUp = (username: string, email: string, password: string) => {
     dispatch(actionCreators.signUp.started());
 
     try {
-      const response: AxiosResponse<User> = await axios.post(
-        "http://localhost:3001/api/v1/user",
-        {
-          username: username,
-          email: email,
-          password: password
-        },
-        {
-          withCredentials: true
-        }
-      );
+      const response: AxiosResponse<User> = await axios.post("/api/v1/user", {
+        username: username,
+        email: email,
+        password: password
+      });
 
       const user = {
         id: response.data.id,

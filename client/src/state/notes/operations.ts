@@ -9,7 +9,7 @@ const createNoteAndRedirect = (title: string, content: string) => {
     dispatch(actionCreators.createNote.started());
 
     try {
-      const response = await api.post("http://localhost:3001/api/v1/notes/", {
+      const response = await api.post("/api/v1/notes/", {
         title,
         content
       });
@@ -32,7 +32,7 @@ const fetchNotes = () => {
     dispatch(actionCreators.getNotes.started());
 
     try {
-      const response = await api.get("http://localhost:3001/api/v1/notes/");
+      const response = await api.get("/api/v1/notes/");
       dispatch(actionCreators.getNotes.done(response.data.notes));
     } catch (err) {
       dispatch(actionCreators.getNotes.failed());
@@ -45,9 +45,7 @@ const fetchNote = (id: number) => {
     dispatch(actionCreators.getNote.started());
 
     try {
-      const response = await api.get(
-        `http://localhost:3001/api/v1/notes/${id}`
-      );
+      const response = await api.get(`/api/v1/notes/${id}`);
       dispatch(actionCreators.getNote.done(response.data));
     } catch (err) {
       dispatch(actionCreators.getNote.failed());
@@ -65,14 +63,11 @@ const updateNote = (
     dispatch(actionCreators.updateNote.started());
 
     try {
-      const response = await api.patch(
-        `http://localhost:3001/api/v1/notes/${id}`,
-        {
-          title,
-          content,
-          version
-        }
-      );
+      const response = await api.patch(`/api/v1/notes/${id}`, {
+        title,
+        content,
+        version
+      });
       dispatch(actionCreators.updateNote.done(response.data));
       dispatch(actionCreators.createNoteEvent(noteEventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
@@ -90,9 +85,7 @@ const deleteNoteAndRedirect = (id: number) => {
     dispatch(actionCreators.deleteNote.started());
 
     try {
-      const response = await api.delete(
-        `http://localhost:3001/api/v1/notes/${id}`
-      );
+      const response = await api.delete(`/api/v1/notes/${id}`);
       dispatch(actionCreators.deleteNote.done());
       dispatch(actionCreators.createNoteEvent(noteEventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));

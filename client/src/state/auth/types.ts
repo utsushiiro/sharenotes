@@ -1,5 +1,5 @@
-import {actionCreators} from "./actions";
-import {PickActionType} from "../types";
+import { actionCreators } from "./actions";
+import { PickActionType } from "../types";
 
 export type User = {
   id: number;
