@@ -2,7 +2,7 @@ import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse } from "axios";
 import { push } from "connected-react-router";
-import api from "../api";
+import api from "../../api";
 import storage from "../storage";
 import { User } from "./types";
 
