@@ -2,7 +2,7 @@ import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse } from "axios";
 import { push } from "connected-react-router";
-import api from "../../api";
+import api, { rawApi } from "../../api";
 import storage from "../storage";
 import { User } from "./types";
 
@@ -14,12 +14,10 @@ const login = (username: string, password: string) => {
       const params = new URLSearchParams();
       params.append("username", username);
       params.append("password", password);
-      const response: AxiosResponse<User> = await axios.post(
-        "http://localhost:3001/api/v1/login",
+      const response: AxiosResponse<User> = await rawApi.post(
+        "/api/v1/login",
         params,
-        {
-          withCredentials: true
-        }
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } } // overwrite Content-Type
       );
       const user = {
         id: response.data.id,
