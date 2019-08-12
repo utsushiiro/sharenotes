@@ -1,6 +1,6 @@
 import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
-import api from "../../api";
+import { apiGet, apiPost, apiPatch, apiDelete } from "../../api";
 import { push } from "connected-react-router";
 import { noteEventTypes } from "./constants";
 
@@ -9,9 +9,11 @@ const createNoteAndRedirect = (title: string, content: string) => {
     dispatch(actionCreators.createNote.started());
 
     try {
-      const response = await api.post("/api/v1/notes/", {
-        title,
-        content
+      const response = await apiPost("/api/v1/notes", {
+        body: {
+          title,
+          content
+        }
       });
       dispatch(actionCreators.createNote.done(response.data));
       dispatch(actionCreators.createNoteEvent(noteEventTypes.CREATED_NOTE));
@@ -32,7 +34,7 @@ const fetchNotes = () => {
     dispatch(actionCreators.getNotes.started());
 
     try {
-      const response = await api.get("/api/v1/notes/");
+      const response = await apiGet("/api/v1/notes");
       dispatch(actionCreators.getNotes.done(response.data.notes));
     } catch (err) {
       dispatch(actionCreators.getNotes.failed());
@@ -45,7 +47,9 @@ const fetchNote = (id: number) => {
     dispatch(actionCreators.getNote.started());
 
     try {
-      const response = await api.get(`/api/v1/notes/${id}`);
+      const response = await apiGet("/api/v1/notes/:id", {
+        vars: { id: String(id) }
+      });
       dispatch(actionCreators.getNote.done(response.data));
     } catch (err) {
       dispatch(actionCreators.getNote.failed());
@@ -63,10 +67,13 @@ const updateNote = (
     dispatch(actionCreators.updateNote.started());
 
     try {
-      const response = await api.patch(`/api/v1/notes/${id}`, {
-        title,
-        content,
-        version
+      const response = await apiPatch("/api/v1/notes/:id", {
+        vars: { id: String(id) },
+        body: {
+          title,
+          content,
+          version
+        }
       });
       dispatch(actionCreators.updateNote.done(response.data));
       dispatch(actionCreators.createNoteEvent(noteEventTypes.UPDATED_NOTE));
@@ -85,7 +92,9 @@ const deleteNoteAndRedirect = (id: number) => {
     dispatch(actionCreators.deleteNote.started());
 
     try {
-      const response = await api.delete(`/api/v1/notes/${id}`);
+      await apiDelete("/api/v1/notes/:id", {
+        vars: { id: String(id) }
+      });
       dispatch(actionCreators.deleteNote.done());
       dispatch(actionCreators.createNoteEvent(noteEventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));

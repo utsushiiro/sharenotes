@@ -1,31 +1,26 @@
 import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
-import axios, { AxiosResponse } from "axios";
 import { push } from "connected-react-router";
-import api, { rawApi } from "../../api";
+import { apiPost } from "../../api";
 import storage from "../storage";
-import { User } from "./types";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(actionCreators.login.started());
 
     try {
-      const params = new URLSearchParams();
-      params.append("username", username);
-      params.append("password", password);
-      const response: AxiosResponse<User> = await rawApi.post(
+      const response = await apiPost(
         "/api/v1/login",
-        params,
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } } // overwrite Content-Type
+        {
+          body: {
+            username,
+            password
+          }
+        },
+        { enableConvertJsonToForm: true }
       );
-      const user = {
-        id: response.data.id,
-        name: response.data.name,
-        email: response.data.email
-      };
-      storage.setLoginUser(user);
-      dispatch(actionCreators.login.done(user));
+      storage.setLoginUser(response.data);
+      dispatch(actionCreators.login.done(response.data));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.login.failed());
@@ -38,7 +33,7 @@ const logout = () => {
     dispatch(actionCreators.logout.started());
 
     try {
-      await api.post("/api/v1/logout");
+      await apiPost("/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actionCreators.logout.done());
       dispatch(push("/login"));
@@ -53,19 +48,15 @@ const signUp = (username: string, email: string, password: string) => {
     dispatch(actionCreators.signUp.started());
 
     try {
-      const response: AxiosResponse<User> = await axios.post("/api/v1/user", {
-        username: username,
-        email: email,
-        password: password
+      const response = await apiPost("/api/v1/users", {
+        body: {
+          username: username,
+          email: email,
+          password: password
+        }
       });
-
-      const user = {
-        id: response.data.id,
-        name: response.data.name,
-        email: response.data.email
-      };
-      storage.setLoginUser(user);
-      dispatch(actionCreators.signUp.done(user));
+      storage.setLoginUser(response.data);
+      dispatch(actionCreators.signUp.done(response.data));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.signUp.failed());
