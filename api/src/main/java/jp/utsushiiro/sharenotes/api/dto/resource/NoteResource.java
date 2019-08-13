@@ -38,6 +38,6 @@ public class NoteResource {
         this.updatedBy = latestRevision.getCreatedBy().getName();
         this.createdAt = note.getCreatedAt();
         this.createdBy = note.getCreatedBy().getName();
-        this.version = note.getVersion();
+        this.version = note.getLatestRevisionVersion();
     }
 }
