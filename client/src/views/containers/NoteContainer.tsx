@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { Action } from "../../state/notes/actions";
+import { Action } from "../../state/types";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";
@@ -61,45 +61,36 @@ type Props = {
   deleteEvent: (eventId: string) => void;
 };
 
-const NoteContainer: React.FC<Props> = ({
-  note,
-  onMount,
-  updateButtonHandler,
-  deleteButtonHandler,
-  isFetching,
-  isEditorMode,
-  events,
-  deleteEvent
-}) => {
+const NoteContainer: React.FC<Props> = props => {
   const classes = useStyles();
-  const [tabValue, setTabValue] = React.useState(isEditorMode ? 1 : 0);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [tabValue, setTabValue] = React.useState(props.isEditorMode ? 1 : 0);
+  const { enqueueSnackbar } = useSnackbar();
   const modeStyle = tabValue === 1 ? editorModeStyle : {};
 
   useEffect(() => {
-    onMount();
+    props.onMount();
   }, []);
 
   useEffect(() => {
-    events.forEach(event => {
+    props.events.forEach(event => {
       if (event.type === noteEventTypes.CREATED_NOTE) {
         enqueueSnackbar("Successfuly created", {
           variant: "success",
           autoHideDuration: 1500
         });
-        deleteEvent(event.id);
-      }else if (event.type === noteEventTypes.UPDATED_NOTE) {
+        props.deleteEvent(event.id);
+      } else if (event.type === noteEventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfuly updated", {
           variant: "success",
           autoHideDuration: 1500
         });
-        deleteEvent(event.id);
+        props.deleteEvent(event.id);
       } else if (event.type === noteEventTypes.FAILED_TO_UPDATE_NOTE) {
         enqueueSnackbar("Failed to update", {
           variant: "error",
           autoHideDuration: 1500
         });
-        deleteEvent(event.id);
+        props.deleteEvent(event.id);
       }
     });
   });
@@ -108,13 +99,13 @@ const NoteContainer: React.FC<Props> = ({
     return (
       <>
         {value === 0 && (
-          <Note note={note} deleteButtonHandler={deleteButtonHandler} />
+          <Note note={note} deleteButtonHandler={props.deleteButtonHandler} />
         )}
         {value === 1 && (
           <Editor
             note={note}
             updateButtonHandler={content =>
-              updateButtonHandler(note.title, content)
+              props.updateButtonHandler(note.title, content)
             }
           />
         )}
@@ -127,7 +118,7 @@ const NoteContainer: React.FC<Props> = ({
     );
   };
 
-  return isFetching || note == null ? (
+  return props.isFetching || props.note == null ? (
     <></>
   ) : (
     <>
@@ -145,7 +136,7 @@ const NoteContainer: React.FC<Props> = ({
         <Paper className={classes.content}>
           <Box p={2}>
             <Typography variant="h5" component="h1">
-              {note.title}
+              {props.note.title}
             </Typography>
           </Box>
           <Divider />
@@ -164,7 +155,7 @@ const NoteContainer: React.FC<Props> = ({
               <Tab label="Others" />
             </Tabs>
             <Divider />
-            {tabComponentSwitcher(tabValue, note)}
+            {tabComponentSwitcher(tabValue, props.note)}
           </Box>
         </Paper>
       </Box>
@@ -185,16 +176,9 @@ const mapDispatchToProps = (
   ownProps: { id: string }
 ) => {
   return {
+    dispatch,
     onMount() {
       dispatch(notesOperations.fetchNote(parseInt(ownProps.id)));
-    },
-    deleteButtonHandler() {
-      dispatch(notesOperations.deleteNoteAndRedirect(parseInt(ownProps.id)));
-    },
-    updateButtonHandler(title: string, content: string) {
-      dispatch(
-        notesOperations.updateNote(parseInt(ownProps.id), title, content)
-      );
     },
     deleteEvent(eventId: string) {
       dispatch(notesOperations.deleteNoteEvent(eventId));
@@ -202,7 +186,37 @@ const mapDispatchToProps = (
   };
 };
 
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: { id: string }
+) => {
+  return Object.assign({}, ownProps, stateProps, {
+    ...dispatchProps,
+    deleteButtonHandler() {
+      if (stateProps.note !== null) {
+        dispatchProps.dispatch(
+          notesOperations.deleteNoteAndRedirect(stateProps.note.id)
+        );
+      }
+    },
+    updateButtonHandler(title: string, content: string) {
+      if (stateProps.note !== null) {
+        dispatchProps.dispatch(
+          notesOperations.updateNote(
+            stateProps.note.id,
+            title,
+            content,
+            stateProps.note.version
+          )
+        );
+      }
+    }
+  });
+};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(NoteContainer);

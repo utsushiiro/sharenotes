@@ -33,13 +33,13 @@ type Props = {
   onSubmit: (username: string, password: string) => void;
 };
 
-const Login: React.FC<Props> = ({ onSubmit }) => {
+const Login: React.FC<Props> = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(username, password);
+    props.onSubmit(username, password);
   };
 
   const classes = useStyles();

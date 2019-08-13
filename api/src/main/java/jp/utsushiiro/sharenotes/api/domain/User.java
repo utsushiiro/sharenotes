@@ -17,18 +17,19 @@ import java.util.Objects;
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name="password")
+    @Column(name = "password")
     @JsonIgnore
     private String password;
 
@@ -50,12 +51,16 @@ public class User {
     private List<UserGroupMapping> userGroupMappings = new ArrayList<>();
 
     @LastModifiedDate
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @CreatedDate
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     public enum AuthorityType {
         READ,
@@ -80,7 +85,7 @@ public class User {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
+        sb.append(", name = '").append(name).append('\'');
         sb.append('}');
         return sb.toString();
     }

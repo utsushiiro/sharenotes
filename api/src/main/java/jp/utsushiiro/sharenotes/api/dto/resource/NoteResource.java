@@ -25,6 +25,8 @@ public class NoteResource {
 
     private String createdBy;
 
+    private Long version;
+
     public NoteResource(Note note) {
         this.id = note.getId();
 
@@ -36,5 +38,6 @@ public class NoteResource {
         this.updatedBy = latestRevision.getCreatedBy().getName();
         this.createdAt = note.getCreatedAt();
         this.createdBy = note.getCreatedBy().getName();
+        this.version = note.getVersion();
     }
 }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
 import { Note, NoteEvent } from "../../state/notes/types";
-import { Action } from "../../state/notes/actions";
+import { Action } from "../../state/types";
 import { notesOperations } from "../../state/notes";
 import { useEffect } from "react";
 import { State } from "../../state/types";
@@ -44,21 +44,21 @@ type Props = {
   deleteEvent: (eventId: string) => void;
 };
 
-const NoteList: React.FC<Props> = ({ notes, onMount, isFetching, events, deleteEvent}) => {
+const NoteList: React.FC<Props> = props => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    onMount();
+    props.onMount();
   }, []);
 
   useEffect(() => {
-    events.forEach(event => {
+    props.events.forEach(event => {
       if (event.type === noteEventTypes.DELETED_NOTE) {
         enqueueSnackbar("Successfuly deleted", {
           variant: "success",
           autoHideDuration: 1500
         });
-        deleteEvent(event.id);
+        props.deleteEvent(event.id);
       }
     });
   });
@@ -66,7 +66,7 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching, events, deleteE
   const classes = useStyles();
   return (
     <div>
-      {isFetching ? (
+      {props.isFetching ? (
         <></>
       ) : (
         <Box mt={4}>
@@ -74,7 +74,7 @@ const NoteList: React.FC<Props> = ({ notes, onMount, isFetching, events, deleteE
             Note List
           </Typography>
           <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-            {notes.map(note => (
+            {props.notes.map(note => (
               <li key={note.id} style={{ marginBottom: "20px" }}>
                 <Card className={classes.card}>
                   <CardContent>

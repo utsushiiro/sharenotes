@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
-import { NotesState } from "./types";
-import { Action, actionTypes } from "./actions";
+import { NotesState, NotesAction } from "./types";
+import { actionTypes } from "./actions";
 import { v4 as uuid } from "uuid";
 
 const initialState: NotesState = {
@@ -10,7 +10,10 @@ const initialState: NotesState = {
   events: []
 };
 
-const note: Reducer<NotesState, Action> = (state = initialState, action) => {
+const note: Reducer<NotesState, NotesAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case actionTypes.CREATE_NOTE.STARTED:
       return {

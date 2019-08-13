@@ -29,9 +29,9 @@ type Props = {
   updateButtonHandler: (content: string) => void;
 };
 
-const Editor: React.FC<Props> = ({ note, updateButtonHandler }) => {
+const Editor: React.FC<Props> = props => {
   const classes = useStyles();
-  const [content, setContent] = useState(note.content);
+  const [content, setContent] = useState(props.note.content);
   return (
     <div>
       <form>
@@ -47,7 +47,7 @@ const Editor: React.FC<Props> = ({ note, updateButtonHandler }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => updateButtonHandler(content)}
+          onClick={() => props.updateButtonHandler(content)}
         >
           Update
         </Button>

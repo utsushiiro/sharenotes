@@ -2,8 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import { State } from "../../state/types";
-import { Action } from "../../state/notes/actions";
+import { State, Action } from "../../state/types";
 import { authOperations } from "../../state/auth";
 import { User } from "../../state/auth/types";
 
@@ -43,11 +42,7 @@ type Props = {
   newButtonHandler: (title: string) => void;
 };
 
-const Navbar: React.FC<Props> = ({
-  logoutButtonHandler,
-  loginUser,
-  newButtonHandler
-}) => {
+const Navbar: React.FC<Props> = props => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -87,7 +82,7 @@ const Navbar: React.FC<Props> = ({
           <Button color="inherit" onClick={handleClickOpen}>
             New
           </Button>
-          <Button color="inherit" onClick={logoutButtonHandler}>
+          <Button color="inherit" onClick={props.logoutButtonHandler}>
             Logout
           </Button>
         </Toolbar>
@@ -107,7 +102,7 @@ const Navbar: React.FC<Props> = ({
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={() => newButtonHandler(title)} color="primary">
+          <Button onClick={() => props.newButtonHandler(title)} color="primary">
             New
           </Button>
         </DialogActions>

@@ -1,25 +1,21 @@
 import * as React from "react";
 import { Route, Redirect } from "react-router";
 import { State } from "../../state/types";
-import { authSelectors } from "../../state/auth";
 import { connect } from "react-redux";
 import { RouteProps } from "react-router";
 
 type Props = {
   component: React.FC;
-  isLoggedIn: boolean;
+  isAuthenticated: boolean;
 } & RouteProps;
 
-const PrivateRoute: React.FC<Props> = ({
-  component: Component,
-  isLoggedIn,
-  ...rest
-}) => {
+const PrivateRoute: React.FC<Props> = props => {
+  const { component: Component, isAuthenticated, ...rest } = props;
   return (
     <Route
       {...rest}
       render={props =>
-        isLoggedIn ? (
+        isAuthenticated ? (
           <Component />
         ) : (
           <Redirect
@@ -36,7 +32,7 @@ const PrivateRoute: React.FC<Props> = ({
 
 const mapStateToProps = ({ authState }: State) => {
   return {
-    isLoggedIn: authSelectors.isLoggedIn(authState)
+    isAuthenticated: authState.loginUser !== null
   };
 };
 
