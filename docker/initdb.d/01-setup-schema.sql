@@ -40,7 +40,6 @@ create table note (
     folder_id bigint not null,
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
-    version bigint not null,
     primary key (id),
     foreign key (folder_id) references folder (id),
     foreign key (created_by) references user (id)
@@ -64,6 +63,7 @@ create table note_revision (
 create table latest_note_revision_mapping (
     note_id bigint not null,
     note_revision_id bigint not null,
+    version bigint not null,
     primary key (note_id),
     foreign key (note_id) references note (id),
     foreign key (note_revision_id) references note_revision (id)

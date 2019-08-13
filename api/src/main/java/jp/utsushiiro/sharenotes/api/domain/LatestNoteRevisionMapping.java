@@ -22,6 +22,10 @@ public class LatestNoteRevisionMapping {
     @JoinColumn(name = "note_revision_id")
     private NoteRevision noteRevision;
 
+    @Version
+    @Column(name = "version")
+    private Long version;
+
     public LatestNoteRevisionMapping(Note note, NoteRevision noteRevision) {
         this.note = note;
         this.noteRevision = noteRevision;

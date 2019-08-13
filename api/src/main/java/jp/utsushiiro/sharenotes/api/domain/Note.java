@@ -47,10 +47,6 @@ public class Note{
     )
     private User createdBy;
 
-    @Version
-    @Column(name = "version")
-    private Long version;
-
     public enum AuthorityType {
         READ,
         READ_WRITE,
@@ -64,6 +60,10 @@ public class Note{
 
     public NoteRevision getLatestRevision() {
         return latestNoteRevisionMapping.getNoteRevision();
+    }
+
+    public Long getLatestRevisionVersion() {
+        return latestNoteRevisionMapping.getVersion();
     }
 
     public void updateLatestRevision(NoteRevision revision) {

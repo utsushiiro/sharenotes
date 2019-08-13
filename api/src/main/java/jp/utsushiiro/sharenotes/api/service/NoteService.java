@@ -83,7 +83,7 @@ public class NoteService {
         Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException(Note.class, noteId));
 
-        if (!note.getVersion().equals(form.getVersion())) {
+        if (!note.getLatestRevisionVersion().equals(form.getVersion())) {
             throw new ObjectOptimisticLockingFailureException(Note.class, note.getId());
         }
 
