@@ -1,10 +1,7 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
-import { State } from "../../state/types";
-import { Action } from "redux";
-import { authOperations } from "../../state/auth";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { authOperations } from "../../../state/auth";
+import { useState, useCallback } from "react";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,20 +26,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-type Props = {
-  onSubmit: (username: string, password: string) => void;
-};
-
-const Login: React.FC<Props> = props => {
+const LoginPage: React.FC = () => {
+  const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch(authOperations.login(username, password));
+    },
+    [username, password]
+  );
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.onSubmit(username, password);
-  };
-
-  const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -50,7 +46,7 @@ const Login: React.FC<Props> = props => {
         <Typography component="h1" variant="h5">
           ShareNotes
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -89,19 +85,4 @@ const Login: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = () => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
-  return {
-    onSubmit: (username: string, password: string) => {
-      dispatch(authOperations.login(username, password));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default LoginPage;

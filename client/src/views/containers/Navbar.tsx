@@ -1,10 +1,9 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { ThunkDispatch } from "redux-thunk";
-import { State, Action } from "../../state/types";
 import { authOperations } from "../../state/auth";
-import { User } from "../../state/auth/types";
+import { notesOperations } from "../../state/notes";
+import { useState, useCallback } from "react";
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -21,7 +20,6 @@ import {
   TextField,
   DialogActions
 } from "@material-ui/core";
-import { notesOperations } from "../../state/notes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,25 +34,27 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-type Props = {
-  loginUser: User;
-  logoutButtonHandler: () => void;
-  newButtonHandler: (title: string) => void;
-};
 
-const Navbar: React.FC<Props> = props => {
+const Navbar: React.FC = () => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState("");
-
-  function handleClickOpen() {
+  const [open, setOpen] = useState(false);
+  const openDialogHandler = useCallback(() => {
     setOpen(true);
-  }
-
-  function handleClose() {
+  }, []);
+  const closeDialogHandler = useCallback(() => {
     setOpen(false);
-  }
+  }, []);
+
+  const [title, setTitle] = useState("");
+  
+  const dispatch = useDispatch();
+  const logoutButtonHandler = useCallback(() => {
+    dispatch(authOperations.logout());
+  }, []);
+  const newButtonHandler = useCallback(() => {
+    dispatch(notesOperations.createNoteAndRedirect(title, ""));
+  }, [title]);
 
   return (
     <div className={classes.root}>
@@ -69,7 +69,6 @@ const Navbar: React.FC<Props> = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="h1" className={classes.title}>
-            {/* TODO use styled-component */}
             <Link
               color="inherit"
               component={RouterLink}
@@ -79,15 +78,15 @@ const Navbar: React.FC<Props> = props => {
               ShareNotes
             </Link>
           </Typography>
-          <Button color="inherit" onClick={handleClickOpen}>
+          <Button color="inherit" onClick={openDialogHandler}>
             New
           </Button>
-          <Button color="inherit" onClick={props.logoutButtonHandler}>
+          <Button color="inherit" onClick={logoutButtonHandler}>
             Logout
           </Button>
         </Toolbar>
       </AppBar>
-      <Dialog open={open} onClose={handleClose} fullWidth={true}>
+      <Dialog open={open} onClose={closeDialogHandler} fullWidth={true}>
         <DialogTitle>Create New Note</DialogTitle>
         <DialogContent>
           <TextField
@@ -99,10 +98,10 @@ const Navbar: React.FC<Props> = props => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={closeDialogHandler} color="secondary">
             Cancel
           </Button>
-          <Button onClick={() => props.newButtonHandler(title)} color="primary">
+          <Button onClick={newButtonHandler} color="primary">
             New
           </Button>
         </DialogActions>
@@ -111,25 +110,4 @@ const Navbar: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = ({ authState }: State) => {
-  return {
-    loginUser: authState.loginUser
-  };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
-  return {
-    logoutButtonHandler: () => {
-      dispatch(authOperations.logout());
-    },
-    newButtonHandler: (title: string) => {
-      console.log(title);
-      dispatch(notesOperations.createNoteAndRedirect(title, ""));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar);
+export default Navbar;

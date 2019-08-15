@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   note: Note;
-  deleteButtonHandler: () => void;
+  onDelete: () => void;
 };
 
 const Note: React.FC<Props> = props => {
@@ -37,7 +37,7 @@ const Note: React.FC<Props> = props => {
           variant="contained"
           color="secondary"
           className={classes.button}
-          onClick={props.deleteButtonHandler}
+          onClick={props.onDelete}
         >
           Delete
         </Button>

@@ -8,8 +8,8 @@ import { createBrowserHistory } from "history";
 import authReducer from "./auth";
 import {
   useSelector as useReduxSelector,
-  TypedUseSelectorHook,
-} from 'react-redux'
+  TypedUseSelectorHook
+} from "react-redux";
 
 export const history = createBrowserHistory();
 const middlewares = [logger, routerMiddleware(history), thunk];
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   router: connectRouter(history)
 });
 type RootState = ReturnType<typeof rootReducer>;
-export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
 export default function configureStore(initialState = {}) {
   return createStore(
