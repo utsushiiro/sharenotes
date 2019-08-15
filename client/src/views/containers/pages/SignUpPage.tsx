@@ -1,10 +1,7 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
-import { State } from "../../state/types";
-import { Action } from "redux";
-import { authOperations } from "../../state/auth";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { authOperations } from "../../../state/auth";
+import { useState, useCallback } from "react";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,21 +26,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-type Props = {
-  onSubmit: (username: string, email: string, password: string) => void;
-};
-
-const SignUp: React.FC<Props> = props => {
+const SignUpPage: React.FC = () => {
+  const classes = useStyles();
+  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch(authOperations.signUp(username, email, password));
+    },
+    [username, email, password]
+  );
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.onSubmit(username, email, password);
-  };
-
-  const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -51,7 +48,7 @@ const SignUp: React.FC<Props> = props => {
         <Typography component="h1" variant="h5">
           ShareNotes
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -103,19 +100,4 @@ const SignUp: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = () => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => {
-  return {
-    onSubmit: (username: string, email: string, password: string) => {
-      dispatch(authOperations.signUp(username, email, password));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUp);
+export default SignUpPage;

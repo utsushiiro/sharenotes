@@ -6,8 +6,8 @@ import App from "./views/containers/App";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./state/store";
 import { Switch, Route } from "react-router";
-import Login from "./views/components/Login";
-import SignUp from "./views/components/SignUp";
+import LoginPage from "./views/containers/pages/LoginPage";
+import SignUpPage from "./views/containers/pages/SignUpPage";
 import PrivateRoute from "./views/containers/PrivateRoute";
 import { SnackbarProvider } from "notistack";
 
@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
           }}
         >
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/sign_up" component={SignUp} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/sign_up" component={SignUpPage} />
             <PrivateRoute component={App} />
           </Switch>
         </SnackbarProvider>

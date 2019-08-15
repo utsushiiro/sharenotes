@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
-import NoteList from "../components/NoteList";
-import Navbar from "../components/Navbar";
+import NoteListPage from "./pages/NoteListPage";
+import Navbar from "./Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import NoteContainer from "./NoteContainer";
+import NotePage from "./pages/NotePage";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const App: React.FC = () => {
       <Navbar />
       <Container>
         <Switch>
-          <Route exact path="/(notes)?" component={NoteList} />
+          <Route exact path="/(notes)?" component={NoteListPage} />
           <Route
             exact
             path="/notes/:id"
@@ -21,8 +21,8 @@ const App: React.FC = () => {
               match,
               location: { state: fromCreateNoteOperation }
             }) => (
-              <NoteContainer
-                id={match.params.id}
+              <NotePage
+                noteId={match.params.id}
                 isEditorMode={!!fromCreateNoteOperation}
               />
             )}

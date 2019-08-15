@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   note: Note;
-  updateButtonHandler: (content: string) => void;
+  onUpdate: (content: string) => void;
 };
 
 const Editor: React.FC<Props> = props => {
@@ -47,7 +47,7 @@ const Editor: React.FC<Props> = props => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => props.updateButtonHandler(content)}
+          onClick={() => props.onUpdate(content)}
         >
           Update
         </Button>
