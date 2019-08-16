@@ -19,6 +19,7 @@ const PasswordField: React.FC<Props> = (props) => {
           } else if (!/^[a-zA-Z0-9]{8,16}$/.test(value)) {
             return "Invalid password";
           }
+          return undefined;
         })
       }
     >

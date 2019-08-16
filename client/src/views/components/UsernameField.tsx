@@ -19,7 +19,7 @@ const UsernameField: React.FC<Props> = (props) => {
           } else if (!/^[a-zA-Z][a-zA-Z0-9]+$/.test(value)) {
             return "Invalid username";
           }
-          return "";
+          return undefined;
         })
       }
     >
