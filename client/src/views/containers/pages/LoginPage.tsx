@@ -9,7 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import FormikTextField from "../../components/FormikTextField";
+import UsernameField from "../../components/UsernameField";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -52,12 +52,8 @@ const LoginPage: React.FC = () => {
           }}
           render={() => (
             <Form className={classes.form} noValidate>
-              <FormikTextField name="username" label="User Name" type="text" />
-              <FormikTextField
-                name="password"
-                label="Password"
-                type="password"
-              />
+              <UsernameField />
+              <UsernameField />
               <Button
                 type="submit"
                 fullWidth
