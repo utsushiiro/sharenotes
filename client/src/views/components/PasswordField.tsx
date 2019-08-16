@@ -5,14 +5,14 @@ import TextField from "@material-ui/core/TextField";
 
 type Props = {
   enableValidation?: boolean;
-}
+};
 
-const PasswordField: React.FC<Props> = (props) => {
+const PasswordField: React.FC<Props> = props => {
   return (
     <Field
       name="password"
       validate={
-        props.enableValidation && 
+        props.enableValidation &&
         (async (value: string) => {
           if (!value) {
             return "Required";

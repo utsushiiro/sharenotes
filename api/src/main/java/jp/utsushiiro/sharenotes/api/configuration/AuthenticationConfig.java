@@ -42,6 +42,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/system:install").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/users:exists").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginProcessingUrl("/api/v1/login").permitAll()

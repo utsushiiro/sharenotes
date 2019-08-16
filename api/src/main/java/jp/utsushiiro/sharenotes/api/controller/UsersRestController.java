@@ -34,7 +34,7 @@ public class UsersRestController {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email
     ) {
-        return Collections.singletonMap("result", userService.exists(username, email));
+        return Collections.singletonMap("exists", userService.exists(username, email));
     }
 
     @PostMapping("/users")
