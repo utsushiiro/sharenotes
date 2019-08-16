@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   const [title, setTitle] = useState("");
-  
+
   const dispatch = useDispatch();
   const logoutButtonHandler = useCallback(() => {
     dispatch(authOperations.logout());

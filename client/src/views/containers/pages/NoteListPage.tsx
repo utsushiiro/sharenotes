@@ -40,7 +40,7 @@ const NoteListPage: React.FC = () => {
   const isFetching = useSelector(state => state.notesState.isFetching);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(notesOperations.fetchNotes())
+    dispatch(notesOperations.fetchNotes());
   }, []);
 
   const events = useSelector(state => state.notesState.events);

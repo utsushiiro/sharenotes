@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { authOperations } from "../../../state/auth";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
+import { Formik, Form } from "formik";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import FormikTextField from "../../components/FormikTextField";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -28,15 +29,12 @@ const useStyles = makeStyles(theme => ({
 
 const LoginPage: React.FC = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const onSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const submitHadler = useCallback(
+    (username: string, password: string) => {
       dispatch(authOperations.login(username, password));
     },
-    [username, password]
+    [dispatch]
   );
 
   return (
@@ -46,40 +44,32 @@ const LoginPage: React.FC = () => {
         <Typography component="h1" variant="h5">
           ShareNotes
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label="Username"
-            name="username"
-            onChange={e => {
-              setUsername(e.currentTarget.value);
-            }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            onChange={e => {
-              setPassword(e.currentTarget.value);
-            }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Login
-          </Button>
-        </form>
+        <Formik
+          initialValues={{ username: "", password: "" }}
+          onSubmit={(values, actions) => {
+            submitHadler(values.username, values.password);
+            actions.setSubmitting(false);
+          }}
+          render={() => (
+            <Form className={classes.form} noValidate>
+              <FormikTextField name="username" label="User Name" type="text" />
+              <FormikTextField
+                name="password"
+                label="Password"
+                type="password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Login
+              </Button>
+            </Form>
+          )}
+        />
       </div>
     </Container>
   );

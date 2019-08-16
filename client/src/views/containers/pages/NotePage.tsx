@@ -49,7 +49,7 @@ const editorModeStyle = {
 
 type Props = {
   isEditorMode: boolean;
-  noteId: string 
+  noteId: string;
 };
 
 const NotePage: React.FC<Props> = props => {
@@ -62,16 +62,16 @@ const NotePage: React.FC<Props> = props => {
 
   const note = useSelector(state => state.notesState.note);
   const isFetching = useSelector(state => state.notesState.isFetching);
-  const updateNoteHandler = useCallback((content: string) => {
-    if (note !== null) {
-      dispatch(notesOperations.updateNote(note.id,
-          note.title,
-          content,
-          note.version
-        )
-      );
-    }
-  }, [note]);
+  const updateNoteHandler = useCallback(
+    (content: string) => {
+      if (note !== null) {
+        dispatch(
+          notesOperations.updateNote(note.id, note.title, content, note.version)
+        );
+      }
+    },
+    [note]
+  );
 
   const deleteNoteHandler = useCallback(() => {
     if (note !== null) {
@@ -150,10 +150,7 @@ const NotePage: React.FC<Props> = props => {
                 <Note note={note} onDelete={deleteNoteHandler} />
               )}
               {tabValue === 1 && (
-                <Editor
-                  note={note}
-                  onUpdate={updateNoteHandler}
-                />
+                <Editor note={note} onUpdate={updateNoteHandler} />
               )}
               {tabValue !== 0 && tabValue !== 1 && (
                 <Typography variant="body1" style={{ padding: "20px" }}>
