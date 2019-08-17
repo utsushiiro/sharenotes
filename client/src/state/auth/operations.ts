@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { push } from "connected-react-router";
 import { apiPost } from "../../api";
 import storage from "../storage";
+import constants from "./constants";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
@@ -21,9 +22,13 @@ const login = (username: string, password: string) => {
       );
       storage.setLoginUser(response.data);
       dispatch(actionCreators.login.done(response.data));
+      dispatch(actionCreators.createAuthEvent(constants.eventTypes.LOGGED_IN));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.login.failed());
+      dispatch(
+        actionCreators.createAuthEvent(constants.eventTypes.FAILED_TO_LOGIN)
+      );
     }
   };
 };
@@ -67,5 +72,7 @@ const signUp = (username: string, email: string, password: string) => {
 export default {
   login,
   logout,
-  signUp
+  signUp,
+  createAuthEvent: actionCreators.createAuthEvent,
+  deleteAuthEvent: actionCreators.deleteAuthEvent
 };

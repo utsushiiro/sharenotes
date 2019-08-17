@@ -19,12 +19,14 @@ const EmailField: React.FC<Props> = props => {
             return "Required";
           } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
             return "Invalid email address";
-          } else { 
+          } else {
             // TODO handing api error
             const response = await apiGet("/api/v1/users:exists", {
               params: { email: value }
             });
-            return response.data.exists ? "This email is already in use." : undefined;
+            return response.data.exists
+              ? "This email is already in use."
+              : undefined;
           }
         })
       }

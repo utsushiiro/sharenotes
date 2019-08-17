@@ -98,7 +98,9 @@ const NotePage: React.FC<Props> = props => {
           autoHideDuration: 1500
         });
         dispatch(notesOperations.deleteNoteEvent(event.id));
-      } else if (event.type === notesConstants.eventTypes.FAILED_TO_UPDATE_NOTE) {
+      } else if (
+        event.type === notesConstants.eventTypes.FAILED_TO_UPDATE_NOTE
+      ) {
         enqueueSnackbar("Failed to update", {
           variant: "error",
           autoHideDuration: 1500

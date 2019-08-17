@@ -5,11 +5,13 @@ export type GET = {
   "/api/v1/users:exists": {
     req: {
       vars?: {};
-      params: {
-        username: string;
-      } | {
-        email: string;
-      };
+      params:
+        | {
+            username: string;
+          }
+        | {
+            email: string;
+          };
       body?: {};
     };
     res: {

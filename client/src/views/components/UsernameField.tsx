@@ -24,7 +24,9 @@ const UsernameField: React.FC<Props> = props => {
             const response = await apiGet("/api/v1/users:exists", {
               params: { username: value }
             });
-            return response.data.exists ? "This username is already in use." : undefined;
+            return response.data.exists
+              ? "This username is already in use."
+              : undefined;
           }
         })
       }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { authOperations } from "../../../state/auth";
-import { useCallback } from "react";
+import { authOperations, authConstants } from "../../../state/auth";
+import { useCallback, useEffect } from "react";
 import { Formik, Form } from "formik";
 
 import Button from "@material-ui/core/Button";
@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import UsernameField from "../../components/UsernameField";
 import PasswordField from "../../components/PasswordField";
+import { useSelector } from "../../../state/store";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 const LoginPage: React.FC = () => {
   const classes = useStyles();
+
   const dispatch = useDispatch();
   const submitHadler = useCallback(
     (username: string, password: string) => {
@@ -37,6 +40,20 @@ const LoginPage: React.FC = () => {
     },
     [dispatch]
   );
+
+  const events = useSelector(state => state.authState.events);
+  const { enqueueSnackbar } = useSnackbar();
+  useEffect(() => {
+    events.forEach(event => {
+      if (event.type === authConstants.eventTypes.FAILED_TO_LOGIN) {
+        enqueueSnackbar("Login Failed", {
+          variant: "error",
+          autoHideDuration: 1500
+        });
+        dispatch(authOperations.deleteAuthEvent(event.id));
+      }
+    });
+  });
 
   return (
     <Container component="main" maxWidth="xs">
