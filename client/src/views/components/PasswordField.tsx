@@ -27,7 +27,7 @@ const PasswordField: React.FC<Props> = props => {
         <TextField
           {...field}
           label="Password"
-          type="text"
+          type="password"
           variant="outlined"
           margin="normal"
           required
