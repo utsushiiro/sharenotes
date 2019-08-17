@@ -2,10 +2,12 @@ import { Reducer } from "redux";
 import { AuthState, AuthAction } from "./types";
 import { actionTypes } from "./actions";
 import storage from "../storage";
+import { v4 as uuid } from "uuid";
 
 const initialState: AuthState = {
+  isLoading: false,
   loginUser: storage.getLoginUser(),
-  isLoading: false
+  events: []
 };
 
 const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
@@ -18,8 +20,8 @@ const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
     case actionTypes.LOGIN.DONE:
       return {
         ...state,
-        loginUser: action.payload.user,
-        isLoading: false
+        isLoading: false,
+        loginUser: action.payload.user
       };
     case actionTypes.LOGIN.FAILED:
       return {
@@ -35,8 +37,8 @@ const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
     case actionTypes.LOGOUT.DONE:
       return {
         ...state,
-        loginUser: null,
-        isLoading: false
+        isLoading: false,
+        loginUser: null
       };
     case actionTypes.LOGOUT.FAILED:
       return {
@@ -52,14 +54,32 @@ const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
     case actionTypes.SIGN_UP.DONE:
       return {
         ...state,
-        loginUser: action.payload.user,
-        isLoading: false
+        isLoading: false,
+        loginUser: action.payload.user
       };
     case actionTypes.SIGN_UP.FAILED:
       return {
         ...state,
         isLoading: false
       };
+
+    case actionTypes.CREATE_AUTH_EVENT:
+      return {
+        ...state,
+        events: state.events.concat([
+          {
+            id: uuid(),
+            type: action.payload.type,
+            createdAt: new Date().toISOString()
+          }
+        ])
+      };
+    case actionTypes.DELETE_AUTH_EVENT:
+      return {
+        ...state,
+        events: state.events.filter(event => event.id !== action.payload.id)
+      };
+
     default:
       const _: never = action;
       return state;
