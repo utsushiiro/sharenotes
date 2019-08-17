@@ -17,7 +17,7 @@ const login = (username: string, password: string) => {
             password
           }
         },
-        { enableConvertJsonToForm: true }
+        { enableConvertJsonToForm: true, disable401Handler: true }
       );
       storage.setLoginUser(response.data);
       dispatch(actionCreators.login.done(response.data));
