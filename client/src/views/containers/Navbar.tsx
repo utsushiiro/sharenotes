@@ -53,6 +53,7 @@ const Navbar: React.FC = () => {
     dispatch(authOperations.logout());
   }, []);
   const newButtonHandler = useCallback(() => {
+    closeDialogHandler();
     dispatch(notesOperations.createNoteAndRedirect(title, ""));
   }, [title]);
 
