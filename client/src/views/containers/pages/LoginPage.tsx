@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
           autoHideDuration: 1500
         });
         dispatch(authOperations.deleteAuthEvent(event.id));
-      }else if(event.type === authConstants.eventTypes.LOGGED_OUT) {
+      } else if (event.type === authConstants.eventTypes.LOGGED_OUT) {
         enqueueSnackbar("Logged out", {
           variant: "success",
           autoHideDuration: 1000

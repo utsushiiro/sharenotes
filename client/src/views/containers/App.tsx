@@ -23,7 +23,7 @@ const App: React.FC = () => {
           autoHideDuration: 1000
         });
         dispatch(authOperations.deleteAuthEvent(event.id));
-      }else if (event.type === authConstants.eventTypes.SIGNED_UP) {
+      } else if (event.type === authConstants.eventTypes.SIGNED_UP) {
         enqueueSnackbar("Welcome!", {
           variant: "success",
           autoHideDuration: 1000
