@@ -41,6 +41,7 @@ const logout = () => {
       await apiPost("/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actionCreators.logout.done());
+      dispatch(actionCreators.createAuthEvent(constants.eventTypes.LOGGED_OUT));
       dispatch(push("/login"));
     } catch (err) {
       dispatch(actionCreators.logout.failed());
