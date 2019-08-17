@@ -6,7 +6,7 @@ import { User } from "./auth/types";
  * @param type
  */
 const storageAvailable = (type: "localStorage" | "sessionStorage") => {
-  let storage;
+  let storage: any;
   try {
     storage = window[type];
     const keyForTest = "__storage_test__";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Field } from "formik";
+import { Field, FieldProps } from "formik";
 
 import TextField from "@material-ui/core/TextField";
 
@@ -23,17 +23,17 @@ const PasswordField: React.FC<Props> = props => {
         })
       }
     >
-      {({ field, meta }) => (
+      {(props: FieldProps) => (
         <TextField
-          {...field}
+          {...props.field}
           label="Password"
           type="password"
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          error={meta.touched && !!meta.error}
-          helperText={meta.touched && meta.error}
+          error={props.meta.touched && !!props.meta.error}
+          helperText={props.meta.touched && props.meta.error}
         />
       )}
     </Field>

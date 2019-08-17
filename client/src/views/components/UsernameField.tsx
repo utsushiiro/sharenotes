@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Field } from "formik";
+import { Field, FieldProps } from "formik";
 
 import TextField from "@material-ui/core/TextField";
 import { apiGet } from "../../api";
@@ -31,18 +31,18 @@ const UsernameField: React.FC<Props> = props => {
         })
       }
     >
-      {({ field, meta }) => (
+      {(props: FieldProps) => (
         <TextField
           autoComplete="off"
-          {...field}
+          {...props.field}
           label="User Name"
           type="text"
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          error={meta.touched && !!meta.error}
-          helperText={meta.touched && meta.error}
+          error={props.meta.touched && !!props.meta.error}
+          helperText={props.meta.touched && props.meta.error}
         />
       )}
     </Field>
