@@ -63,6 +63,7 @@ const signUp = (username: string, email: string, password: string) => {
       });
       storage.setLoginUser(response.data);
       dispatch(actionCreators.signUp.done(response.data));
+      dispatch(actionCreators.createAuthEvent(constants.eventTypes.SIGNED_UP));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.signUp.failed());
