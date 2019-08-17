@@ -10,7 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-import { noteEventTypes } from "../../../state/notes/constants";
+import { notesConstants } from "../../../state/notes";
 import { useSnackbar } from "notistack";
 import { useSelector } from "../../../state/store";
 
@@ -37,7 +37,7 @@ const NoteListPage: React.FC = () => {
   const classes = useStyles();
 
   const notes = useSelector(state => state.notesState.notes);
-  const isFetching = useSelector(state => state.notesState.isFetching);
+  const isLoading = useSelector(state => state.notesState.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(notesOperations.fetchNotes());
@@ -47,7 +47,7 @@ const NoteListPage: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === noteEventTypes.DELETED_NOTE) {
+      if (event.type === notesConstants.eventTypes.DELETED_NOTE) {
         enqueueSnackbar("Successfuly deleted", {
           variant: "success",
           autoHideDuration: 1500
@@ -59,7 +59,7 @@ const NoteListPage: React.FC = () => {
 
   return (
     <div>
-      {!isFetching && (
+      {!isLoading && (
         <Box mt={4}>
           <Typography variant="h5" component="h1">
             Note List
