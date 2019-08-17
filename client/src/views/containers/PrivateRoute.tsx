@@ -9,8 +9,10 @@ type Props = {
 
 const PrivateRoute: React.FC<Props> = props => {
   const { component: Component, ...rest } = props;
-  const isAuthenticated = useSelector(state => state.authState.loginUser !== null);
-  
+  const isAuthenticated = useSelector(
+    state => state.authState.loginUser !== null
+  );
+
   return (
     <Route
       {...rest}

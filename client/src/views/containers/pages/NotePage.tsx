@@ -14,7 +14,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import { Note } from "../../components/Note";
 import { Editor } from "../../components/Editor";
 import { useSnackbar } from "notistack";
-import { noteEventTypes } from "../../../state/notes/constants";
+import { notesConstants } from "../../../state/notes";
 import { useSelector } from "../../../state/store";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +49,7 @@ const editorModeStyle = {
 
 type Props = {
   isEditorMode: boolean;
-  noteId: string 
+  noteId: string;
 };
 
 const NotePage: React.FC<Props> = props => {
@@ -61,17 +61,17 @@ const NotePage: React.FC<Props> = props => {
   }, [props.noteId]);
 
   const note = useSelector(state => state.notesState.note);
-  const isFetching = useSelector(state => state.notesState.isFetching);
-  const updateNoteHandler = useCallback((content: string) => {
-    if (note !== null) {
-      dispatch(notesOperations.updateNote(note.id,
-          note.title,
-          content,
-          note.version
-        )
-      );
-    }
-  }, [note]);
+  const isLoading = useSelector(state => state.notesState.isLoading);
+  const updateNoteHandler = useCallback(
+    (content: string) => {
+      if (note !== null) {
+        dispatch(
+          notesOperations.updateNote(note.id, note.title, content, note.version)
+        );
+      }
+    },
+    [note]
+  );
 
   const deleteNoteHandler = useCallback(() => {
     if (note !== null) {
@@ -86,19 +86,21 @@ const NotePage: React.FC<Props> = props => {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === noteEventTypes.CREATED_NOTE) {
+      if (event.type === notesConstants.eventTypes.CREATED_NOTE) {
         enqueueSnackbar("Successfuly created", {
           variant: "success",
           autoHideDuration: 1500
         });
         dispatch(notesOperations.deleteNoteEvent(event.id));
-      } else if (event.type === noteEventTypes.UPDATED_NOTE) {
+      } else if (event.type === notesConstants.eventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfuly updated", {
           variant: "success",
           autoHideDuration: 1500
         });
         dispatch(notesOperations.deleteNoteEvent(event.id));
-      } else if (event.type === noteEventTypes.FAILED_TO_UPDATE_NOTE) {
+      } else if (
+        event.type === notesConstants.eventTypes.FAILED_TO_UPDATE_NOTE
+      ) {
         enqueueSnackbar("Failed to update", {
           variant: "error",
           autoHideDuration: 1500
@@ -108,7 +110,7 @@ const NotePage: React.FC<Props> = props => {
     });
   });
 
-  return isFetching || note === null ? (
+  return isLoading || note === null ? (
     <></>
   ) : (
     <>
@@ -150,10 +152,7 @@ const NotePage: React.FC<Props> = props => {
                 <Note note={note} onDelete={deleteNoteHandler} />
               )}
               {tabValue === 1 && (
-                <Editor
-                  note={note}
-                  onUpdate={updateNoteHandler}
-                />
+                <Editor note={note} onUpdate={updateNoteHandler} />
               )}
               {tabValue !== 0 && tabValue !== 1 && (
                 <Typography variant="body1" style={{ padding: "20px" }}>

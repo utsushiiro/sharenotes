@@ -1,4 +1,4 @@
-import { Note, NoteEventType } from "./types";
+import { Note, NotesEventType } from "./types";
 
 export const actionTypes = {
   CREATE_NOTE: {
@@ -26,8 +26,8 @@ export const actionTypes = {
     DONE: "DELETE_NOTE.DONE",
     FAILED: "DELETE_NOTE.FAILED"
   },
-  CREATE_NOTE_EVENT: "CREATE_NOTE_EVENT",
-  DELETE_NOTE_EVENT: "DELETE_NOTE_EVENT"
+  CREATE_NOTES_EVENT: "CREATE_NOTES_EVENT",
+  DELETE_NOTES_EVENT: "DELETE_NOTES_EVENT"
 } as const;
 
 export const actionCreators = {
@@ -100,14 +100,14 @@ export const actionCreators = {
       type: actionTypes.DELETE_NOTE.FAILED
     })
   },
-  createNoteEvent: (type: NoteEventType) => ({
-    type: actionTypes.CREATE_NOTE_EVENT,
+  createNoteEvent: (type: NotesEventType) => ({
+    type: actionTypes.CREATE_NOTES_EVENT,
     payload: {
       type
     }
   }),
   deleteNoteEvent: (id: string) => ({
-    type: actionTypes.DELETE_NOTE_EVENT,
+    type: actionTypes.DELETE_NOTES_EVENT,
     payload: {
       id
     }

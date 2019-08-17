@@ -1,4 +1,4 @@
-export const noteEventTypes = {
+const eventTypes = {
   CREATED_NOTE: "CREATED_NOTE",
   FAILED_TO_CREATE_NOTE: "FAILED_TO_CREATE_NOTE",
   UPDATED_NOTE: "UPDATED_NOTE",
@@ -6,3 +6,7 @@ export const noteEventTypes = {
   DELETED_NOTE: "DELETED_NOTE",
   FAILED_TO_DELETE_NOTE: "FAILED_TO_DELETE_NOTE"
 } as const;
+
+export default {
+  eventTypes
+};

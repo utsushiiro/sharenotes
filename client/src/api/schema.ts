@@ -2,6 +2,22 @@ import { User } from "../state/auth/types";
 import { Note } from "../state/notes/types";
 
 export type GET = {
+  "/api/v1/users:exists": {
+    req: {
+      vars?: {};
+      params:
+        | {
+            username: string;
+          }
+        | {
+            email: string;
+          };
+      body?: {};
+    };
+    res: {
+      exists: boolean;
+    };
+  };
   "/api/v1/notes": {
     req: {
       vars?: {};

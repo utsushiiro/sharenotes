@@ -1,5 +1,5 @@
 import { actionCreators } from "./actions";
-import { noteEventTypes } from "./constants";
+import constants from "./constants";
 import { PickActionType } from "../types";
 
 export type Note = {
@@ -9,19 +9,19 @@ export type Note = {
   version: number;
 };
 
-export type NoteEventType = keyof (typeof noteEventTypes);
+export type NotesEventType = keyof (typeof constants.eventTypes);
 
-export type NoteEvent = {
+export type NotesEvent = {
   id: string;
-  type: NoteEventType;
+  type: NotesEventType;
   createdAt: string;
 };
 
 export type NotesAction = PickActionType<typeof actionCreators>;
 
 export type NotesState = {
-  notes: Note[];
+  isLoading: boolean;
   note: Note | null;
-  isFetching: boolean;
-  events: NoteEvent[];
+  notes: Note[];
+  events: NotesEvent[];
 };
