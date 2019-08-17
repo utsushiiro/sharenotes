@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import UsernameField from "../../components/UsernameField";
+import PasswordField from "../../components/PasswordField";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -53,7 +54,7 @@ const LoginPage: React.FC = () => {
           render={() => (
             <Form className={classes.form} noValidate>
               <UsernameField />
-              <UsernameField />
+              <PasswordField />
               <Button
                 type="submit"
                 fullWidth
