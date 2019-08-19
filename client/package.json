@@ -48,6 +48,7 @@
     "codemirror": "^5.48.4",
     "connected-react-router": "^6.5.2",
     "formik": "^2.0.1-rc.12",
+    "history": "^4.9.0",
     "notistack": "^0.8.9",
     "react": "^16.9.0",
     "react-codemirror2": "^6.0.0",
