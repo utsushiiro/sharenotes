@@ -1,21 +1,19 @@
 import * as React from "react";
 import { Note } from "@state/notes/types";
 import { useState } from "react";
-
+import { UnControlled as CodeMirror } from 'react-codemirror2'
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Divider, Box, Button } from "@material-ui/core";
+require('codemirror/mode/gfm/gfm');
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    textarea: {
+    editor: {
       display: "block",
       boxSizing: "border-box",
       width: "100%",
       height: "calc(100vh - 48px - 1px - 1px - 52px)",
-      resize: "none",
-      padding: "20px",
-      border: "none",
-      outline: "none"
+      fontSize: "1rem"
     },
     footer: {
       display: "flex",
@@ -34,14 +32,20 @@ const Editor: React.FC<Props> = props => {
   const [content, setContent] = useState(props.note.content);
   return (
     <div>
-      <form>
-        <textarea
-          name="content"
-          className={classes.textarea}
-          value={content}
-          onChange={e => setContent(e.currentTarget.value)}
+      <Box className={classes.editor}>
+        <CodeMirror
+            value={content}
+            options={{
+              mode: 'gfm',
+              theme: 'elegant',
+              lineNumbers: true,
+              lineWrapping: true,
+            }}
+            onChange={(editor, data, value) => {
+              setContent(value);
+            }}
         />
-      </form>
+      </Box>
       <Divider />
       <Box p={1} className={classes.footer}>
         <Button
