@@ -1,5 +1,5 @@
 const path = require("path");
-const webpack = require("webpack")
+const webpack = require("webpack");
 
 const client_path = path.resolve(__dirname);
 const public_path = path.resolve(__dirname, "..", "public");
