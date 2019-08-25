@@ -10,7 +10,9 @@ module.exports = {
   globals: {
     "ts-jest": {
       tsConfig: "tsconfig.json"
-    }
+    },
+    "CONFIG_TYPE": "test" // used in config/index.ts
   },
-  testMatch: ["**/*.test.ts"]
+  testMatch: ["**/*.test.ts"],
+  testPathIgnorePatterns: ["<rootDir>/src/config"]
 };
