@@ -126,7 +126,7 @@ describe("Auth Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.signUp(user.name, user.email,"password"));
+    await store.dispatch(operations.signUp(user.name, user.email, "password"));
 
     // verify
     expect(store.getActions()).toEqual(expected);
