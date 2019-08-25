@@ -11,8 +11,7 @@ module.exports = {
     "ts-jest": {
       tsConfig: "tsconfig.json"
     },
-    "CONFIG_TYPE": "test" // used in config/index.ts
+    "CONFIG_TYPE": "jest" // used in config/index.ts
   },
-  testMatch: ["**/*.test.ts"],
-  testPathIgnorePatterns: ["<rootDir>/src/config"]
+  testMatch: ["**/*.test.ts"]
 };
