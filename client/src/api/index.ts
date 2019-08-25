@@ -1,14 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { GET, POST, PATCH, DELETE } from "./schema";
-import {
-  createAxiosInstance,
-  setRedirectLoginPageInterceptor
-} from "./axios-base";
+import { axiosInstance, axiosInstanceWith401Handler } from "./axios-base";
 
-const axiosInstance = createAxiosInstance();
-const axiosInstanceWith401Handler = setRedirectLoginPageInterceptor(
-  createAxiosInstance()
-);
 type ApiRequestConfig = AxiosRequestConfig & {
   disable401Handler?: boolean;
   enableConvertJsonToForm?: boolean;
