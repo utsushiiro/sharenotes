@@ -20,7 +20,7 @@
       "@test-util": ["src/test-util"],
       "@components/*": ["src/views/components/*"],
       "@containers/*": ["src/views/containers/*"]
-    },
+    }
   },
   "exclude": [
     "node_modules",
