@@ -1,6 +1,6 @@
 import { actionCreators } from "./actions";
 import constants from "./constants";
-import { PickActionType } from "../types";
+import { PickActionType } from "@state/types";
 
 export type Note = {
   id: number;

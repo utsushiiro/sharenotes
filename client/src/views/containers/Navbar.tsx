@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { authOperations } from "../../state/auth";
-import { notesOperations } from "../../state/notes";
+import { authOperations } from "@state/auth";
+import { notesOperations } from "@state/notes";
 import { useState, useCallback } from "react";
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";

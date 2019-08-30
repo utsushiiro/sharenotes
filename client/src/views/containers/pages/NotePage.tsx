@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { notesOperations } from "../../../state/notes";
+import { notesOperations } from "@state/notes";
 import { useEffect, useCallback, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -11,11 +11,11 @@ import { Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
-import { Note } from "../../components/Note";
-import { Editor } from "../../components/Editor";
+import { Note } from "@components/Note";
+import { Editor } from "@components/Editor";
 import { useSnackbar } from "notistack";
-import { notesConstants } from "../../../state/notes";
-import { useSelector } from "../../../state/store";
+import { notesConstants } from "@state/notes";
+import { useSelector } from "@state/store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

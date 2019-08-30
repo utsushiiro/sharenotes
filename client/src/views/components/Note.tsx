@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Note } from "../../state/notes/types";
+import { Note } from "@state/notes/types";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Button, Divider } from "@material-ui/core";

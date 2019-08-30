@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import storage from "../state/storage";
-import { config } from "../config";
+import storage from "@state/storage";
+import { config } from "@config";
 
 export const createAxiosInstance = () => {
   let axiosInstance: AxiosInstance;

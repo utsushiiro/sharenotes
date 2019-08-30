@@ -1,8 +1,8 @@
 import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import { push } from "connected-react-router";
-import { apiPost } from "../../api";
-import storage from "../storage";
+import { apiPost } from "@api";
+import storage from "@state/storage";
 import constants from "./constants";
 
 const login = (username: string, password: string) => {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Field, FieldProps } from "formik";
 
 import TextField from "@material-ui/core/TextField";
-import { apiGet } from "../../api";
+import { apiGet } from "@api";
 
 type Props = {
   enableValidation?: boolean;

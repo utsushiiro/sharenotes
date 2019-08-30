@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { authOperations } from "../../../state/auth";
+import { authOperations } from "@state/auth";
 import { useCallback } from "react";
 
 import Button from "@material-ui/core/Button";
@@ -9,9 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Formik, Form } from "formik";
-import EmailField from "../../components/EmailField";
-import UsernameField from "../../components/UsernameField";
-import PasswordField from "../../components/PasswordField";
+import EmailField from "@components/EmailField";
+import UsernameField from "@components/UsernameField";
+import PasswordField from "@components/PasswordField";
 
 const useStyles = makeStyles(theme => ({
   paper: {
