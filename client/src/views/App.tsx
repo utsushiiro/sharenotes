@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
-import NoteListPage from "./pages/NoteListPage";
-import Navbar from "./Navbar";
+import NoteListPage from "@pages/NoteListPage";
+import Navbar from "@components/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import NotePage from "./pages/NotePage";
+import NotePage from "@pages/NotePage";
 import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
 import { authOperations, authConstants } from "@state/auth";

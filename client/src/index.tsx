@@ -2,13 +2,13 @@ import { render } from "react-dom";
 import * as React from "react";
 import { Provider } from "react-redux";
 import configureStore from "@state/store";
-import App from "@containers/App";
+import App from "src/views/App";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "@state/store";
 import { Switch, Route } from "react-router";
-import LoginPage from "@containers/pages/LoginPage";
-import SignUpPage from "@containers/pages/SignUpPage";
-import PrivateRoute from "@containers/PrivateRoute";
+import LoginPage from "@pages/LoginPage";
+import SignUpPage from "@pages/SignUpPage";
+import PrivateRoute from "src/views/PrivateRoute";
 import { SnackbarProvider } from "notistack";
 
 const store = configureStore();
