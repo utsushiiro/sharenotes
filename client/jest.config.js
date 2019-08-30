@@ -10,7 +10,8 @@ module.exports = {
   globals: {
     "ts-jest": {
       tsConfig: "tsconfig.json"
-    }
+    },
+    "CONFIG_TYPE": "jest" // used in config/index.ts
   },
   testMatch: ["**/*.test.ts"]
 };

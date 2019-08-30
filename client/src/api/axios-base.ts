@@ -43,3 +43,8 @@ export const setRedirectLoginPageInterceptor = (
   );
   return axiosInstance;
 };
+
+export const axiosInstance = createAxiosInstance();
+export const axiosInstanceWith401Handler = setRedirectLoginPageInterceptor(
+  createAxiosInstance()
+);

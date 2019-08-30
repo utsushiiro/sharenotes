@@ -11,5 +11,10 @@
       "dom"
     ],
     "strict": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "jest.setup.ts"
+  ]
 }
