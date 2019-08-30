@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { authOperations, authConstants } from "../../../state/auth";
+import { authOperations, authConstants } from "@state/auth";
 import { useCallback, useEffect } from "react";
 import { Formik, Form } from "formik";
 
@@ -9,9 +9,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import UsernameField from "../../components/UsernameField";
-import PasswordField from "../../components/PasswordField";
-import { useSelector } from "../../../state/store";
+import UsernameField from "@components/UsernameField";
+import PasswordField from "@components/PasswordField";
+import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles(theme => ({

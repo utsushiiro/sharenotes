@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route, Redirect } from "react-router";
 import { RouteProps } from "react-router";
-import { useSelector } from "../../state/store";
+import { useSelector } from "@state/store";
 
 type Props = {
   component: React.FC;

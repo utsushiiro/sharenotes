@@ -1,5 +1,5 @@
-import { User } from "../state/auth/types";
-import { Note } from "../state/notes/types";
+import { User } from "@state/auth/types";
+import { Note } from "@state/notes/types";
 
 export type GET = {
   "/api/v1/users:exists": {

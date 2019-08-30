@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const client_path = path.resolve(__dirname);
 const public_path = path.resolve(__dirname, "..", "public");
@@ -28,7 +29,9 @@ module.exports = env => {
     },
   
     resolve: {
-      extensions: [".ts", ".tsx", ".js", ".json"]
+      extensions: [".ts", ".tsx", ".js", ".json"],
+      // ref: https://github.com/TypeStrong/ts-loader#baseurl--paths-module-resolution
+      plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })]
     },
   
     plugins: [

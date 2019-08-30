@@ -5,9 +5,9 @@ import Navbar from "./Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import NotePage from "./pages/NotePage";
-import { useSelector } from "../../state/store";
+import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
-import { authOperations, authConstants } from "../../state/auth";
+import { authOperations, authConstants } from "@state/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 

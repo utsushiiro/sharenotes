@@ -34,6 +34,7 @@
     "redux-mock-store": "^1.5.3",
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.4.5",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.6",

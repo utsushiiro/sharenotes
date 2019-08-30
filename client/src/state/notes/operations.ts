@@ -1,6 +1,6 @@
 import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
-import { apiGet, apiPost, apiPatch, apiDelete } from "../../api";
+import { apiGet, apiPost, apiPatch, apiDelete } from "@api";
 import { push } from "connected-react-router";
 import constants from "./constants";
 
