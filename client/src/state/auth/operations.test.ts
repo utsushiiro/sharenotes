@@ -3,7 +3,11 @@ import { push } from "connected-react-router";
 import constants from "./constants";
 import operations from "./operations";
 import { User } from "./types";
-import { mockAxios, mockStore, mockAxiosWith401Handler } from "../../test-utils";
+import {
+  mockAxios,
+  mockStore,
+  mockAxiosWith401Handler
+} from "../../test-utils";
 
 describe("Auth Operations", () => {
   test("login", async () => {
