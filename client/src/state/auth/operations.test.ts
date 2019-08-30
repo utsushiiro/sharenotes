@@ -1,22 +1,9 @@
-import createMockStore from "redux-mock-store";
-import thunk, { ThunkDispatch } from "redux-thunk";
 import { actionTypes } from "./actions";
-import { State, Action } from "../types";
 import { push } from "connected-react-router";
 import constants from "./constants";
 import operations from "./operations";
-import MockAdapter from "axios-mock-adapter";
-import {
-  axiosInstance,
-  axiosInstanceWith401Handler
-} from "../../api/axios-base";
 import { User } from "./types";
-
-type Dispatch = ThunkDispatch<State, void, Action>;
-const middlewares = [thunk];
-const mockStore = createMockStore<State, Dispatch>(middlewares);
-const mockAxios = new MockAdapter(axiosInstance);
-const mockAxiosWith401Handler = new MockAdapter(axiosInstanceWith401Handler);
+import { mockAxios, mockStore, mockAxiosWith401Handler } from "../../test-utils";
 
 describe("Auth Operations", () => {
   test("login", async () => {
