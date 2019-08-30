@@ -1,24 +1,26 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
-import { User } from "./types";
+import { Note } from "./types";
 
-describe("Auth Reducers", () => {
-  describe("LOGIN", () => {
+describe("Note Reducers", () => {
+  describe("CREATE_NOTE", () => {
     test("STARTED", () => {
       // setup
       const state = {
         isLoading: false,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGIN.STARTED
+        type: actionTypes.CREATE_NOTE.STARTED
       };
 
       const expected = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
@@ -31,28 +33,31 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
+      const note: Note = {
         id: 0,
-        email: "test@example.com",
-        name: "test-name"
+        title: "test-title",
+        content: "test-content",
+        version: 0
       };
 
       const state = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGIN.DONE,
+        type: actionTypes.CREATE_NOTE.DONE,
         payload: {
-          user
+          note
         }
       };
 
       const expected = {
         isLoading: false,
-        loginUser: user,
+        note: note,
+        notes: [],
         events: []
       };
 
@@ -67,17 +72,19 @@ describe("Auth Reducers", () => {
       // setup
       const state = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGIN.FAILED
+        type: actionTypes.CREATE_NOTE.FAILED
       };
 
       const expected = {
         isLoading: false,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
@@ -89,28 +96,24 @@ describe("Auth Reducers", () => {
     });
   });
 
-  describe("LOGOUT", () => {
+  describe("GET_NOTES", () => {
     test("STARTED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
-
       const state = {
         isLoading: false,
-        loginUser: user,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGOUT.STARTED
+        type: actionTypes.GET_NOTES.STARTED
       };
 
       const expected = {
         isLoading: true,
-        loginUser: user,
+        note: null,
+        notes: [],
         events: []
       };
 
@@ -123,28 +126,31 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
+      const notes: Note[] = [{
         id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+        title: "test-title",
+        content: "test-content",
+        version: 0
+      }];
 
       const state = {
         isLoading: true,
-        loginUser: user,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGOUT.DONE,
+        type: actionTypes.GET_NOTES.DONE,
         payload: {
-          user
+          notes
         }
       };
 
       const expected = {
         isLoading: false,
-        loginUser: null,
+        note: null,
+        notes: notes,
         events: []
       };
 
@@ -157,25 +163,21 @@ describe("Auth Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
-
       const state = {
         isLoading: true,
-        loginUser: user,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.LOGOUT.FAILED
+        type: actionTypes.GET_NOTES.FAILED
       };
 
       const expected = {
         isLoading: false,
-        loginUser: user,
+        note: null,
+        notes: [],
         events: []
       };
 
@@ -187,22 +189,24 @@ describe("Auth Reducers", () => {
     });
   });
 
-  describe("SIGN_UP", () => {
+  describe("GET_NOTE", () => {
     test("STARTED", () => {
       // setup
       const state = {
         isLoading: false,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.SIGN_UP.STARTED
+        type: actionTypes.GET_NOTE.STARTED
       };
 
       const expected = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
@@ -215,28 +219,31 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
+      const note: Note = {
         id: 0,
-        email: "test@example.com",
-        name: "test-name"
+        title: "test-title",
+        content: "test-content",
+        version: 0
       };
 
       const state = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.SIGN_UP.DONE,
+        type: actionTypes.GET_NOTE.DONE,
         payload: {
-          user
+          note
         }
       };
 
       const expected = {
         isLoading: false,
-        loginUser: user,
+        note: note,
+        notes: [],
         events: []
       };
 
@@ -251,17 +258,112 @@ describe("Auth Reducers", () => {
       // setup
       const state = {
         isLoading: true,
-        loginUser: null,
+        note: null,
+        notes: [],
         events: []
       };
 
       const action = {
-        type: actionTypes.SIGN_UP.FAILED
+        type: actionTypes.GET_NOTE.FAILED
       };
 
       const expected = {
         isLoading: false,
-        loginUser: null,
+        note: null,
+        notes: [],
+        events: []
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("UPDATE_NOTE", () => {
+    test("STARTED", () => {
+      // setup
+      const state = {
+        isLoading: false,
+        note: null,
+        notes: [],
+        events: []
+      };
+
+      const action = {
+        type: actionTypes.UPDATE_NOTE.STARTED
+      };
+
+      const expected = {
+        isLoading: false,
+        note: null,
+        notes: [],
+        events: []
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+
+    test("DONE", () => {
+      // setup
+      const note: Note = {
+        id: 0,
+        title: "test-title",
+        content: "test-content",
+        version: 0
+      };
+
+      const state = {
+        isLoading: false,
+        note: null,
+        notes: [],
+        events: []
+      };
+
+      const action = {
+        type: actionTypes.UPDATE_NOTE.DONE,
+        payload: {
+          note
+        }
+      };
+
+      const expected = {
+        isLoading: false,
+        note: note,
+        notes: [],
+        events: []
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+
+    test("FAILED", () => {
+      // setup
+      const state = {
+        isLoading: false,
+        note: null,
+        notes: [],
+        events: []
+      };
+
+      const action = {
+        type: actionTypes.UPDATE_NOTE.FAILED
+      };
+
+      const expected = {
+        isLoading: false,
+        note: null,
+        notes: [],
         events: []
       };
 
