@@ -124,7 +124,7 @@ const NotePage: React.FC<Props> = props => {
           </Breadcrumbs>
         </Paper>
       </Box>
-      <Box mt={2}>
+      <Box mt={2} mb={4}>
         <Paper className={classes.content}>
           <Box p={2}>
             <Typography variant="h5" component="h1">
