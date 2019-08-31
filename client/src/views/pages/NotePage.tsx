@@ -87,13 +87,13 @@ const NotePage: React.FC<Props> = props => {
   useEffect(() => {
     events.forEach(event => {
       if (event.type === notesConstants.eventTypes.CREATED_NOTE) {
-        enqueueSnackbar("Successfuly created", {
+        enqueueSnackbar("Successfully created", {
           variant: "success",
           autoHideDuration: 1500
         });
         dispatch(notesOperations.deleteNoteEvent(event.id));
       } else if (event.type === notesConstants.eventTypes.UPDATED_NOTE) {
-        enqueueSnackbar("Successfuly updated", {
+        enqueueSnackbar("Successfully updated", {
           variant: "success",
           autoHideDuration: 1500
         });

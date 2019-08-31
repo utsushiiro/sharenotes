@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const submitHadler = useCallback(
+  const submitHandler = useCallback(
     (username: string, password: string) => {
       dispatch(authOperations.login(username, password));
     },
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={(values, actions) => {
-            submitHadler(values.username, values.password);
+            submitHandler(values.username, values.password);
             actions.setSubmitting(false);
           }}
           render={() => (

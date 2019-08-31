@@ -48,7 +48,7 @@ const NoteListPage: React.FC = () => {
   useEffect(() => {
     events.forEach(event => {
       if (event.type === notesConstants.eventTypes.DELETED_NOTE) {
-        enqueueSnackbar("Successfuly deleted", {
+        enqueueSnackbar("Successfully deleted", {
           variant: "success",
           autoHideDuration: 1500
         });
