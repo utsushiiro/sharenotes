@@ -3,6 +3,7 @@ import { Note } from "@state/notes/types";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Button, Divider } from "@material-ui/core";
+import { parser } from "@utils/markdown-parser";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,9 +29,12 @@ const Note: React.FC<Props> = props => {
 
   return (
     <div>
-      <Typography variant="body1" gutterBottom className={classes.content}>
-        {props.note.content}
-      </Typography>
+      <Typography
+        variant="body1"
+        gutterBottom
+        className={classes.content}
+        dangerouslySetInnerHTML={{ __html: parser(props.note.content) }}
+      />
       <Divider />
       <Box p={1}>
         <Button
