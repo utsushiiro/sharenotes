@@ -2,10 +2,7 @@ import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
 import constants from "./constants";
 import operations from "./operations";
-import {
-  mockStore,
-  mockAxiosWith401Handler
-} from "../../test-utils";
+import { mockStore, mockAxiosWith401Handler } from "../../test-utils";
 import { Note } from "./types";
 
 describe("Note Operations", () => {
@@ -44,19 +41,23 @@ describe("Note Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.createNoteAndRedirect(note.title, note.content));
+    await store.dispatch(
+      operations.createNoteAndRedirect(note.title, note.content)
+    );
 
     // verify
     expect(store.getActions()).toEqual(expected);
   });
 
   test("fetchNotes", async () => {
-    const notes: Note[] = [{
-      id: 0,
-      title: "test-title",
-      content: "test-content",
-      version: 0
-    }];
+    const notes: Note[] = [
+      {
+        id: 0,
+        title: "test-title",
+        content: "test-content",
+        version: 0
+      }
+    ];
 
     // expected actions
     const expected = [
@@ -129,7 +130,7 @@ describe("Note Operations", () => {
     const updatedNote: Note = {
       ...note,
       version: note.version + 1
-    }
+    };
 
     // expected actions
     const expected = [
@@ -152,13 +153,17 @@ describe("Note Operations", () => {
     ];
 
     // api mock
-    mockAxiosWith401Handler.onPatch(`/api/v1/notes/${note.id}`).reply(200, updatedNote);
+    mockAxiosWith401Handler
+      .onPatch(`/api/v1/notes/${note.id}`)
+      .reply(200, updatedNote);
 
     // mock store
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.updateNote(note.id, note.title, note.content, note.version));
+    await store.dispatch(
+      operations.updateNote(note.id, note.title, note.content, note.version)
+    );
 
     // verify
     expect(store.getActions()).toEqual(expected);

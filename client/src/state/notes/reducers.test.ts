@@ -126,12 +126,14 @@ describe("Note Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const notes: Note[] = [{
-        id: 0,
-        title: "test-title",
-        content: "test-content",
-        version: 0
-      }];
+      const notes: Note[] = [
+        {
+          id: 0,
+          title: "test-title",
+          content: "test-content",
+          version: 0
+        }
+      ];
 
       const state = {
         isLoading: true,

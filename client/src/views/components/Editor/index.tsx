@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Note } from "@state/notes/types";
 import { useState } from "react";
-import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Controlled as CodeMirror } from "react-codemirror2";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Divider, Box, Button } from "@material-ui/core";
-require('codemirror/mode/gfm/gfm');
+require("codemirror/mode/gfm/gfm");
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,16 +34,16 @@ const Editor: React.FC<Props> = props => {
     <div>
       <Box className={classes.editor}>
         <CodeMirror
-            value={content}
-            options={{
-              mode: 'gfm',
-              theme: 'elegant',
-              lineNumbers: true,
-              lineWrapping: true,
-            }}
-            onBeforeChange={(editor, data, value) => {
-              setContent(value);
-            }}
+          value={content}
+          options={{
+            mode: "gfm",
+            theme: "elegant",
+            lineNumbers: true,
+            lineWrapping: true
+          }}
+          onBeforeChange={(editor, data, value) => {
+            setContent(value);
+          }}
         />
       </Box>
       <Divider />
