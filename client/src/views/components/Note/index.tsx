@@ -46,4 +46,4 @@ const Note: React.FC<Props> = props => {
   );
 };
 
-export { Note };
+export default Note;

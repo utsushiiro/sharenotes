@@ -60,4 +60,4 @@ const Editor: React.FC<Props> = props => {
   );
 };
 
-export { Editor };
+export default Editor;
