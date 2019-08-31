@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Note } from "@state/notes/types";
 import { useState } from "react";
-import { UnControlled as CodeMirror } from 'react-codemirror2'
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Divider, Box, Button } from "@material-ui/core";
 require('codemirror/mode/gfm/gfm');
@@ -41,7 +41,7 @@ const Editor: React.FC<Props> = props => {
               lineNumbers: true,
               lineWrapping: true,
             }}
-            onChange={(editor, data, value) => {
+            onBeforeChange={(editor, data, value) => {
               setContent(value);
             }}
         />
