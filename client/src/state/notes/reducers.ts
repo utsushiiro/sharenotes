@@ -10,7 +10,7 @@ const initialState: NotesState = {
   events: []
 };
 
-const note: Reducer<NotesState, NotesAction> = (
+const notes: Reducer<NotesState, NotesAction> = (
   state = initialState,
   action
 ) => {
@@ -123,4 +123,4 @@ const note: Reducer<NotesState, NotesAction> = (
   }
 };
 
-export default note;
+export default notes;
