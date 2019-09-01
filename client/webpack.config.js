@@ -10,36 +10,41 @@ module.exports = env => {
     mode: "development",
 
     entry: client_path + "/src/index.tsx",
-  
+
     output: {
       path: path.resolve(public_path, "js"),
       filename: "bundle.js",
       publicPath: "js"
     },
-  
+
     devtool: 'source-map',
-  
+
     module: {
       rules: [
         {
           test: /\.tsx?$/,
-          use: "ts-loader"
+          loader: "ts-loader",
+          // use tsconfig.webpack.json to ignore test files.
+          // ref: https://github.com/TypeStrong/ts-loader/issues/544
+          options: {
+            configFile: "tsconfig.webpack.json"
+          }
         }
       ]
     },
-  
+
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".json"],
       // ref: https://github.com/TypeStrong/ts-loader#baseurl--paths-module-resolution
       plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })]
     },
-  
+
     plugins: [
       new webpack.DefinePlugin({
         "CONFIG_TYPE": JSON.stringify((env && env.config) ? env.config : "dev")
       })
     ],
-  
+
     devServer: {
       port: 3000,
       contentBase: public_path,
@@ -47,7 +52,7 @@ module.exports = env => {
       watchContentBase: true,
       historyApiFallback: true
     },
-  
+
     watchOptions: {
       aggregateTimeout: 300,
       ignored: /node_modules/

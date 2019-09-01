@@ -22,10 +22,5 @@
       "@containers/*": ["src/views/containers/*"],
       "@pages/*": ["src/views/pages/*"]
     }
-  },
-  "exclude": [
-    "node_modules",
-    "**/*.test.ts",
-    "jest.setup.ts"
-  ]
+  }
 }
