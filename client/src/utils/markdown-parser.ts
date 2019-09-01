@@ -7,12 +7,12 @@ const md: MarkdownIt = new MarkdownIt({
     let highlightedText;
 
     try {
-      highlightedText = Prism.highlight(text, Prism.languages[lang], lang)
+      highlightedText = Prism.highlight(text, Prism.languages[lang], lang);
     } catch (error) {
-      highlightedText = md.utils.escapeHtml(text)
+      highlightedText = md.utils.escapeHtml(text);
     }
 
-    return `<pre class="language-${lang} line-numbers"><code class="language-${lang}">${highlightedText}</code></pre>`
+    return `<pre class="language-${lang} line-numbers"><code class="language-${lang}">${highlightedText}</code></pre>`;
   }
 });
 
