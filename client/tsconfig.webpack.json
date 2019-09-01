@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig",
+  "exclude": [
+    "jest.setup.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "node_modules"
+  ]
+}
