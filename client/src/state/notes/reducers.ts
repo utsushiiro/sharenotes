@@ -100,23 +100,6 @@ const notes: Reducer<NotesState, NotesAction> = (
         isLoading: false
       };
 
-    case actionTypes.CREATE_NOTES_EVENT:
-      return {
-        ...state,
-        events: state.events.concat([
-          {
-            id: uuid(),
-            type: action.payload.type,
-            createdAt: new Date().toISOString()
-          }
-        ])
-      };
-    case actionTypes.DELETE_NOTES_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(event => event.id !== action.payload.id)
-      };
-
     default:
       const _: never = action;
       return state;

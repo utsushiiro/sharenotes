@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { apiGet, apiPost, apiPatch, apiDelete } from "@api";
 import { push } from "connected-react-router";
 import constants from "./constants";
+import { eventsOperations } from "@state/events";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
@@ -17,7 +18,7 @@ const createNoteAndRedirect = (title: string, content: string) => {
       });
       dispatch(actionCreators.createNote.done(response.data));
       dispatch(
-        actionCreators.createNoteEvent(constants.eventTypes.CREATED_NOTE)
+        eventsOperations.createEvent(constants.eventTypes.CREATED_NOTE)
       );
       dispatch(
         push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
@@ -25,7 +26,7 @@ const createNoteAndRedirect = (title: string, content: string) => {
     } catch (err) {
       dispatch(actionCreators.createNote.failed());
       dispatch(
-        actionCreators.createNoteEvent(
+        eventsOperations.createEvent(
           constants.eventTypes.FAILED_TO_CREATE_NOTE
         )
       );
@@ -81,13 +82,13 @@ const updateNote = (
       });
       dispatch(actionCreators.updateNote.done(response.data));
       dispatch(
-        actionCreators.createNoteEvent(constants.eventTypes.UPDATED_NOTE)
+        eventsOperations.createEvent(constants.eventTypes.UPDATED_NOTE)
       );
       dispatch(push(`/notes/${id}`));
     } catch (err) {
       dispatch(actionCreators.updateNote.failed());
       dispatch(
-        actionCreators.createNoteEvent(
+        eventsOperations.createEvent(
           constants.eventTypes.FAILED_TO_UPDATE_NOTE
         )
       );
@@ -105,13 +106,13 @@ const deleteNoteAndRedirect = (id: number) => {
       });
       dispatch(actionCreators.deleteNote.done());
       dispatch(
-        actionCreators.createNoteEvent(constants.eventTypes.DELETED_NOTE)
+        eventsOperations.createEvent(constants.eventTypes.DELETED_NOTE)
       );
       dispatch(push("/notes/"));
     } catch (err) {
       dispatch(actionCreators.deleteNote.failed());
       dispatch(
-        actionCreators.createNoteEvent(
+        eventsOperations.createEvent(
           constants.eventTypes.FAILED_TO_DELETE_NOTE
         )
       );
@@ -125,6 +126,4 @@ export default {
   fetchNote,
   updateNote,
   deleteNoteAndRedirect,
-  createNoteEvent: actionCreators.createNoteEvent,
-  deleteNoteEvent: actionCreators.deleteNoteEvent
 };

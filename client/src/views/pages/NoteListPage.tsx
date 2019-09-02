@@ -13,6 +13,7 @@ import { Box } from "@material-ui/core";
 import { notesConstants } from "@state/notes";
 import { useSnackbar } from "notistack";
 import { useSelector } from "@state/store";
+import { eventsOperations } from "@state/events";
 
 const useStyles = makeStyles(
   createStyles({
@@ -43,7 +44,7 @@ const NoteListPage: React.FC = () => {
     dispatch(notesOperations.fetchNotes());
   }, []);
 
-  const events = useSelector(state => state.notesState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
@@ -52,7 +53,7 @@ const NoteListPage: React.FC = () => {
           variant: "success",
           autoHideDuration: 1500
         });
-        dispatch(notesOperations.deleteNoteEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });

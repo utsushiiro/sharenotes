@@ -16,6 +16,7 @@ import Editor from "@components/Editor";
 import { useSnackbar } from "notistack";
 import { notesConstants } from "@state/notes";
 import { useSelector } from "@state/store";
+import { eventsOperations } from "@state/events";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,7 +83,7 @@ const NotePage: React.FC<Props> = props => {
   const [tabValue, setTabValue] = useState(props.isEditorMode ? 1 : 0);
   const tabModeStyle = tabValue === 1 ? editorModeStyle : {};
 
-  const events = useSelector(state => state.notesState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
@@ -91,13 +92,13 @@ const NotePage: React.FC<Props> = props => {
           variant: "success",
           autoHideDuration: 1500
         });
-        dispatch(notesOperations.deleteNoteEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       } else if (event.type === notesConstants.eventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfully updated", {
           variant: "success",
           autoHideDuration: 1500
         });
-        dispatch(notesOperations.deleteNoteEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       } else if (
         event.type === notesConstants.eventTypes.FAILED_TO_UPDATE_NOTE
       ) {
@@ -105,7 +106,7 @@ const NotePage: React.FC<Props> = props => {
           variant: "error",
           autoHideDuration: 1500
         });
-        dispatch(notesOperations.deleteNoteEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });
