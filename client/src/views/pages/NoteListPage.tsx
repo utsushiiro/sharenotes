@@ -10,9 +10,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-import { notesConstants } from "@state/notes";
 import { useSnackbar } from "notistack";
 import { useSelector } from "@state/store";
+import { eventsOperations, eventsConstants } from "@state/events";
 
 const useStyles = makeStyles(
   createStyles({
@@ -43,16 +43,16 @@ const NoteListPage: React.FC = () => {
     dispatch(notesOperations.fetchNotes());
   }, []);
 
-  const events = useSelector(state => state.notesState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === notesConstants.eventTypes.DELETED_NOTE) {
+      if (event.type === eventsConstants.eventTypes.DELETED_NOTE) {
         enqueueSnackbar("Successfully deleted", {
           variant: "success",
           autoHideDuration: 1500
         });
-        dispatch(notesOperations.deleteNoteEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });

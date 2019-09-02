@@ -25,12 +25,6 @@ describe("Note Operations", () => {
           note
         }
       },
-      {
-        type: actionTypes.CREATE_NOTES_EVENT,
-        payload: {
-          type: constants.eventTypes.CREATED_NOTE
-        }
-      },
       push(`/notes/${note.id}`, { fromCreateNoteOperation: true })
     ];
 
@@ -46,7 +40,7 @@ describe("Note Operations", () => {
     );
 
     // verify
-    expect(store.getActions()).toEqual(expected);
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 
   test("fetchNotes", async () => {
@@ -143,12 +137,6 @@ describe("Note Operations", () => {
           note: updatedNote
         }
       },
-      {
-        type: actionTypes.CREATE_NOTES_EVENT,
-        payload: {
-          type: constants.eventTypes.UPDATED_NOTE
-        }
-      },
       push(`/notes/${updatedNote.id}`)
     ];
 
@@ -166,6 +154,6 @@ describe("Note Operations", () => {
     );
 
     // verify
-    expect(store.getActions()).toEqual(expected);
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 });

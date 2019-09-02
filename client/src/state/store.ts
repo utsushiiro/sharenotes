@@ -10,12 +10,14 @@ import {
   useSelector as useReduxSelector,
   TypedUseSelectorHook
 } from "react-redux";
+import eventsReducer from "./events";
 
 export const history = createBrowserHistory();
 const middlewares = [logger, routerMiddleware(history), thunk];
 const rootReducer = combineReducers({
   notesState: notesReducer,
   authState: authReducer,
+  eventsState: eventsReducer,
   router: connectRouter(history)
 });
 type RootState = ReturnType<typeof rootReducer>;

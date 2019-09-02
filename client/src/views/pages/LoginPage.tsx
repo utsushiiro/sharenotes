@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { authOperations, authConstants } from "@state/auth";
+import { authOperations } from "@state/auth";
 import { useCallback, useEffect } from "react";
 import { Formik, Form } from "formik";
 
@@ -13,6 +13,7 @@ import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
 import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
+import { eventsOperations, eventsConstants } from "@state/events";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,22 +42,22 @@ const LoginPage: React.FC = () => {
     [dispatch]
   );
 
-  const events = useSelector(state => state.authState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === authConstants.eventTypes.FAILED_TO_LOGIN) {
+      if (event.type === eventsConstants.eventTypes.FAILED_TO_LOGIN) {
         enqueueSnackbar("Login Failed", {
           variant: "error",
           autoHideDuration: 1500
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
-      } else if (event.type === authConstants.eventTypes.LOGGED_OUT) {
+        dispatch(eventsOperations.deleteEvent(event.id));
+      } else if (event.type === eventsConstants.eventTypes.LOGGED_OUT) {
         enqueueSnackbar("Logged out", {
           variant: "success",
           autoHideDuration: 1000
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });

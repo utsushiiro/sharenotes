@@ -6,11 +6,10 @@ import { v4 as uuid } from "uuid";
 const initialState: NotesState = {
   isLoading: false,
   note: null,
-  notes: [],
-  events: []
+  notes: []
 };
 
-const note: Reducer<NotesState, NotesAction> = (
+const notes: Reducer<NotesState, NotesAction> = (
   state = initialState,
   action
 ) => {
@@ -100,27 +99,10 @@ const note: Reducer<NotesState, NotesAction> = (
         isLoading: false
       };
 
-    case actionTypes.CREATE_NOTES_EVENT:
-      return {
-        ...state,
-        events: state.events.concat([
-          {
-            id: uuid(),
-            type: action.payload.type,
-            createdAt: new Date().toISOString()
-          }
-        ])
-      };
-    case actionTypes.DELETE_NOTES_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(event => event.id !== action.payload.id)
-      };
-
     default:
       const _: never = action;
       return state;
   }
 };
 
-export default note;
+export default notes;

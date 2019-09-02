@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { push } from "connected-react-router";
 import { apiPost } from "@api";
 import storage from "@state/storage";
-import constants from "./constants";
+import { eventsOperations, eventsConstants } from "@state/events";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
@@ -22,12 +22,12 @@ const login = (username: string, password: string) => {
       );
       storage.setLoginUser(response.data);
       dispatch(actionCreators.login.done(response.data));
-      dispatch(actionCreators.createAuthEvent(constants.eventTypes.LOGGED_IN));
+      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_IN));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.login.failed());
       dispatch(
-        actionCreators.createAuthEvent(constants.eventTypes.FAILED_TO_LOGIN)
+        eventsOperations.createEvent(eventsConstants.eventTypes.FAILED_TO_LOGIN)
       );
     }
   };
@@ -41,7 +41,7 @@ const logout = () => {
       await apiPost("/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actionCreators.logout.done());
-      dispatch(actionCreators.createAuthEvent(constants.eventTypes.LOGGED_OUT));
+      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_OUT));
       dispatch(push("/login"));
     } catch (err) {
       dispatch(actionCreators.logout.failed());
@@ -63,7 +63,7 @@ const signUp = (username: string, email: string, password: string) => {
       });
       storage.setLoginUser(response.data);
       dispatch(actionCreators.signUp.done(response.data));
-      dispatch(actionCreators.createAuthEvent(constants.eventTypes.SIGNED_UP));
+      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.SIGNED_UP));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.signUp.failed());
@@ -74,7 +74,5 @@ const signUp = (username: string, email: string, password: string) => {
 export default {
   login,
   logout,
-  signUp,
-  createAuthEvent: actionCreators.createAuthEvent,
-  deleteAuthEvent: actionCreators.deleteAuthEvent
+  signUp
 };

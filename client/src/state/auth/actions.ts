@@ -1,4 +1,4 @@
-import { User, AuthEventType } from "./types";
+import { User } from "./types";
 
 export const actionTypes = {
   LOGIN: {
@@ -15,9 +15,7 @@ export const actionTypes = {
     STARTED: "SIGN_UP.STARTED",
     DONE: "SIGN_UP.DONE",
     FAILED: "SIGN_UP.FAILED"
-  },
-  CREATE_AUTH_EVENT: "CREATE_AUTH_EVENT",
-  DELETE_AUTH_EVENT: "DELETE_AUTH_EVENT"
+  }
 } as const;
 
 export const actionCreators = {
@@ -59,17 +57,5 @@ export const actionCreators = {
     failed: () => ({
       type: actionTypes.SIGN_UP.FAILED
     })
-  },
-  createAuthEvent: (type: AuthEventType) => ({
-    type: actionTypes.CREATE_AUTH_EVENT,
-    payload: {
-      type
-    }
-  }),
-  deleteAuthEvent: (id: string) => ({
-    type: actionTypes.DELETE_AUTH_EVENT,
-    payload: {
-      id
-    }
-  })
+  }
 };

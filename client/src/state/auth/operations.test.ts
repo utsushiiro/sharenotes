@@ -1,16 +1,18 @@
 import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
-import constants from "./constants";
 import operations from "./operations";
 import { User } from "./types";
 import {
   mockAxios,
   mockStore,
   mockAxiosWith401Handler
-} from "../../test-utils";
+} from "@test-utils";
 
+/**
+ * TODO check eventsOperations call
+ */
 describe("Auth Operations", () => {
-  test("login", async () => {
+  test("login (success)", async () => {
     const user: User = {
       id: 0,
       email: "test@example.com",
@@ -28,12 +30,6 @@ describe("Auth Operations", () => {
           user: user
         }
       },
-      {
-        type: actionTypes.CREATE_AUTH_EVENT,
-        payload: {
-          type: constants.eventTypes.LOGGED_IN
-        }
-      },
       push("/")
     ];
 
@@ -47,7 +43,31 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.login(user.name, "password"));
 
     // verify
-    expect(store.getActions()).toEqual(expected);
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
+  });
+
+  test("login (failure)", async () => {
+    // expected actions
+    const expected = [
+      {
+        type: actionTypes.LOGIN.STARTED
+      },
+      {
+        type: actionTypes.LOGIN.FAILED,
+      }
+    ];
+
+    // api mock
+    mockAxios.onPost("/api/v1/login").reply(401);
+
+    // mock store
+    const store = mockStore();
+
+    // execute
+    await store.dispatch(operations.login("test-user", "invalidPassword"));
+
+    // verify
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 
   test("logout", async () => {
@@ -58,12 +78,6 @@ describe("Auth Operations", () => {
       },
       {
         type: actionTypes.LOGOUT.DONE
-      },
-      {
-        type: actionTypes.CREATE_AUTH_EVENT,
-        payload: {
-          type: constants.eventTypes.LOGGED_OUT
-        }
       },
       push("/login")
     ];
@@ -79,7 +93,7 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.logout());
 
     // verify
-    expect(store.getActions()).toEqual(expected);
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 
   test("signUp", async () => {
@@ -100,12 +114,6 @@ describe("Auth Operations", () => {
           user: user
         }
       },
-      {
-        type: actionTypes.CREATE_AUTH_EVENT,
-        payload: {
-          type: constants.eventTypes.SIGNED_UP
-        }
-      },
       push("/")
     ];
 
@@ -120,6 +128,6 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.signUp(user.name, user.email, "password"));
 
     // verify
-    expect(store.getActions()).toEqual(expected);
+    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 });

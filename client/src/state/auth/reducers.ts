@@ -6,8 +6,7 @@ import { v4 as uuid } from "uuid";
 
 const initialState: AuthState = {
   isLoading: false,
-  loginUser: storage.getLoginUser(),
-  events: []
+  loginUser: storage.getLoginUser()
 };
 
 const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
@@ -61,23 +60,6 @@ const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false
-      };
-
-    case actionTypes.CREATE_AUTH_EVENT:
-      return {
-        ...state,
-        events: state.events.concat([
-          {
-            id: uuid(),
-            type: action.payload.type,
-            createdAt: new Date().toISOString()
-          }
-        ])
-      };
-    case actionTypes.DELETE_AUTH_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(event => event.id !== action.payload.id)
       };
 
     default:
