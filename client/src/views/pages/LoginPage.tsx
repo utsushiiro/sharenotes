@@ -13,6 +13,7 @@ import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
 import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
+import { eventsOperations } from "@state/events";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,7 +42,7 @@ const LoginPage: React.FC = () => {
     [dispatch]
   );
 
-  const events = useSelector(state => state.authState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
@@ -50,13 +51,13 @@ const LoginPage: React.FC = () => {
           variant: "error",
           autoHideDuration: 1500
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       } else if (event.type === authConstants.eventTypes.LOGGED_OUT) {
         enqueueSnackbar("Logged out", {
           variant: "success",
           autoHideDuration: 1000
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });

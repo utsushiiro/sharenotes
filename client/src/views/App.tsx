@@ -7,13 +7,14 @@ import Container from "@material-ui/core/Container";
 import NotePage from "@pages/NotePage";
 import { useSelector } from "@state/store";
 import { useSnackbar } from "notistack";
-import { authOperations, authConstants } from "@state/auth";
+import { authConstants } from "@state/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { eventsOperations } from "@state/events";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const events = useSelector(state => state.authState.events);
+  const events = useSelector(state => state.eventsState.events);
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
@@ -22,13 +23,13 @@ const App: React.FC = () => {
           variant: "success",
           autoHideDuration: 1000
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       } else if (event.type === authConstants.eventTypes.SIGNED_UP) {
         enqueueSnackbar("Welcome!", {
           variant: "success",
           autoHideDuration: 1000
         });
-        dispatch(authOperations.deleteAuthEvent(event.id));
+        dispatch(eventsOperations.deleteEvent(event.id));
       }
     });
   });

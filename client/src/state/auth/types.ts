@@ -12,14 +12,7 @@ export type AuthAction = PickActionType<typeof actionCreators>;
 
 export type AuthEventType = keyof (typeof constants.eventTypes);
 
-export type AuthEvent = {
-  id: string;
-  type: AuthEventType;
-  createdAt: string;
-};
-
 export type AuthState = {
   isLoading: boolean;
   loginUser: User | null;
-  events: AuthEvent[];
 };

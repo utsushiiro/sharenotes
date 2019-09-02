@@ -63,23 +63,6 @@ const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
         isLoading: false
       };
 
-    case actionTypes.CREATE_AUTH_EVENT:
-      return {
-        ...state,
-        events: state.events.concat([
-          {
-            id: uuid(),
-            type: action.payload.type,
-            createdAt: new Date().toISOString()
-          }
-        ])
-      };
-    case actionTypes.DELETE_AUTH_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(event => event.id !== action.payload.id)
-      };
-
     default:
       const _: never = action;
       return state;
