@@ -6,8 +6,7 @@ import { v4 as uuid } from "uuid";
 
 const initialState: AuthState = {
   isLoading: false,
-  loginUser: storage.getLoginUser(),
-  events: []
+  loginUser: storage.getLoginUser()
 };
 
 const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {

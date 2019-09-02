@@ -1,5 +1,4 @@
 import { actionCreators } from "./actions";
-import constants from "./constants";
 import { PickActionType } from "@state/types";
 
 export type Note = {
@@ -8,8 +7,6 @@ export type Note = {
   content: string;
   version: number;
 };
-
-export type NotesEventType = keyof (typeof constants.eventTypes);
 
 export type NotesAction = PickActionType<typeof actionCreators>;
 

@@ -14,9 +14,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import Note from "@components/Note";
 import Editor from "@components/Editor";
 import { useSnackbar } from "notistack";
-import { notesConstants } from "@state/notes";
 import { useSelector } from "@state/store";
-import { eventsOperations } from "@state/events";
+import { eventsOperations, eventsConstants } from "@state/events";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,20 +86,20 @@ const NotePage: React.FC<Props> = props => {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     events.forEach(event => {
-      if (event.type === notesConstants.eventTypes.CREATED_NOTE) {
+      if (event.type === eventsConstants.eventTypes.CREATED_NOTE) {
         enqueueSnackbar("Successfully created", {
           variant: "success",
           autoHideDuration: 1500
         });
         dispatch(eventsOperations.deleteEvent(event.id));
-      } else if (event.type === notesConstants.eventTypes.UPDATED_NOTE) {
+      } else if (event.type === eventsConstants.eventTypes.UPDATED_NOTE) {
         enqueueSnackbar("Successfully updated", {
           variant: "success",
           autoHideDuration: 1500
         });
         dispatch(eventsOperations.deleteEvent(event.id));
       } else if (
-        event.type === notesConstants.eventTypes.FAILED_TO_UPDATE_NOTE
+        event.type === eventsConstants.eventTypes.FAILED_TO_UPDATE_NOTE
       ) {
         enqueueSnackbar("Failed to update", {
           variant: "error",

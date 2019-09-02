@@ -6,8 +6,7 @@ import { v4 as uuid } from "uuid";
 const initialState: NotesState = {
   isLoading: false,
   note: null,
-  notes: [],
-  events: []
+  notes: []
 };
 
 const notes: Reducer<NotesState, NotesAction> = (

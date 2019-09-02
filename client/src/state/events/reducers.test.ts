@@ -1,7 +1,7 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
 import { EventAction, EventState } from "./types";
-import constants from "@state/auth/constants";
+import constants from "./constants";
 
 describe("Event Reducers", () => {
   test("CREATE_EVENT", () => {
