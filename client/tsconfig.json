@@ -17,6 +17,7 @@
       "@api/*": ["src/api/*"],
       "@config": ["src/config"],
       "@state/*": ["src/state/*"],
+      "@test-utils": ["src/test-utils"],
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/views/components/*"],
       "@containers/*": ["src/views/containers/*"],
