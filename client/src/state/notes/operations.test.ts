@@ -1,8 +1,7 @@
 import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
-import constants from "./constants";
 import operations from "./operations";
-import { mockStore, mockAxiosWith401Handler } from "../../test-utils";
+import { mockStore, mockAxiosWith401Handler } from "@test-utils";
 import { Note } from "./types";
 
 describe("Note Operations", () => {
