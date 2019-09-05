@@ -12,6 +12,7 @@ import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { authOperations } from "@state/auth";
 import { makeStyles } from "@material-ui/styles";
+import { useSelector } from "@state/store";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -46,6 +47,9 @@ const UserMenuButton: React.FC = () => {
     dispatch(authOperations.logout());
   }, []);
 
+  // get logged in user name
+  const username = useSelector(state => state.authState.loginUser!.name);
+
   return (
     <>
       <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
@@ -65,7 +69,7 @@ const UserMenuButton: React.FC = () => {
             dense={true}
           >
             <Box>
-              Signed in as <br /> <b>utsushiiro</b>
+              Signed in as <br /> <b>{username}</b>
             </Box>
           </MenuItem>
         </Box>
