@@ -27,11 +27,13 @@ describe("Event Reducers", () => {
   test("DELETE_EVENT", () => {
     // setup
     const state: EventState = {
-      events: [{
-        id: "XXX",
-        type: constants.eventTypes.LOGGED_IN,
-        createdAt: "XXX"
-      }]
+      events: [
+        {
+          id: "XXX",
+          type: constants.eventTypes.LOGGED_IN,
+          createdAt: "XXX"
+        }
+      ]
     };
 
     const action: EventAction = {
@@ -43,7 +45,7 @@ describe("Event Reducers", () => {
 
     const expected: EventState = {
       events: []
-    }
+    };
 
     // execute
     const result = reducer(state, action);

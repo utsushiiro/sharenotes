@@ -124,5 +124,5 @@ export default {
   fetchNotes,
   fetchNote,
   updateNote,
-  deleteNoteAndRedirect,
+  deleteNoteAndRedirect
 };

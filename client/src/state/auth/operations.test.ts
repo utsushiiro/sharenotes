@@ -2,11 +2,7 @@ import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
 import operations from "./operations";
 import { User } from "./types";
-import {
-  mockAxios,
-  mockStore,
-  mockAxiosWith401Handler
-} from "@test-utils";
+import { mockAxios, mockStore, mockAxiosWith401Handler } from "@test-utils";
 
 /**
  * TODO check eventsOperations call
@@ -53,7 +49,7 @@ describe("Auth Operations", () => {
         type: actionTypes.LOGIN.STARTED
       },
       {
-        type: actionTypes.LOGIN.FAILED,
+        type: actionTypes.LOGIN.FAILED
       }
     ];
 

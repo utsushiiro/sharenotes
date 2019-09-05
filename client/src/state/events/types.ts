@@ -2,7 +2,7 @@ import { actionCreators } from "./actions";
 import { PickActionType } from "@state/types";
 import constants from "./constants";
 
-export type EventType = keyof(typeof constants.eventTypes);
+export type EventType = keyof (typeof constants.eventTypes);
 
 export type Event = {
   id: string;

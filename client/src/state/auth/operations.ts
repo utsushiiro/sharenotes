@@ -22,7 +22,9 @@ const login = (username: string, password: string) => {
       );
       storage.setLoginUser(response.data);
       dispatch(actionCreators.login.done(response.data));
-      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_IN));
+      dispatch(
+        eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_IN)
+      );
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.login.failed());
@@ -41,7 +43,9 @@ const logout = () => {
       await apiPost("/api/v1/logout");
       storage.deleteLoginUser();
       dispatch(actionCreators.logout.done());
-      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_OUT));
+      dispatch(
+        eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_OUT)
+      );
       dispatch(push("/login"));
     } catch (err) {
       dispatch(actionCreators.logout.failed());
@@ -63,7 +67,9 @@ const signUp = (username: string, email: string, password: string) => {
       });
       storage.setLoginUser(response.data);
       dispatch(actionCreators.signUp.done(response.data));
-      dispatch(eventsOperations.createEvent(eventsConstants.eventTypes.SIGNED_UP));
+      dispatch(
+        eventsOperations.createEvent(eventsConstants.eventTypes.SIGNED_UP)
+      );
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.signUp.failed());
