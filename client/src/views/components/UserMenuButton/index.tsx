@@ -31,7 +31,7 @@ const UserMenuButton: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // for menu open&close 
+  // for menu open&close
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
