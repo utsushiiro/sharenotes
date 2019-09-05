@@ -19,6 +19,8 @@ import {
   DialogActions
 } from "@material-ui/core";
 import UserMenuButton from "@components/UserMenuButton";
+import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,9 +77,12 @@ const Navbar: React.FC = () => {
               ShareNotes
             </Link>
           </Typography>
-          <Button color="inherit" onClick={openDialogHandler}>
-            New
-          </Button>
+          <IconButton color="inherit" onClick={openDialogHandler}>
+            <LibraryAddIcon />
+          </IconButton>
+          <IconButton color="inherit">
+            <CreateNewFolderIcon /> 
+          </IconButton>
           <UserMenuButton />
         </Toolbar>
       </AppBar>

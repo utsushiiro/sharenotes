@@ -7,7 +7,7 @@ import {
   createStyles,
   Box
 } from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { authOperations } from "@state/auth";
@@ -49,7 +49,7 @@ const UserMenuButton: React.FC = () => {
   return (
     <>
       <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
-        <AccountCircle />
+        <AccountBoxIcon />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
