@@ -1,10 +1,8 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { authOperations } from "@state/auth";
 import { notesOperations } from "@state/notes";
 import { useState, useCallback } from "react";
-
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,6 +18,7 @@ import {
   TextField,
   DialogActions
 } from "@material-ui/core";
+import UserMenuButton from "@components/UserMenuButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,9 +48,6 @@ const Navbar: React.FC = () => {
   const [title, setTitle] = useState("");
 
   const dispatch = useDispatch();
-  const logoutButtonHandler = useCallback(() => {
-    dispatch(authOperations.logout());
-  }, []);
   const newButtonHandler = useCallback(() => {
     closeDialogHandler();
     dispatch(notesOperations.createNoteAndRedirect(title, ""));
@@ -82,9 +78,7 @@ const Navbar: React.FC = () => {
           <Button color="inherit" onClick={openDialogHandler}>
             New
           </Button>
-          <Button color="inherit" onClick={logoutButtonHandler}>
-            Logout
-          </Button>
+          <UserMenuButton />
         </Toolbar>
       </AppBar>
       <Dialog open={open} onClose={closeDialogHandler} fullWidth={true}>
