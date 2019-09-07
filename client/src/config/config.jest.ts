@@ -1,5 +1,4 @@
 import { Config } from "./types";
 
-export const config: Config = {
-  API_ORIGIN: "" // same origin
+export const config: Partial<Config> = {
 };

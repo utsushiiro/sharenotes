@@ -1,5 +1,5 @@
 import { Config } from "./types";
 
-export const config: Config = {
+export const config: Partial<Config> = {
   API_ORIGIN: "http://localhost:3001"
 };
