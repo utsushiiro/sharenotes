@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const client_path = path.resolve(__dirname);
 const public_path = path.resolve(__dirname, "..", "public");
@@ -42,7 +43,8 @@ module.exports = env => {
     plugins: [
       new webpack.DefinePlugin({
         "CONFIG_TYPE": JSON.stringify((env && env.config) ? env.config : "dev")
-      })
+      }),
+      new BundleAnalyzerPlugin()
     ],
 
     devServer: {
