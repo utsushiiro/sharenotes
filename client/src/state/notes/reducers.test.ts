@@ -305,7 +305,7 @@ describe("Note Reducers", () => {
         ...note,
         content: "test-content-2",
         version: "1"
-      }
+      };
 
       const state = {
         isLoading: false,

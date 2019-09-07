@@ -63,7 +63,7 @@ const notes: Reducer<NotesState, NotesAction> = (
         isLoading: false,
         notes
       };
-    } 
+    }
     case actionTypes.GET_NOTE.FAILED:
       return {
         ...state,
