@@ -10,9 +10,17 @@ import LoginPage from "@pages/LoginPage";
 import SignUpPage from "@pages/SignUpPage";
 import PrivateRoute from "src/views/PrivateRoute";
 import { SnackbarProvider } from "notistack";
+import dayjs from "dayjs";
 
+// --- bootstrapping
+
+// create store for redux
 const store = configureStore();
 
+// set locale
+dayjs.locale("ja");
+
+// --- render root component
 document.addEventListener("DOMContentLoaded", () => {
   render(
     <Provider store={store}>
