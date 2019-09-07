@@ -32,10 +32,10 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const state = {
@@ -120,10 +120,10 @@ describe("Note Reducers", () => {
       // setup
       const notes: Note[] = [
         {
-          id: 0,
+          id: "0",
           title: "test-title",
           content: "test-content",
-          version: 0
+          version: "0"
         }
       ];
 
@@ -208,10 +208,10 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const state = {
@@ -295,16 +295,16 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const updatedNote: Note = {
         ...note,
         content: "test-content-2",
-        version: 1
+        version: "1"
       }
 
       const state = {
@@ -336,10 +336,10 @@ describe("Note Reducers", () => {
     test("FAILED", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const state = {

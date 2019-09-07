@@ -7,10 +7,10 @@ import { Note } from "./types";
 describe("Note Operations", () => {
   test("createNoteAndRedirect", async () => {
     const note: Note = {
-      id: 0,
+      id: "0",
       title: "test-title",
       content: "test-content",
-      version: 0
+      version: "0"
     };
 
     // expected actions
@@ -45,10 +45,10 @@ describe("Note Operations", () => {
   test("fetchNotes", async () => {
     const notes: Note[] = [
       {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       }
     ];
 
@@ -80,10 +80,10 @@ describe("Note Operations", () => {
 
   test("fetchNote", async () => {
     const note: Note = {
-      id: 0,
+      id: "0",
       title: "test-title",
       content: "test-content",
-      version: 0
+      version: "0"
     };
 
     // expected actions
@@ -114,15 +114,15 @@ describe("Note Operations", () => {
 
   test("updateNote", async () => {
     const note: Note = {
-      id: 0,
+      id: "0",
       title: "test-title",
       content: "test-content",
-      version: 0
+      version: "0"
     };
 
     const updatedNote: Note = {
       ...note,
-      version: note.version + 1
+      version: "1"
     };
 
     // expected actions
