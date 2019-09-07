@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
-public class FolderController {
+public class FolderRestController {
 
     private final FolderService folderService;
 
     @Autowired
-    public FolderController(FolderService folderService) {
+    public FolderRestController(FolderService folderService) {
         this.folderService = folderService;
     }
 
