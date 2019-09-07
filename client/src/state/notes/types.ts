@@ -12,6 +12,5 @@ export type NotesAction = PickActionType<typeof actionCreators>;
 
 export type NotesState = {
   isLoading: boolean;
-  note: Note | null;
   notes: Note[];
 };
