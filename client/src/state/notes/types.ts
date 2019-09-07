@@ -2,10 +2,10 @@ import { actionCreators } from "./actions";
 import { PickActionType } from "@state/types";
 
 export type Note = {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  version: number;
+  version: string;
 };
 
 export type NotesAction = PickActionType<typeof actionCreators>;

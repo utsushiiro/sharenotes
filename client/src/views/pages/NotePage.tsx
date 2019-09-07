@@ -57,11 +57,11 @@ const NotePage: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(state => state.notesState.isLoading);
-  const note = useSelector(state => state.notesState.notes.find(note => note.id === parseInt(props.noteId)));
+  const note = useSelector(state => state.notesState.notes.find(note => note.id === props.noteId));
 
   // fetch note when props.noteId changed
   useEffect(() => {
-    dispatch(notesOperations.fetchNote(parseInt(props.noteId)));
+    dispatch(notesOperations.fetchNote(props.noteId));
   }, [props.noteId]);
 
   // for note update

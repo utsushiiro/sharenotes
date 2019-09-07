@@ -46,13 +46,13 @@ const fetchNotes = () => {
   };
 };
 
-const fetchNote = (id: number) => {
+const fetchNote = (id: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(actionCreators.getNote.started());
 
     try {
       const response = await apiGet("/api/v1/notes/:id", {
-        vars: { id: String(id) }
+        vars: { id: id }
       });
       dispatch(actionCreators.getNote.done(response.data));
     } catch (err) {
@@ -62,17 +62,17 @@ const fetchNote = (id: number) => {
 };
 
 const updateNote = (
-  id: number,
+  id: string,
   title: string,
   content: string,
-  version: number
+  version: string
 ) => {
   return async (dispatch: Dispatch) => {
     dispatch(actionCreators.updateNote.started());
 
     try {
       const response = await apiPatch("/api/v1/notes/:id", {
-        vars: { id: String(id) },
+        vars: { id: id },
         body: {
           title,
           content,
@@ -95,13 +95,13 @@ const updateNote = (
   };
 };
 
-const deleteNoteAndRedirect = (id: number) => {
+const deleteNoteAndRedirect = (id: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(actionCreators.deleteNote.started());
 
     try {
       await apiDelete("/api/v1/notes/:id", {
-        vars: { id: String(id) }
+        vars: { id: id }
       });
       dispatch(actionCreators.deleteNote.done());
       dispatch(
