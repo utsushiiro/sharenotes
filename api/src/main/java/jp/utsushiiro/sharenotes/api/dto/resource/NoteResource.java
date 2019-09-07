@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class NoteResource {
 
-    private Long id;
+    private String id;
 
     private String title;
 
@@ -25,10 +25,10 @@ public class NoteResource {
 
     private String createdBy;
 
-    private Long version;
+    private String version;
 
     public NoteResource(Note note) {
-        this.id = note.getId();
+        this.id = note.getId().toString();
 
         NoteRevision latestRevision = note.getLatestRevision();
         this.title = latestRevision.getTitle();
@@ -38,6 +38,6 @@ public class NoteResource {
         this.updatedBy = latestRevision.getCreatedBy().getName();
         this.createdAt = note.getCreatedAt();
         this.createdBy = note.getCreatedBy().getName();
-        this.version = note.getLatestRevisionVersion();
+        this.version = note.getLatestRevisionVersion().toString();
     }
 }
