@@ -7,7 +7,8 @@
     "build": "webpack",
     "dev": "webpack-dev-server",
     "fmt": "prettier --parser typescript --write \"./**/*.{ts,tsx}\"",
-    "test": "jest"
+    "test": "jest",
+    "analyze": "webpack --profile --json > /tmp/jp.utsushiiro.sharenotes.webpack.json && webpack-bundle-analyzer /tmp/jp.utsushiiro.sharenotes.webpack.json"
   },
   "devDependencies": {
     "@types/axios-mock-adapter": "^1.10.0",
@@ -40,6 +41,7 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.8.0"
   },
