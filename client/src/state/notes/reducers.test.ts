@@ -8,7 +8,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -19,7 +18,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -34,15 +32,14 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -56,8 +53,7 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: note,
-        notes: [],
+        notes: [note],
         events: []
       };
 
@@ -72,7 +68,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -83,7 +78,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -101,7 +95,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -112,7 +105,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -128,16 +120,15 @@ describe("Note Reducers", () => {
       // setup
       const notes: Note[] = [
         {
-          id: 0,
+          id: "0",
           title: "test-title",
           content: "test-content",
-          version: 0
+          version: "0"
         }
       ];
 
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -151,7 +142,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
         notes: notes,
         events: []
       };
@@ -167,7 +157,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -178,7 +167,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -196,7 +184,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -207,7 +194,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -222,15 +208,14 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
 
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -244,8 +229,7 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: note,
-        notes: [],
+        notes: [note],
         events: []
       };
 
@@ -260,7 +244,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: true,
-        note: null,
         notes: [],
         events: []
       };
@@ -271,7 +254,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -289,7 +271,6 @@ describe("Note Reducers", () => {
       // setup
       const state = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -300,7 +281,6 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
         notes: [],
         events: []
       };
@@ -315,30 +295,34 @@ describe("Note Reducers", () => {
     test("DONE", () => {
       // setup
       const note: Note = {
-        id: 0,
+        id: "0",
         title: "test-title",
         content: "test-content",
-        version: 0
+        version: "0"
       };
+
+      const updatedNote: Note = {
+        ...note,
+        content: "test-content-2",
+        version: "1"
+      }
 
       const state = {
         isLoading: false,
-        note: null,
-        notes: [],
+        notes: [note],
         events: []
       };
 
       const action = {
         type: actionTypes.UPDATE_NOTE.DONE,
         payload: {
-          note
+          note: updatedNote
         }
       };
 
       const expected = {
         isLoading: false,
-        note: note,
-        notes: [],
+        notes: [updatedNote],
         events: []
       };
 
@@ -351,10 +335,16 @@ describe("Note Reducers", () => {
 
     test("FAILED", () => {
       // setup
+      const note: Note = {
+        id: "0",
+        title: "test-title",
+        content: "test-content",
+        version: "0"
+      };
+
       const state = {
         isLoading: false,
-        note: null,
-        notes: [],
+        notes: [note],
         events: []
       };
 
@@ -364,8 +354,7 @@ describe("Note Reducers", () => {
 
       const expected = {
         isLoading: false,
-        note: null,
-        notes: [],
+        notes: [note],
         events: []
       };
 

@@ -1,11 +1,9 @@
 import { Reducer } from "redux";
 import { NotesState, NotesAction } from "./types";
 import { actionTypes } from "./actions";
-import { v4 as uuid } from "uuid";
 
 const initialState: NotesState = {
   isLoading: false,
-  note: null,
   notes: []
 };
 
@@ -17,20 +15,18 @@ const notes: Reducer<NotesState, NotesAction> = (
     case actionTypes.CREATE_NOTE.STARTED:
       return {
         ...state,
-        isLoading: true,
-        note: null
+        isLoading: true
       };
     case actionTypes.CREATE_NOTE.DONE:
       return {
         ...state,
         isLoading: false,
-        note: action.payload.note
+        notes: state.notes.concat(action.payload.note)
       };
     case actionTypes.CREATE_NOTE.FAILED:
       return {
         ...state,
-        isLoading: false,
-        note: null
+        isLoading: false
       };
 
     case actionTypes.GET_NOTES.STARTED:
@@ -57,12 +53,17 @@ const notes: Reducer<NotesState, NotesAction> = (
         ...state,
         isLoading: true
       };
-    case actionTypes.GET_NOTE.DONE:
+    case actionTypes.GET_NOTE.DONE: {
+      const notes = state.notes.filter(
+        note => note.id !== action.payload.note.id
+      );
+      notes.push(action.payload.note);
       return {
         ...state,
         isLoading: false,
-        note: action.payload.note
+        notes
       };
+    } 
     case actionTypes.GET_NOTE.FAILED:
       return {
         ...state,
@@ -73,11 +74,16 @@ const notes: Reducer<NotesState, NotesAction> = (
       return {
         ...state
       };
-    case actionTypes.UPDATE_NOTE.DONE:
+    case actionTypes.UPDATE_NOTE.DONE: {
+      const notes = state.notes.filter(
+        note => note.id !== action.payload.note.id
+      );
+      notes.push(action.payload.note);
       return {
         ...state,
-        note: action.payload.note
+        notes
       };
+    }
     case actionTypes.UPDATE_NOTE.FAILED:
       return {
         ...state

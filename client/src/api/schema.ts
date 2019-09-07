@@ -89,7 +89,7 @@ export type PATCH = {
       body: {
         title: string;
         content: string;
-        version: number;
+        version: string;
       };
     };
     res: Note;

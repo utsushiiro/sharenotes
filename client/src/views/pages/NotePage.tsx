@@ -54,17 +54,20 @@ type Props = {
 
 const NotePage: React.FC<Props> = props => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
+
+  const isLoading = useSelector(state => state.notesState.isLoading);
+  const note = useSelector(state => state.notesState.notes.find(note => note.id === props.noteId));
+
+  // fetch note when props.noteId changed
   useEffect(() => {
-    dispatch(notesOperations.fetchNote(parseInt(props.noteId)));
+    dispatch(notesOperations.fetchNote(props.noteId));
   }, [props.noteId]);
 
-  const note = useSelector(state => state.notesState.note);
-  const isLoading = useSelector(state => state.notesState.isLoading);
+  // for note update
   const updateNoteHandler = useCallback(
     (content: string) => {
-      if (note !== null) {
+      if (note !== undefined) {
         dispatch(
           notesOperations.updateNote(note.id, note.title, content, note.version)
         );
@@ -73,8 +76,9 @@ const NotePage: React.FC<Props> = props => {
     [note]
   );
 
+  // for note delete
   const deleteNoteHandler = useCallback(() => {
-    if (note !== null) {
+    if (note !== undefined) {
       dispatch(notesOperations.deleteNoteAndRedirect(note.id));
     }
   }, [note]);
@@ -110,7 +114,7 @@ const NotePage: React.FC<Props> = props => {
     });
   });
 
-  return isLoading || note === null ? (
+  return isLoading || note === undefined ? (
     <></>
   ) : (
     <>

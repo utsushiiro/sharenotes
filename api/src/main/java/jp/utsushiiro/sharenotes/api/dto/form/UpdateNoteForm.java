@@ -15,5 +15,5 @@ public class UpdateNoteForm {
     private String content;
 
     @NotNull
-    private Long version;
+    private String version;
 }
