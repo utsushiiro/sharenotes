@@ -1,7 +1,6 @@
 import { Reducer } from "redux";
 import { NotesState, NotesAction } from "./types";
 import { actionTypes } from "./actions";
-import { v4 as uuid } from "uuid";
 
 const initialState: NotesState = {
   isLoading: false,

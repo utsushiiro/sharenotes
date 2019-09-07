@@ -2,7 +2,6 @@ import { Reducer } from "redux";
 import { AuthState, AuthAction } from "./types";
 import { actionTypes } from "./actions";
 import storage from "@state/storage";
-import { v4 as uuid } from "uuid";
 
 const initialState: AuthState = {
   isLoading: false,
