@@ -6,9 +6,16 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server",
-    "fmt": "prettier --parser typescript --write \"./**/*.{ts,tsx}\"",
+    "lint": "prettier --parser typescript --check \"./**/*.{ts,tsx}\"",
+    "lint:fix": "prettier --parser typescript --write \"./**/*.{ts,tsx}\"",
     "test": "jest",
     "analyze": "webpack --profile --json > /tmp/jp.utsushiiro.sharenotes.webpack.json && webpack-bundle-analyzer /tmp/jp.utsushiiro.sharenotes.webpack.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
+    }
   },
   "devDependencies": {
     "@types/axios-mock-adapter": "^1.10.0",
