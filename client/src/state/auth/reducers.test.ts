@@ -1,25 +1,24 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
-import { User } from "./types";
+import { createTestUser } from "@test-utils";
+import { AuthState, AuthAction } from "./types";
 
 describe("Auth Reducers", () => {
   describe("LOGIN", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: AuthState = {
         isLoading: false,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       const action = {
         type: actionTypes.LOGIN.STARTED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       // execute
@@ -31,29 +30,23 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.LOGIN.DONE,
         payload: {
           user
         }
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
       // execute
@@ -65,20 +58,18 @@ describe("Auth Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.LOGIN.FAILED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       // execute
@@ -92,26 +83,20 @@ describe("Auth Reducers", () => {
   describe("LOGOUT", () => {
     test("STARTED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
-      const state = {
+      const state: AuthState = {
         isLoading: false,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.LOGOUT.STARTED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: true,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
       // execute
@@ -123,29 +108,20 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
-      const action = {
-        type: actionTypes.LOGOUT.DONE,
-        payload: {
-          user
-        }
+      const action: AuthAction = {
+        type: actionTypes.LOGOUT.DONE
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       // execute
@@ -157,26 +133,20 @@ describe("Auth Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.LOGOUT.FAILED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
       // execute
@@ -190,20 +160,18 @@ describe("Auth Reducers", () => {
   describe("SIGN_UP", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: AuthState = {
         isLoading: false,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.SIGN_UP.STARTED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       // execute
@@ -215,29 +183,23 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.SIGN_UP.DONE,
         payload: {
           user
         }
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: user,
-        events: []
+        loginUser: user
       };
 
       // execute
@@ -249,20 +211,18 @@ describe("Auth Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const state = {
+      const state: AuthState = {
         isLoading: true,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
-      const action = {
+      const action: AuthAction = {
         type: actionTypes.SIGN_UP.FAILED
       };
 
-      const expected = {
+      const expected: AuthState = {
         isLoading: false,
-        loginUser: null,
-        events: []
+        loginUser: null
       };
 
       // execute

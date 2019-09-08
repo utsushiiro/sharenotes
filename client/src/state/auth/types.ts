@@ -1,11 +1,6 @@
 import { actionCreators } from "./actions";
 import { PickActionType } from "@state/types";
-
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import { User } from "@state/users/types";
 
 export type AuthAction = PickActionType<typeof actionCreators>;
 

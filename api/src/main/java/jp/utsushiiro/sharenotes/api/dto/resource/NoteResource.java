@@ -19,11 +19,11 @@ public class NoteResource {
 
     private LocalDateTime updatedAt;
 
-    private String updatedBy;
+    private UserResource updatedBy;
 
     private LocalDateTime createdAt;
 
-    private String createdBy;
+    private UserResource createdBy;
 
     private String version;
 
@@ -35,9 +35,9 @@ public class NoteResource {
         this.content = latestRevision.getContent();
 
         this.updatedAt = latestRevision.getCreatedAt();
-        this.updatedBy = latestRevision.getCreatedBy().getName();
+        this.updatedBy = new UserResource(latestRevision.getCreatedBy());
         this.createdAt = note.getCreatedAt();
-        this.createdBy = note.getCreatedBy().getName();
+        this.createdBy = new UserResource(note.getCreatedBy());
         this.version = note.getLatestRevisionVersion().toString();
     }
 }

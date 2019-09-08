@@ -1,20 +1,19 @@
 import { actionTypes } from "./actions";
-import { push } from "connected-react-router";
+import { push, RouterAction } from "connected-react-router";
 import operations from "./operations";
-import { mockStore, mockAxiosWith401Handler } from "@test-utils";
-import { Note } from "./types";
+import {
+  mockStore,
+  mockAxiosWith401Handler,
+  createTestNote
+} from "@test-utils";
+import { Note, NotesAction } from "./types";
 
 describe("Note Operations", () => {
   test("createNoteAndRedirect", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     // expected actions
-    const expected = [
+    const expected: (NotesAction | RouterAction)[] = [
       {
         type: actionTypes.CREATE_NOTE.STARTED
       },
@@ -43,17 +42,10 @@ describe("Note Operations", () => {
   });
 
   test("fetchNotes", async () => {
-    const notes: Note[] = [
-      {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      }
-    ];
+    const notes = [createTestNote()];
 
     // expected actions
-    const expected = [
+    const expected: NotesAction[] = [
       {
         type: actionTypes.GET_NOTES.STARTED
       },
@@ -79,15 +71,10 @@ describe("Note Operations", () => {
   });
 
   test("fetchNote", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     // expected actions
-    const expected = [
+    const expected: NotesAction[] = [
       {
         type: actionTypes.GET_NOTE.STARTED
       },
@@ -113,12 +100,7 @@ describe("Note Operations", () => {
   });
 
   test("updateNote", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     const updatedNote: Note = {
       ...note,
@@ -126,7 +108,7 @@ describe("Note Operations", () => {
     };
 
     // expected actions
-    const expected = [
+    const expected: (NotesAction | RouterAction)[] = [
       {
         type: actionTypes.UPDATE_NOTE.STARTED
       },
