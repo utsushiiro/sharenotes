@@ -1,19 +1,19 @@
 import { actionTypes } from "./actions";
-import { push } from "connected-react-router";
+import { push, RouterAction } from "connected-react-router";
 import operations from "./operations";
 import {
   mockStore,
   mockAxiosWith401Handler,
   createTestNote
 } from "@test-utils";
-import { Note } from "./types";
+import { Note, NotesAction } from "./types";
 
 describe("Note Operations", () => {
   test("createNoteAndRedirect", async () => {
     const note = createTestNote();
 
     // expected actions
-    const expected = [
+    const expected: (NotesAction | RouterAction)[] = [
       {
         type: actionTypes.CREATE_NOTE.STARTED
       },
@@ -42,10 +42,10 @@ describe("Note Operations", () => {
   });
 
   test("fetchNotes", async () => {
-    const notes: Note[] = [createTestNote()];
+    const notes = [createTestNote()];
 
     // expected actions
-    const expected = [
+    const expected: NotesAction[] = [
       {
         type: actionTypes.GET_NOTES.STARTED
       },
@@ -74,7 +74,7 @@ describe("Note Operations", () => {
     const note = createTestNote();
 
     // expected actions
-    const expected = [
+    const expected: NotesAction[] = [
       {
         type: actionTypes.GET_NOTE.STARTED
       },
@@ -108,7 +108,7 @@ describe("Note Operations", () => {
     };
 
     // expected actions
-    const expected = [
+    const expected: (NotesAction | RouterAction)[] = [
       {
         type: actionTypes.UPDATE_NOTE.STARTED
       },

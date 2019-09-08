@@ -1,26 +1,24 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
-import { Note } from "./types";
+import { Note, NotesState, NotesAction } from "./types";
 import { createTestNote } from "@test-utils";
 
 describe("Note Reducers", () => {
   describe("CREATE_NOTE", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.CREATE_NOTE.STARTED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -34,23 +32,21 @@ describe("Note Reducers", () => {
       // setup
       const note = createTestNote();
 
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.CREATE_NOTE.DONE,
         payload: {
           note
         }
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [note],
-        events: []
+        notes: [note]
       };
 
       // execute
@@ -62,20 +58,18 @@ describe("Note Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.CREATE_NOTE.FAILED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -89,20 +83,18 @@ describe("Note Reducers", () => {
   describe("GET_NOTES", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTES.STARTED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -116,23 +108,21 @@ describe("Note Reducers", () => {
       // setup
       const notes: Note[] = [createTestNote()];
 
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTES.DONE,
         payload: {
           notes
         }
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: notes,
-        events: []
+        notes: notes
       };
 
       // execute
@@ -144,20 +134,18 @@ describe("Note Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTES.FAILED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -171,20 +159,18 @@ describe("Note Reducers", () => {
   describe("GET_NOTE", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTE.STARTED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -198,23 +184,21 @@ describe("Note Reducers", () => {
       // setup
       const note = createTestNote();
 
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTE.DONE,
         payload: {
           note
         }
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [note],
-        events: []
+        notes: [note]
       };
 
       // execute
@@ -226,20 +210,18 @@ describe("Note Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: true,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.GET_NOTE.FAILED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -253,20 +235,18 @@ describe("Note Reducers", () => {
   describe("UPDATE_NOTE", () => {
     test("STARTED", () => {
       // setup
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.UPDATE_NOTE.STARTED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [],
-        events: []
+        notes: []
       };
 
       // execute
@@ -286,23 +266,21 @@ describe("Note Reducers", () => {
         version: "1"
       };
 
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [note],
-        events: []
+        notes: [note]
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.UPDATE_NOTE.DONE,
         payload: {
           note: updatedNote
         }
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [updatedNote],
-        events: []
+        notes: [updatedNote]
       };
 
       // execute
@@ -316,20 +294,18 @@ describe("Note Reducers", () => {
       // setup
       const note = createTestNote();
 
-      const state = {
+      const state: NotesState = {
         isLoading: false,
-        notes: [note],
-        events: []
+        notes: [note]
       };
 
-      const action = {
+      const action: NotesAction = {
         type: actionTypes.UPDATE_NOTE.FAILED
       };
 
-      const expected = {
+      const expected: NotesState = {
         isLoading: false,
-        notes: [note],
-        events: []
+        notes: [note]
       };
 
       // execute
