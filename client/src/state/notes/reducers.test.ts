@@ -1,6 +1,7 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
 import { Note } from "./types";
+import { createTestNote } from "@test-utils";
 
 describe("Note Reducers", () => {
   describe("CREATE_NOTE", () => {
@@ -31,12 +32,7 @@ describe("Note Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const note: Note = {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      };
+      const note = createTestNote();
 
       const state = {
         isLoading: true,
@@ -118,14 +114,7 @@ describe("Note Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const notes: Note[] = [
-        {
-          id: "0",
-          title: "test-title",
-          content: "test-content",
-          version: "0"
-        }
-      ];
+      const notes: Note[] = [createTestNote()];
 
       const state = {
         isLoading: true,
@@ -207,12 +196,7 @@ describe("Note Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const note: Note = {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      };
+      const note = createTestNote();
 
       const state = {
         isLoading: true,
@@ -294,12 +278,7 @@ describe("Note Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const note: Note = {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      };
+      const note = createTestNote();
 
       const updatedNote: Note = {
         ...note,
@@ -335,12 +314,7 @@ describe("Note Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const note: Note = {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      };
+      const note = createTestNote();
 
       const state = {
         isLoading: false,

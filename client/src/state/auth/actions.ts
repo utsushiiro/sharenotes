@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User } from "@state/users/types";
 
 export const actionTypes = {
   LOGIN: {

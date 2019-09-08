@@ -1,6 +1,6 @@
 import reducer from "./reducers";
 import { actionTypes } from "./actions";
-import { User } from "./types";
+import { createTestUser } from "@test-utils";
 
 describe("Auth Reducers", () => {
   describe("LOGIN", () => {
@@ -31,11 +31,7 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
       const state = {
         isLoading: true,
@@ -92,11 +88,7 @@ describe("Auth Reducers", () => {
   describe("LOGOUT", () => {
     test("STARTED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
       const state = {
         isLoading: false,
@@ -123,11 +115,7 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
       const state = {
         isLoading: true,
@@ -157,11 +145,7 @@ describe("Auth Reducers", () => {
 
     test("FAILED", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
       const state = {
         isLoading: true,
@@ -215,11 +199,7 @@ describe("Auth Reducers", () => {
 
     test("DONE", () => {
       // setup
-      const user: User = {
-        id: 0,
-        email: "test@example.com",
-        name: "test-name"
-      };
+      const user = createTestUser();
 
       const state = {
         isLoading: true,

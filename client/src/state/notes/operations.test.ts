@@ -1,17 +1,16 @@
 import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
 import operations from "./operations";
-import { mockStore, mockAxiosWith401Handler } from "@test-utils";
+import {
+  mockStore,
+  mockAxiosWith401Handler,
+  createTestNote
+} from "@test-utils";
 import { Note } from "./types";
 
 describe("Note Operations", () => {
   test("createNoteAndRedirect", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     // expected actions
     const expected = [
@@ -43,14 +42,7 @@ describe("Note Operations", () => {
   });
 
   test("fetchNotes", async () => {
-    const notes: Note[] = [
-      {
-        id: "0",
-        title: "test-title",
-        content: "test-content",
-        version: "0"
-      }
-    ];
+    const notes: Note[] = [createTestNote()];
 
     // expected actions
     const expected = [
@@ -79,12 +71,7 @@ describe("Note Operations", () => {
   });
 
   test("fetchNote", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     // expected actions
     const expected = [
@@ -113,12 +100,7 @@ describe("Note Operations", () => {
   });
 
   test("updateNote", async () => {
-    const note: Note = {
-      id: "0",
-      title: "test-title",
-      content: "test-content",
-      version: "0"
-    };
+    const note = createTestNote();
 
     const updatedNote: Note = {
       ...note,

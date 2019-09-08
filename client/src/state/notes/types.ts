@@ -1,6 +1,6 @@
 import { actionCreators } from "./actions";
 import { PickActionType } from "@state/types";
-import { User } from "@state/auth/types";
+import { User } from "@state/users/types";
 
 export type Note = {
   id: string;

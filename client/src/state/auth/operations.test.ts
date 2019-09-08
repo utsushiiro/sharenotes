@@ -1,19 +1,20 @@
 import { actionTypes } from "./actions";
 import { push } from "connected-react-router";
 import operations from "./operations";
-import { User } from "./types";
-import { mockAxios, mockStore, mockAxiosWith401Handler } from "@test-utils";
+import {
+  mockAxios,
+  mockStore,
+  mockAxiosWith401Handler,
+  createTestUser
+} from "@test-utils";
+import { User } from "@state/users/types";
 
 /**
  * TODO check eventsOperations call
  */
 describe("Auth Operations", () => {
   test("login (success)", async () => {
-    const user: User = {
-      id: 0,
-      email: "test@example.com",
-      name: "test-name"
-    };
+    const user = createTestUser();
 
     // expected actions
     const expected = [
@@ -93,11 +94,7 @@ describe("Auth Operations", () => {
   });
 
   test("signUp", async () => {
-    const user: User = {
-      id: 0,
-      email: "test@example.com",
-      name: "test-name"
-    };
+    const user = createTestUser();
 
     // expected actions
     const expected = [
