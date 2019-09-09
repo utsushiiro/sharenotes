@@ -1,4 +1,4 @@
-import { User } from "./auth/types";
+import { User } from "@state/users/types";
 
 /**
  * Testing for availability
