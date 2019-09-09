@@ -63,6 +63,7 @@
     "formik": "^2.0.1-rc.12",
     "history": "^4.9.0",
     "markdown-it": "^9.1.0",
+    "normalizr": "^3.4.1",
     "notistack": "^0.8.9",
     "prismjs": "^1.17.1",
     "react": "^16.9.0",
