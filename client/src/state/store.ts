@@ -13,7 +13,7 @@ import {
 import eventsReducer from "./events";
 
 export const history = createBrowserHistory();
-const middlewares = [logger, routerMiddleware(history), thunk];
+const middlewares = [thunk, logger, routerMiddleware(history)];
 const rootReducer = combineReducers({
   notesState: notesReducer,
   authState: authReducer,
