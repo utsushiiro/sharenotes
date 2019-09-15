@@ -10,24 +10,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class FolderResource {
 
-    private Long id;
+    private String id;
 
     private String name;
 
     private LocalDateTime updatedAt;
 
-    private String updatedBy;
+    private UserResource updatedBy;
 
     private LocalDateTime createdAt;
 
-    private String createdBy;
+    private UserResource createdBy;
 
     public FolderResource(Folder folder) {
-        this.id = folder.getId();
+        this.id = folder.getId().toString();
         this.name = folder.getName();
         this.updatedAt = folder.getUpdatedAt();
-        this.updatedBy = folder.getUpdatedBy().getName();
+        this.updatedBy = new UserResource(folder.getUpdatedBy());
         this.createdAt = folder.getCreatedAt();
-        this.createdBy = folder.getCreatedBy().getName();
+        this.createdBy = new UserResource(folder.getCreatedBy());
     }
 }

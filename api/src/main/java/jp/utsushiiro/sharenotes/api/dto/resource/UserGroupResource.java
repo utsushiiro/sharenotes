@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserGroupResource {
 
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -19,7 +19,7 @@ public class UserGroupResource {
     private LocalDateTime createdAt;
 
     public UserGroupResource(UserGroup userGroup) {
-        this.id = userGroup.getId();
+        this.id = userGroup.getId().toString();
         this.name = userGroup.getName();
         this.updatedAt = userGroup.getUpdatedAt();
         this.createdAt = userGroup.getCreatedAt();

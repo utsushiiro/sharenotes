@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResource {
 
-    private Long id;
+    private String id;
 
     private String name;
 
     private String email;
 
     public UserResource(User user) {
-        this.id = user.getId();
+        this.id = user.getId().toString();
         this.name = user.getName();
         this.email = user.getEmail();
     }
