@@ -1,32 +1,71 @@
-import { Reducer } from "redux";
+import { Reducer, combineReducers } from "redux";
 import { UsersState, UsersAction } from "./types";
 import { actionTypes } from "./actions";
+import { Action } from "@state/types";
 
-const initialState: UsersState = {
-  users: []
+export const initialState: UsersState = {
+  entities: {
+    byId: {}
+  },
+  meta: {
+    isLoading: false
+  }
 };
 
-const users: Reducer<UsersState, UsersAction> = (
-  state = initialState,
-  action
-) => {
+function byId(
+  state = initialState.entities.byId,
+  action: Action
+): UsersState["entities"]["byId"] {
   switch (action.type) {
-    case actionTypes.SET_USER: {
-      const users = state.users.filter(
-        user => user.id !== action.payload.user.id
-      );
-      users.push(action.payload.user);
+    case actionTypes.UPSERT_USER_ENTITIES: {
       return {
         ...state,
-        users
+        ...action.payload.userEntities
+      };
+    }
+
+    case actionTypes.DELETE_USER_ENTITY: {
+      const { [action.payload.userId]: _, ...newState } = state;
+      return newState;
+    }
+
+    case actionTypes.RESET_USER_ENTITIES: {
+      return {
+        ...initialState.entities.byId
       };
     }
 
     default:
-      // When the case label is only one, action type here does not be inferred as 'never'. (Why?)
-      // const _: never = action;
       return state;
   }
-};
+}
 
-export default users;
+function meta(state = initialState.meta, action: Action): UsersState["meta"] {
+  switch (action.type) {
+    case actionTypes.START_USER_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case actionTypes.FINISH_USER_LOADING:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    default:
+      return state;
+  }
+}
+
+const entities = combineReducers<UsersState["entities"], Action>({
+  byId
+});
+
+export const usersReducer = combineReducers<UsersState, Action>({
+  entities,
+  meta
+});
+
+export default usersReducer;

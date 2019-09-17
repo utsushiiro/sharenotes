@@ -1,24 +1,189 @@
-import reducer from "./reducers";
+import reducer, { initialState } from "./reducers";
 import { actionTypes } from "./actions";
 import { UsersState, UsersAction } from "./types";
-import { createTestUser } from "@test-utils";
+import { createTestUserEntity } from "@test-utils";
 
 describe("Users Reducers", () => {
-  test("SET_USER - when user to be set does not exist in the state", () => {
-    // setup
-    const state: UsersState = {
-      users: [createTestUser({ id: "0" })]
-    };
+  describe("UPSERT_USER_ENTITIES", () => {
+    test("insert", () => {
+      // setup
+      const state: UsersState = {
+        ...initialState
+      };
 
-    const action: UsersAction = {
-      type: actionTypes.SET_USER,
-      payload: {
-        user: createTestUser({ id: "1" })
+      const userEntity = createTestUserEntity();
+
+      const action: UsersAction = {
+        type: actionTypes.UPSERT_USER_ENTITIES,
+        payload: {
+          userEntities: {
+            [userEntity.id]: userEntity
+          }
+        }
+      };
+
+      const expected: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userEntity.id]: userEntity
+          }
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+
+    test("update", () => {
+      // setup
+      const userId = "1";
+      const userEntity = createTestUserEntity({
+        id: userId,
+        name: "before@example.com"
+      });
+
+      const state: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userId]: userEntity
+          }
+        }
+      };
+
+      const updatedUserEntity = createTestUserEntity({
+        id: userId,
+        name: "after@example.com"
+      });
+
+      const action: UsersAction = {
+        type: actionTypes.UPSERT_USER_ENTITIES,
+        payload: {
+          userEntities: {
+            [userId]: updatedUserEntity
+          }
+        }
+      };
+
+      const expected: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userId]: updatedUserEntity
+          }
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("DELETE_USER_ENTITY", () => {
+    test("no entity after delete", () => {
+      // setup
+      const userEntity = createTestUserEntity({ id: "1" });
+
+      const state: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userEntity.id]: userEntity
+          }
+        }
+      };
+
+      const action: UsersAction = {
+        type: actionTypes.DELETE_USER_ENTITY,
+        payload: {
+          userId: userEntity.id
+        }
+      };
+
+      const expected: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {}
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+
+    test("some entity after delete", () => {
+      // setup
+      const userEntity1 = createTestUserEntity({ id: "1" });
+      const userEntity2 = createTestUserEntity({ id: "2" });
+
+      const state: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userEntity1.id]: userEntity1,
+            [userEntity2.id]: userEntity2
+          }
+        }
+      };
+
+      const action: UsersAction = {
+        type: actionTypes.DELETE_USER_ENTITY,
+        payload: {
+          userId: userEntity1.id
+        }
+      };
+
+      const expected: UsersState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [userEntity2.id]: userEntity2
+          }
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("RESET_USER_ENTITIES", () => {
+    // setup
+    const userEntity1 = createTestUserEntity({ id: "1" });
+    const userEntity2 = createTestUserEntity({ id: "2" });
+
+    const state: UsersState = {
+      ...initialState,
+      entities: {
+        byId: {
+          [userEntity1.id]: userEntity1,
+          [userEntity2.id]: userEntity2
+        }
       }
     };
 
-    const expected = {
-      users: [createTestUser({ id: "0" }), createTestUser({ id: "1" })]
+    const action: UsersAction = {
+      type: actionTypes.RESET_USER_ENTITIES
+    };
+
+    const expected: UsersState = {
+      ...initialState,
+      entities: {
+        byId: {}
+      }
     };
 
     // execute
@@ -28,31 +193,51 @@ describe("Users Reducers", () => {
     expect(result).toEqual(expected);
   });
 
-  test("SET_USER - when user to be set exists in the state", () => {
+  describe("START_USER_LOADING", () => {
     // setup
     const state: UsersState = {
-      users: [
-        createTestUser({ id: "0" }),
-        createTestUser({ id: "1" }),
-        createTestUser({ id: "2" })
-      ]
-    };
-
-    const renamedUser = createTestUser({ id: "1", name: "renamed" });
-
-    const action: UsersAction = {
-      type: actionTypes.SET_USER,
-      payload: {
-        user: renamedUser
+      ...initialState,
+      meta: {
+        isLoading: false
       }
     };
 
-    const expected = {
-      users: [
-        createTestUser({ id: "0" }),
-        createTestUser({ id: "2" }),
-        renamedUser
-      ]
+    const action: UsersAction = {
+      type: actionTypes.START_USER_LOADING
+    };
+
+    const expected: UsersState = {
+      ...initialState,
+      meta: {
+        isLoading: true
+      }
+    };
+
+    // execute
+    const result = reducer(state, action);
+
+    // verify
+    expect(result).toEqual(expected);
+  });
+
+  describe("FINISH_USER_LOADING", () => {
+    // setup
+    const state: UsersState = {
+      ...initialState,
+      meta: {
+        isLoading: true
+      }
+    };
+
+    const action: UsersAction = {
+      type: actionTypes.FINISH_USER_LOADING
+    };
+
+    const expected: UsersState = {
+      ...initialState,
+      meta: {
+        isLoading: false
+      }
     };
 
     // execute

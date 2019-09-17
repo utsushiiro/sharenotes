@@ -1,15 +1,33 @@
-import { User } from "./types";
+import { UsersState } from "./types";
 
 export const actionTypes = {
-  SET_USER: "SET_USER",
-  REMOVE_USER: "REMOVE_USER"
+  UPSERT_USER_ENTITIES: "UPSERT_USER_ENTITIES",
+  DELETE_USER_ENTITY: "DELETE_USER_ENTITY",
+  RESET_USER_ENTITIES: "RESET_USER_ENTITIES",
+  START_USER_LOADING: "START_USER_LOADING",
+  FINISH_USER_LOADING: "FINISH_USER_LOADING"
 } as const;
 
 export const actionCreators = {
-  setUser: (user: User) => ({
-    type: actionTypes.SET_USER,
+  upsertUserEntities: (userEntities: UsersState["entities"]["byId"]) => ({
+    type: actionTypes.UPSERT_USER_ENTITIES,
     payload: {
-      user
+      userEntities
     }
+  }),
+  deleteUserEntity: (userId: string) => ({
+    type: actionTypes.DELETE_USER_ENTITY,
+    payload: {
+      userId
+    }
+  }),
+  resetUserEntities: () => ({
+    type: actionTypes.RESET_USER_ENTITIES
+  }),
+  startUserLoading: () => ({
+    type: actionTypes.START_USER_LOADING
+  }),
+  finishUserLoading: () => ({
+    type: actionTypes.FINISH_USER_LOADING
   })
 };

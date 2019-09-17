@@ -1,114 +1,67 @@
-import { Reducer } from "redux";
-import { NotesState, NotesAction } from "./types";
+import { combineReducers } from "redux";
+import { NotesState } from "./types";
 import { actionTypes } from "./actions";
+import { Action } from "@state/types";
 
-const initialState: NotesState = {
-  isLoading: false,
-  notes: []
-};
-
-const notes: Reducer<NotesState, NotesAction> = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case actionTypes.CREATE_NOTE.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.CREATE_NOTE.DONE:
-      return {
-        ...state,
-        isLoading: false,
-        notes: state.notes.concat(action.payload.note)
-      };
-    case actionTypes.CREATE_NOTE.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case actionTypes.GET_NOTES.STARTED:
-      return {
-        ...state,
-        isLoading: true,
-        notes: []
-      };
-    case actionTypes.GET_NOTES.DONE:
-      return {
-        ...state,
-        isLoading: false,
-        notes: action.payload.notes
-      };
-    case actionTypes.GET_NOTES.FAILED:
-      return {
-        ...state,
-        isLoading: false,
-        notes: []
-      };
-
-    case actionTypes.GET_NOTE.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.GET_NOTE.DONE: {
-      const notes = state.notes.filter(
-        note => note.id !== action.payload.note.id
-      );
-      notes.push(action.payload.note);
-      return {
-        ...state,
-        isLoading: false,
-        notes
-      };
-    }
-    case actionTypes.GET_NOTE.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case actionTypes.UPDATE_NOTE.STARTED:
-      return {
-        ...state
-      };
-    case actionTypes.UPDATE_NOTE.DONE: {
-      const notes = state.notes.filter(
-        note => note.id !== action.payload.note.id
-      );
-      notes.push(action.payload.note);
-      return {
-        ...state,
-        notes
-      };
-    }
-    case actionTypes.UPDATE_NOTE.FAILED:
-      return {
-        ...state
-      };
-
-    case actionTypes.DELETE_NOTE.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.DELETE_NOTE.DONE:
-      return {
-        ...state,
-        isLoading: false
-      };
-    case actionTypes.DELETE_NOTE.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    default:
-      const _: never = action;
-      return state;
+export const initialState: NotesState = {
+  entities: { byId: {} },
+  meta: {
+    isLoading: false
   }
 };
 
-export default notes;
+function byId(
+  state = initialState.entities.byId,
+  action: Action
+): NotesState["entities"]["byId"] {
+  switch (action.type) {
+    case actionTypes.UPSERT_NOTE_ENTITIES: {
+      return {
+        ...state,
+        ...action.payload.noteEntities
+      };
+    }
+
+    case actionTypes.DELETE_NOTE_ENTITY: {
+      const { [action.payload.noteId]: _, ...newState } = state;
+      return newState;
+    }
+
+    case actionTypes.RESET_NOTE_ENTITIES: {
+      return {
+        ...initialState.entities.byId
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
+function meta(state = initialState.meta, action: Action): NotesState["meta"] {
+  switch (action.type) {
+    case actionTypes.START_NOTE_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case actionTypes.FINISH_NOTE_LOADING:
+      return {
+        ...state,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+}
+
+const entities = combineReducers<NotesState["entities"], Action>({
+  byId
+});
+
+export const notesReducer = combineReducers<NotesState, Action>({
+  entities,
+  meta
+});
+
+export default notesReducer;

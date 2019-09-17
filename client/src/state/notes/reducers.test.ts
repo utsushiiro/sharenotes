@@ -1,130 +1,36 @@
-import reducer from "./reducers";
+import reducer, { initialState } from "./reducers";
 import { actionTypes } from "./actions";
-import { Note, NotesState, NotesAction } from "./types";
-import { createTestNote } from "@test-utils";
+import { NotesState, NotesAction } from "./types";
+import { createTestNoteEntity } from "@test-utils";
 
 describe("Note Reducers", () => {
-  describe("CREATE_NOTE", () => {
-    test("STARTED", () => {
+  describe("UPSERT_NOTE_ENTITIES", () => {
+    test("insert", () => {
       // setup
       const state: NotesState = {
-        isLoading: false,
-        notes: []
+        ...initialState
       };
+
+      const noteEntity = createTestNoteEntity();
 
       const action: NotesAction = {
-        type: actionTypes.CREATE_NOTE.STARTED
-      };
-
-      const expected: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("DONE", () => {
-      // setup
-      const note = createTestNote();
-
-      const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.CREATE_NOTE.DONE,
+        type: actionTypes.UPSERT_NOTE_ENTITIES,
         payload: {
-          note
+          noteEntities: {
+            [noteEntity.id]: noteEntity
+          }
         }
       };
 
       const expected: NotesState = {
-        isLoading: false,
-        notes: [note]
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("FAILED", () => {
-      // setup
-      const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.CREATE_NOTE.FAILED
-      };
-
-      const expected: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe("GET_NOTES", () => {
-    test("STARTED", () => {
-      // setup
-      const state: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTES.STARTED
-      };
-
-      const expected: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("DONE", () => {
-      // setup
-      const notes: Note[] = [createTestNote()];
-
-      const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTES.DONE,
-        payload: {
-          notes
+        ...initialState,
+        entities: {
+          byId: {
+            [noteEntity.id]: noteEntity
+          }
         }
       };
 
-      const expected: NotesState = {
-        isLoading: false,
-        notes: notes
-      };
-
       // execute
       const result = reducer(state, action);
 
@@ -132,155 +38,41 @@ describe("Note Reducers", () => {
       expect(result).toEqual(expected);
     });
 
-    test("FAILED", () => {
+    test("update", () => {
       // setup
-      const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTES.FAILED
-      };
-
-      const expected: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe("GET_NOTE", () => {
-    test("STARTED", () => {
-      // setup
-      const state: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTE.STARTED
-      };
-
-      const expected: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("DONE", () => {
-      // setup
-      const note = createTestNote();
+      const noteId = "1";
+      const noteEntity = createTestNoteEntity({ id: noteId, version: "0" });
 
       const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTE.DONE,
-        payload: {
-          note
+        ...initialState,
+        entities: {
+          byId: {
+            [noteId]: noteEntity
+          }
         }
       };
 
-      const expected: NotesState = {
-        isLoading: false,
-        notes: [note]
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("FAILED", () => {
-      // setup
-      const state: NotesState = {
-        isLoading: true,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.GET_NOTE.FAILED
-      };
-
-      const expected: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe("UPDATE_NOTE", () => {
-    test("STARTED", () => {
-      // setup
-      const state: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      const action: NotesAction = {
-        type: actionTypes.UPDATE_NOTE.STARTED
-      };
-
-      const expected: NotesState = {
-        isLoading: false,
-        notes: []
-      };
-
-      // execute
-      const result = reducer(state, action);
-
-      // verify
-      expect(result).toEqual(expected);
-    });
-
-    test("DONE", () => {
-      // setup
-      const note = createTestNote();
-
-      const updatedNote: Note = {
-        ...note,
-        content: "test-content-2",
+      const updatedNoteEntity = createTestNoteEntity({
+        id: noteId,
         version: "1"
-      };
-
-      const state: NotesState = {
-        isLoading: false,
-        notes: [note]
-      };
+      });
 
       const action: NotesAction = {
-        type: actionTypes.UPDATE_NOTE.DONE,
+        type: actionTypes.UPSERT_NOTE_ENTITIES,
         payload: {
-          note: updatedNote
+          noteEntities: {
+            [noteId]: updatedNoteEntity
+          }
         }
       };
 
       const expected: NotesState = {
-        isLoading: false,
-        notes: [updatedNote]
+        ...initialState,
+        entities: {
+          byId: {
+            [noteId]: updatedNoteEntity
+          }
+        }
       };
 
       // execute
@@ -289,23 +81,34 @@ describe("Note Reducers", () => {
       // verify
       expect(result).toEqual(expected);
     });
+  });
 
-    test("FAILED", () => {
+  describe("DELETE_NOTE_ENTITY", () => {
+    test("no entity after delete", () => {
       // setup
-      const note = createTestNote();
+      const noteEntity = createTestNoteEntity({ id: "1" });
 
       const state: NotesState = {
-        isLoading: false,
-        notes: [note]
+        ...initialState,
+        entities: {
+          byId: {
+            [noteEntity.id]: noteEntity
+          }
+        }
       };
 
       const action: NotesAction = {
-        type: actionTypes.UPDATE_NOTE.FAILED
+        type: actionTypes.DELETE_NOTE_ENTITY,
+        payload: {
+          noteId: noteEntity.id
+        }
       };
 
       const expected: NotesState = {
-        isLoading: false,
-        notes: [note]
+        ...initialState,
+        entities: {
+          byId: {}
+        }
       };
 
       // execute
@@ -314,5 +117,130 @@ describe("Note Reducers", () => {
       // verify
       expect(result).toEqual(expected);
     });
+
+    test("some entity after delete", () => {
+      // setup
+      const noteEntity1 = createTestNoteEntity({ id: "1" });
+      const noteEntity2 = createTestNoteEntity({ id: "2" });
+
+      const state: NotesState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [noteEntity1.id]: noteEntity1,
+            [noteEntity2.id]: noteEntity2
+          }
+        }
+      };
+
+      const action: NotesAction = {
+        type: actionTypes.DELETE_NOTE_ENTITY,
+        payload: {
+          noteId: noteEntity1.id
+        }
+      };
+
+      const expected: NotesState = {
+        ...initialState,
+        entities: {
+          byId: {
+            [noteEntity2.id]: noteEntity2
+          }
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("RESET_NOTE_ENTITIES", () => {
+    // setup
+    const noteEntity1 = createTestNoteEntity({ id: "1" });
+    const noteEntity2 = createTestNoteEntity({ id: "2" });
+
+    const state: NotesState = {
+      ...initialState,
+      entities: {
+        byId: {
+          [noteEntity1.id]: noteEntity1,
+          [noteEntity2.id]: noteEntity2
+        }
+      }
+    };
+
+    const action: NotesAction = {
+      type: actionTypes.RESET_NOTE_ENTITIES
+    };
+
+    const expected: NotesState = {
+      ...initialState,
+      entities: {
+        byId: {}
+      }
+    };
+
+    // execute
+    const result = reducer(state, action);
+
+    // verify
+    expect(result).toEqual(expected);
+  });
+
+  describe("START_NOTE_LOADING", () => {
+    // setup
+    const state: NotesState = {
+      ...initialState,
+      meta: {
+        isLoading: false
+      }
+    };
+
+    const action: NotesAction = {
+      type: actionTypes.START_NOTE_LOADING
+    };
+
+    const expected: NotesState = {
+      ...initialState,
+      meta: {
+        isLoading: true
+      }
+    };
+
+    // execute
+    const result = reducer(state, action);
+
+    // verify
+    expect(result).toEqual(expected);
+  });
+
+  describe("FINISH_NOTE_LOADING", () => {
+    // setup
+    const state: NotesState = {
+      ...initialState,
+      meta: {
+        isLoading: true
+      }
+    };
+
+    const action: NotesAction = {
+      type: actionTypes.FINISH_NOTE_LOADING
+    };
+
+    const expected: NotesState = {
+      ...initialState,
+      meta: {
+        isLoading: false
+      }
+    };
+
+    // execute
+    const result = reducer(state, action);
+
+    // verify
+    expect(result).toEqual(expected);
   });
 });
