@@ -1,61 +1,22 @@
 import { User } from "@state/users/types";
 
 export const actionTypes = {
-  LOGIN: {
-    STARTED: "LOGIN.STARTED",
-    DONE: "LOGIN.DONE",
-    FAILED: "LOGIN.FAILED"
-  },
-  LOGOUT: {
-    STARTED: "LOGOUT.STARTED",
-    DONE: "LOGOUT.DONE",
-    FAILED: "LOGOUT.FAILED"
-  },
-  SIGN_UP: {
-    STARTED: "SIGN_UP.STARTED",
-    DONE: "SIGN_UP.DONE",
-    FAILED: "SIGN_UP.FAILED"
-  }
+  SET_LOGIN_USER: "SET_LOGIN_USER",
+  START_AUTH_LOADING: "START_AUTH_LOADING",
+  FINISH_AUTH_LOADING: "FINISH_AUTH_LOADING"
 } as const;
 
 export const actionCreators = {
-  login: {
-    started: () => ({
-      type: actionTypes.LOGIN.STARTED
-    }),
-    done: (user: User) => ({
-      type: actionTypes.LOGIN.DONE,
-      payload: {
-        user
-      }
-    }),
-    failed: () => ({
-      type: actionTypes.LOGIN.FAILED
-    })
-  },
-  logout: {
-    started: () => ({
-      type: actionTypes.LOGOUT.STARTED
-    }),
-    done: () => ({
-      type: actionTypes.LOGOUT.DONE
-    }),
-    failed: () => ({
-      type: actionTypes.LOGOUT.FAILED
-    })
-  },
-  signUp: {
-    started: () => ({
-      type: actionTypes.SIGN_UP.STARTED
-    }),
-    done: (user: User) => ({
-      type: actionTypes.SIGN_UP.DONE,
-      payload: {
-        user
-      }
-    }),
-    failed: () => ({
-      type: actionTypes.SIGN_UP.FAILED
-    })
-  }
+  setLoginUser: (user: User | null) => ({
+    type: actionTypes.SET_LOGIN_USER,
+    payload: {
+      user
+    }
+  }),
+  startAuthLoading: () => ({
+    type: actionTypes.START_AUTH_LOADING
+  }),
+  finishAuthLoading: () => ({
+    type: actionTypes.FINISH_AUTH_LOADING
+  })
 };

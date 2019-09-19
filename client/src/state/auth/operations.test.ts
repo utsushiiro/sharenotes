@@ -19,13 +19,16 @@ describe("Auth Operations", () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.LOGIN.STARTED
+        type: actionTypes.START_AUTH_LOADING
       },
       {
-        type: actionTypes.LOGIN.DONE,
+        type: actionTypes.SET_LOGIN_USER,
         payload: {
-          user: user
+          user
         }
+      },
+      {
+        type: actionTypes.FINISH_AUTH_LOADING
       },
       push("/")
     ];
@@ -43,38 +46,20 @@ describe("Auth Operations", () => {
     expect(store.getActions()).toEqual(expect.arrayContaining(expected));
   });
 
-  test("login (failure)", async () => {
-    // expected actions
-    const expected: AuthAction[] = [
-      {
-        type: actionTypes.LOGIN.STARTED
-      },
-      {
-        type: actionTypes.LOGIN.FAILED
-      }
-    ];
-
-    // api mock
-    mockAxios.onPost("/api/v1/login").reply(401);
-
-    // mock store
-    const store = mockStore();
-
-    // execute
-    await store.dispatch(operations.login("test-user", "invalidPassword"));
-
-    // verify
-    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
-  });
-
   test("logout", async () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.LOGOUT.STARTED
+        type: actionTypes.START_AUTH_LOADING
       },
       {
-        type: actionTypes.LOGOUT.DONE
+        type: actionTypes.SET_LOGIN_USER,
+        payload: {
+          user: null
+        }
+      },
+      {
+        type: actionTypes.FINISH_AUTH_LOADING
       },
       push("/login")
     ];
@@ -99,13 +84,16 @@ describe("Auth Operations", () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.SIGN_UP.STARTED
+        type: actionTypes.START_AUTH_LOADING
       },
       {
-        type: actionTypes.SIGN_UP.DONE,
+        type: actionTypes.SET_LOGIN_USER,
         payload: {
           user: user
         }
+      },
+      {
+        type: actionTypes.FINISH_AUTH_LOADING
       },
       push("/")
     ];
