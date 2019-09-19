@@ -157,7 +157,7 @@ describe("Note Reducers", () => {
     });
   });
 
-  describe("RESET_NOTE_ENTITIES", () => {
+  test("RESET_NOTE_ENTITIES", () => {
     // setup
     const noteEntity1 = createTestNoteEntity({ id: "1" });
     const noteEntity2 = createTestNoteEntity({ id: "2" });
@@ -190,7 +190,7 @@ describe("Note Reducers", () => {
     expect(result).toEqual(expected);
   });
 
-  describe("START_NOTE_LOADING", () => {
+  test("START_NOTE_LOADING", () => {
     // setup
     const state: NotesState = {
       ...initialState,
@@ -217,7 +217,7 @@ describe("Note Reducers", () => {
     expect(result).toEqual(expected);
   });
 
-  describe("FINISH_NOTE_LOADING", () => {
+  test("FINISH_NOTE_LOADING", () => {
     // setup
     const state: NotesState = {
       ...initialState,
