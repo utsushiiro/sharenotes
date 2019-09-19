@@ -5,6 +5,9 @@ import thunk, { ThunkDispatch } from "redux-thunk";
 import { State, Action } from "@state/types";
 import { Note, NoteEntity } from "@state/notes/types";
 import { User, UserEntity } from "@state/users/types";
+import { EventEntity } from "@state/events/types";
+import constants from "@state/events/constants";
+import uuid from "uuid";
 
 // store
 type Dispatch = ThunkDispatch<State, void, Action>;
@@ -65,5 +68,16 @@ export function createTestUserEntity(
     email: "test@example.com",
     name: "test-name",
     ...userEntity
+  };
+}
+
+export function createTestEventEntity(
+  eventEntity: Partial<EventEntity> = {}
+): EventEntity {
+  return {
+    id: uuid(),
+    type: constants.eventTypes.LOGGED_IN,
+    createdAt: new Date().toISOString(),
+    ...eventEntity
   };
 }

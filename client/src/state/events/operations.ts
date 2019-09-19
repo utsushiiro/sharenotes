@@ -1,6 +1,6 @@
 import { actionCreators } from "./actions";
 
 export default {
-  createEvent: actionCreators.createEvent,
-  deleteEvent: actionCreators.deleteEvent
+  createEvent: actionCreators.createEventEntity,
+  deleteEvent: actionCreators.deleteEventEntity
 };

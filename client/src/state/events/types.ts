@@ -4,7 +4,7 @@ import constants from "./constants";
 
 export type EventType = keyof (typeof constants.eventTypes);
 
-export type Event = {
+export type EventEntity = {
   id: string;
   type: EventType;
   createdAt: string;
@@ -13,5 +13,9 @@ export type Event = {
 export type EventAction = PickActionType<typeof actionCreators>;
 
 export type EventState = {
-  events: Event[];
+  entities: {
+    byId: {
+      [userId: string]: EventEntity;
+    };
+  };
 };

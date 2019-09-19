@@ -1,38 +1,37 @@
-import { EventState, EventAction } from "./types";
-import { Reducer } from "redux";
+import { EventState } from "./types";
+import { combineReducers } from "redux";
 import { actionTypes } from "./actions";
-import { v4 as uuid } from "uuid";
+import { Action } from "@state/types";
 
-const initialState: EventState = {
-  events: []
-};
-
-const events: Reducer<EventState, EventAction> = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case actionTypes.CREATE_EVENT:
-      return {
-        ...state,
-        events: state.events.concat([
-          {
-            id: uuid(),
-            type: action.payload.type,
-            createdAt: new Date().toISOString()
-          }
-        ])
-      };
-    case actionTypes.DELETE_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(event => event.id !== action.payload.id)
-      };
-
-    default:
-      const _: never = action;
-      return state;
+export const initialState: EventState = {
+  entities: {
+    byId: {}
   }
 };
 
-export default events;
+function byId(state = initialState["entities"]["byId"], action: Action) {
+  switch (action.type) {
+    case actionTypes.CREATE_EVENT_ENTITY:
+      return {
+        ...state,
+        [action.payload.eventEntity.id]: action.payload.eventEntity
+      };
+
+    case actionTypes.DELETE_EVENT_ENTITY:
+      const { [action.payload.eventId]: _, ...newState } = state;
+      return newState;
+
+    default:
+      return state;
+  }
+}
+
+const entities = combineReducers<EventState["entities"], Action>({
+  byId
+});
+
+export const eventsReducer = combineReducers<EventState, Action>({
+  entities
+});
+
+export default eventsReducer;

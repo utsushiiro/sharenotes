@@ -1,19 +1,29 @@
-import reducer from "./reducers";
+import reducer, { initialState } from "./reducers";
 import { actionTypes } from "./actions";
 import { EventAction, EventState } from "./types";
-import constants from "./constants";
+import { createTestEventEntity } from "@test-utils";
 
 describe("Event Reducers", () => {
-  test("CREATE_EVENT", () => {
+  test("CREATE_EVENT_ENTITY", () => {
     // setup
     const state: EventState = {
-      events: []
+      ...initialState
     };
 
+    const eventEntity = createTestEventEntity();
+
     const action: EventAction = {
-      type: actionTypes.CREATE_EVENT,
+      type: actionTypes.CREATE_EVENT_ENTITY,
       payload: {
-        type: constants.eventTypes.LOGGED_IN
+        eventEntity: eventEntity
+      }
+    };
+
+    const expected: EventState = {
+      entities: {
+        byId: {
+          [eventEntity.id]: eventEntity
+        }
       }
     };
 
@@ -21,30 +31,33 @@ describe("Event Reducers", () => {
     const result = reducer(state, action);
 
     // verify
-    expect(result.events[0].type).toEqual(action.payload.type);
+    expect(result).toEqual(expected);
   });
 
   test("DELETE_EVENT", () => {
     // setup
+    const eventEntity = createTestEventEntity();
+
     const state: EventState = {
-      events: [
-        {
-          id: "XXX",
-          type: constants.eventTypes.LOGGED_IN,
-          createdAt: "XXX"
+      ...initialState,
+      entities: {
+        byId: {
+          [eventEntity.id]: eventEntity
         }
-      ]
+      }
     };
 
     const action: EventAction = {
-      type: actionTypes.DELETE_EVENT,
+      type: actionTypes.DELETE_EVENT_ENTITY,
       payload: {
-        id: "XXX"
+        eventId: eventEntity.id
       }
     };
 
     const expected: EventState = {
-      events: []
+      entities: {
+        byId: {}
+      }
     };
 
     // execute
