@@ -3,7 +3,8 @@ import { Dispatch } from "redux";
 import { push } from "connected-react-router";
 import { apiPost } from "@api";
 import storage from "@state/storage";
-import { eventsOperations, eventsConstants } from "@state/events";
+import { eventsOperations } from "@state/events";
+import { eventTypes } from "@state/events/constants";
 
 const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
@@ -24,16 +25,12 @@ const login = (username: string, password: string) => {
       dispatch(actionCreators.setLoginUser(response.data));
       dispatch(actionCreators.finishAuthLoading());
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_IN)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.LOGGED_IN));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.finishAuthLoading());
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.FAILED_TO_LOGIN)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_LOGIN));
     }
   };
 };
@@ -48,9 +45,7 @@ const logout = () => {
       dispatch(actionCreators.setLoginUser(null));
       dispatch(actionCreators.finishAuthLoading());
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.LOGGED_OUT)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.LOGGED_OUT));
 
       dispatch(push("/login"));
     } catch (err) {
@@ -75,9 +70,7 @@ const signUp = (username: string, email: string, password: string) => {
       dispatch(actionCreators.setLoginUser(response.data));
       dispatch(actionCreators.finishAuthLoading());
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.SIGNED_UP)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.SIGNED_UP));
 
       dispatch(push("/"));
     } catch (err) {

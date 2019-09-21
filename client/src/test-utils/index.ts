@@ -5,8 +5,8 @@ import thunk, { ThunkDispatch } from "redux-thunk";
 import { State, Action } from "@state/types";
 import { Note, NoteEntity } from "@state/notes/types";
 import { User, UserEntity } from "@state/users/types";
-import { EventEntity } from "@state/events/types";
-import constants from "@state/events/constants";
+import { Event } from "@state/events/types";
+import { eventTypes } from "@state/events/constants";
 import uuid from "uuid";
 
 // store
@@ -71,12 +71,10 @@ export function createTestUserEntity(
   };
 }
 
-export function createTestEventEntity(
-  eventEntity: Partial<EventEntity> = {}
-): EventEntity {
+export function createTestEventEntity(eventEntity: Partial<Event> = {}): Event {
   return {
     id: uuid(),
-    type: constants.eventTypes.LOGGED_IN,
+    type: eventTypes.LOGGED_IN,
     createdAt: new Date().toISOString(),
     ...eventEntity
   };

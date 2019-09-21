@@ -2,10 +2,11 @@ import { actionCreators } from "./actions";
 import { Dispatch } from "redux";
 import { apiGet, apiPost, apiPatch, apiDelete } from "@api";
 import { push } from "connected-react-router";
-import { eventsOperations, eventsConstants } from "@state/events";
+import { eventsOperations } from "@state/events";
 import { normalize } from "normalizr";
 import { noteSchema, notesObjectSchema } from "./schema";
 import { actionCreators as usersActionCreators } from "@state/users/actions";
+import { eventTypes } from "@state/events/constants";
 
 const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
@@ -27,19 +28,13 @@ const createNoteAndRedirect = (title: string, content: string) => {
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.CREATED_NOTE)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.CREATED_NOTE));
 
       dispatch(
         push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
       );
     } catch (err) {
-      dispatch(
-        eventsOperations.createEvent(
-          eventsConstants.eventTypes.FAILED_TO_CREATE_NOTE
-        )
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_CREATE_NOTE));
     } finally {
       dispatch(actionCreators.finishNoteLoading());
     }
@@ -115,16 +110,10 @@ const updateNote = (
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.UPDATED_NOTE)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
     } catch (err) {
-      dispatch(
-        eventsOperations.createEvent(
-          eventsConstants.eventTypes.FAILED_TO_UPDATE_NOTE
-        )
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_UPDATE_NOTE));
     } finally {
       dispatch(actionCreators.finishNoteLoading());
     }
@@ -141,16 +130,10 @@ const deleteNoteAndRedirect = (id: string) => {
 
       dispatch(actionCreators.deleteNoteEntity(id));
 
-      dispatch(
-        eventsOperations.createEvent(eventsConstants.eventTypes.DELETED_NOTE)
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));
     } catch (err) {
-      dispatch(
-        eventsOperations.createEvent(
-          eventsConstants.eventTypes.FAILED_TO_DELETE_NOTE
-        )
-      );
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_DELETE_NOTE));
     } finally {
       dispatch(actionCreators.finishNoteLoading());
     }

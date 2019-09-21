@@ -1,23 +1,24 @@
 import { EventState } from "./types";
-import { combineReducers } from "redux";
-import { actionTypes } from "./actions";
 import { Action } from "@state/types";
+import { actionTypes } from "./actions";
+import { combineReducers } from "redux";
 
 export const initialState: EventState = {
   entities: {
-    byId: {}
+    byId: {},
+    idsByType: {}
   }
 };
 
 function byId(state = initialState["entities"]["byId"], action: Action) {
   switch (action.type) {
-    case actionTypes.CREATE_EVENT_ENTITY:
+    case actionTypes.CREATE:
       return {
         ...state,
         [action.payload.eventEntity.id]: action.payload.eventEntity
       };
 
-    case actionTypes.DELETE_EVENT_ENTITY:
+    case actionTypes.DELETE:
       const { [action.payload.eventId]: _, ...newState } = state;
       return newState;
 
@@ -26,8 +27,48 @@ function byId(state = initialState["entities"]["byId"], action: Action) {
   }
 }
 
+function idsByType(
+  state = initialState["entities"]["idsByType"],
+  action: Action
+) {
+  switch (action.type) {
+    case actionTypes.CREATE: {
+      const eventType = action.payload.eventEntity.type;
+      const events = state.eventType !== undefined ? state.eventType : [];
+      return {
+        ...state,
+        [eventType]: events.concat(action.payload.eventEntity.id)
+      };
+    }
+
+    case actionTypes.DELETE: {
+      const eventType = action.payload.eventType;
+      if (state[eventType] === undefined) {
+        return state;
+      }
+
+      const newIds = state[eventType]!.filter(
+        id => id !== action.payload.eventId
+      );
+      if (newIds.length === 0) {
+        const { [eventType]: _, ...newState } = state;
+        return newState;
+      }
+
+      return {
+        ...state,
+        [eventType]: newIds
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
 const entities = combineReducers<EventState["entities"], Action>({
-  byId
+  byId,
+  idsByType
 });
 
 export const eventsReducer = combineReducers<EventState, Action>({
