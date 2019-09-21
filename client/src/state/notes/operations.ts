@@ -12,14 +12,12 @@ const createNoteAndRedirect = (title: string, content: string) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(actionCreators.startNoteLoading());
-
       const response = await apiPost("/api/v1/notes", {
         body: {
           title,
           content
         }
       });
-
       const normalizedData = normalize(response.data, noteSchema);
       dispatch(
         actionCreators.upsertNoteEntities(normalizedData.entities.notes)
@@ -27,27 +25,23 @@ const createNoteAndRedirect = (title: string, content: string) => {
       dispatch(
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
-
+      dispatch(actionCreators.finishNoteLoading());
       dispatch(eventsOperations.createEvent(eventTypes.CREATED_NOTE));
-
       dispatch(
         push(`/notes/${response.data.id}`, { fromCreateNoteOperation: true })
       );
     } catch (err) {
-      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_CREATE_NOTE));
-    } finally {
       dispatch(actionCreators.finishNoteLoading());
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_CREATE_NOTE));
     }
   };
 };
 
 const fetchNotes = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(actionCreators.startNoteLoading());
-
     try {
+      dispatch(actionCreators.startNoteLoading());
       const response = await apiGet("/api/v1/notes");
-
       const normalizedData = normalize(response.data, notesObjectSchema);
       dispatch(
         actionCreators.upsertNoteEntities(normalizedData.entities.notes)
@@ -55,7 +49,8 @@ const fetchNotes = () => {
       dispatch(
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
-    } finally {
+      dispatch(actionCreators.finishNoteLoading());
+    } catch (err) {
       dispatch(actionCreators.finishNoteLoading());
     }
   };
@@ -65,11 +60,9 @@ const fetchNote = (id: string) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(actionCreators.startNoteLoading());
-
       const response = await apiGet("/api/v1/notes/:id", {
         vars: { id: id }
       });
-
       const normalizedData = normalize(response.data, noteSchema);
       dispatch(
         actionCreators.upsertNoteEntities(normalizedData.entities.notes)
@@ -77,7 +70,8 @@ const fetchNote = (id: string) => {
       dispatch(
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
-    } finally {
+      dispatch(actionCreators.finishNoteLoading());
+    } catch (err) {
       dispatch(actionCreators.finishNoteLoading());
     }
   };
@@ -92,7 +86,6 @@ const updateNote = (
   return async (dispatch: Dispatch) => {
     try {
       dispatch(actionCreators.startNoteLoading());
-
       const response = await apiPatch("/api/v1/notes/:id", {
         vars: { id: id },
         body: {
@@ -101,7 +94,6 @@ const updateNote = (
           version
         }
       });
-
       const normalizedData = normalize(response.data, noteSchema);
       dispatch(
         actionCreators.upsertNoteEntities(normalizedData.entities.notes)
@@ -109,13 +101,12 @@ const updateNote = (
       dispatch(
         usersActionCreators.upsertUserEntities(normalizedData.entities.users)
       );
-
+      dispatch(actionCreators.finishNoteLoading());
       dispatch(eventsOperations.createEvent(eventTypes.UPDATED_NOTE));
       dispatch(push(`/notes/${id}`));
     } catch (err) {
-      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_UPDATE_NOTE));
-    } finally {
       dispatch(actionCreators.finishNoteLoading());
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_UPDATE_NOTE));
     }
   };
 };
@@ -127,15 +118,13 @@ const deleteNoteAndRedirect = (id: string) => {
       await apiDelete("/api/v1/notes/:id", {
         vars: { id: id }
       });
-
       dispatch(actionCreators.deleteNoteEntity(id));
-
+      dispatch(actionCreators.finishNoteLoading());
       dispatch(eventsOperations.createEvent(eventTypes.DELETED_NOTE));
       dispatch(push("/notes/"));
     } catch (err) {
-      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_DELETE_NOTE));
-    } finally {
       dispatch(actionCreators.finishNoteLoading());
+      dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_DELETE_NOTE));
     }
   };
 };

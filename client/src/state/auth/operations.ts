@@ -20,16 +20,13 @@ const login = (username: string, password: string) => {
         },
         { enableConvertJsonToForm: true, disable401Handler: true }
       );
-
       storage.setLoginUser(response.data);
       dispatch(actionCreators.setLoginUser(response.data));
       dispatch(actionCreators.finishAuthLoading());
-
       dispatch(eventsOperations.createEvent(eventTypes.LOGGED_IN));
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.finishAuthLoading());
-
       dispatch(eventsOperations.createEvent(eventTypes.FAILED_TO_LOGIN));
     }
   };
@@ -40,13 +37,10 @@ const logout = () => {
     try {
       dispatch(actionCreators.startAuthLoading());
       await apiPost("/api/v1/logout");
-
       storage.deleteLoginUser();
       dispatch(actionCreators.setLoginUser(null));
       dispatch(actionCreators.finishAuthLoading());
-
       dispatch(eventsOperations.createEvent(eventTypes.LOGGED_OUT));
-
       dispatch(push("/login"));
     } catch (err) {
       dispatch(actionCreators.finishAuthLoading());
@@ -65,13 +59,10 @@ const signUp = (username: string, email: string, password: string) => {
           password: password
         }
       });
-
       storage.setLoginUser(response.data);
       dispatch(actionCreators.setLoginUser(response.data));
       dispatch(actionCreators.finishAuthLoading());
-
       dispatch(eventsOperations.createEvent(eventTypes.SIGNED_UP));
-
       dispatch(push("/"));
     } catch (err) {
       dispatch(actionCreators.finishAuthLoading());
