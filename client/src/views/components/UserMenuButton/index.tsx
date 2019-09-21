@@ -12,7 +12,7 @@ import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { authOps } from "@state/auth";
 import { makeStyles } from "@material-ui/styles";
-import { useSelector } from "@state/store";
+import { useAuth } from "@state/auth/hooks";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -48,7 +48,8 @@ const UserMenuButton: React.FC = () => {
   }, []);
 
   // get logged in user name
-  const username = useSelector(state => state.authState.values.loginUser!.name);
+  const { loginUser } = useAuth();
+  const username = loginUser!.name;
 
   return (
     <>
