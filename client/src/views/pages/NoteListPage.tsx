@@ -10,9 +10,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-import { useSnackbar } from "notistack";
 import { useSelector } from "@state/store";
-import { eventsOperations, eventsConstants } from "@state/events";
+import { eventTypes } from "@state/events/constants";
+import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
 
 const useStyles = makeStyles(
   createStyles({
@@ -33,29 +33,30 @@ const useStyles = makeStyles(
   })
 );
 
+const eventToasterDefs = [
+  {
+    eventType: eventTypes.CREATED_NOTE,
+    toasterOptions: {
+      message: "Successfully deleted",
+      variant: "success",
+      autoHideDuration: 1500
+    }
+  }
+] as EventToasterDefs;
+
 const NoteListPage: React.FC = () => {
   const classes = useStyles();
 
-  const notes = useSelector(state => state.notesState.notes);
-  const isLoading = useSelector(state => state.notesState.isLoading);
+  const notesById = useSelector(state => state.notesState.entities.byId);
+  const notes = Object.keys(notesById).map(key => notesById[key]);
+  const isLoading = useSelector(state => state.notesState.meta.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(notesOperations.fetchNotes());
   }, []);
 
-  const events = useSelector(state => state.eventsState.events);
-  const { enqueueSnackbar } = useSnackbar();
-  useEffect(() => {
-    events.forEach(event => {
-      if (event.type === eventsConstants.eventTypes.DELETED_NOTE) {
-        enqueueSnackbar("Successfully deleted", {
-          variant: "success",
-          autoHideDuration: 1500
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      }
-    });
-  });
+  // event toaster
+  useEventToaster(eventToasterDefs);
 
   return (
     <div>

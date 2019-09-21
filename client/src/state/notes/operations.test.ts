@@ -149,9 +149,9 @@ describe("Note Operations", () => {
 
     // expected actions
     const expected: (NotesAction | UsersAction)[] = [
-      {
-        type: actionTypes.START_NOTE_LOADING
-      },
+      // {
+      //   type: actionTypes.START_NOTE_LOADING
+      // },
       {
         type: actionTypes.UPSERT_NOTE_ENTITIES,
         payload: {
@@ -163,10 +163,10 @@ describe("Note Operations", () => {
         payload: {
           userEntities
         }
-      },
-      {
-        type: actionTypes.FINISH_NOTE_LOADING
       }
+      // {
+      //   type: actionTypes.FINISH_NOTE_LOADING
+      // }
     ];
 
     // api mock

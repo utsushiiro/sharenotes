@@ -11,9 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
-import { useSelector } from "@state/store";
-import { useSnackbar } from "notistack";
-import { eventsOperations, eventsConstants } from "@state/events";
+import { eventTypes } from "@state/events/constants";
+import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -31,6 +30,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const eventToasterDefs = [
+  {
+    eventType: eventTypes.FAILED_TO_LOGIN,
+    toasterOptions: {
+      message: "Login Failed",
+      variant: "error",
+      autoHideDuration: 1500
+    }
+  },
+  {
+    eventType: eventTypes.LOGGED_OUT,
+    toasterOptions: {
+      message: "Logged out",
+      variant: "success",
+      autoHideDuration: 1500
+    }
+  }
+] as EventToasterDefs;
+
 const LoginPage: React.FC = () => {
   const classes = useStyles();
 
@@ -42,25 +60,8 @@ const LoginPage: React.FC = () => {
     [dispatch]
   );
 
-  const events = useSelector(state => state.eventsState.events);
-  const { enqueueSnackbar } = useSnackbar();
-  useEffect(() => {
-    events.forEach(event => {
-      if (event.type === eventsConstants.eventTypes.FAILED_TO_LOGIN) {
-        enqueueSnackbar("Login Failed", {
-          variant: "error",
-          autoHideDuration: 1500
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      } else if (event.type === eventsConstants.eventTypes.LOGGED_OUT) {
-        enqueueSnackbar("Logged out", {
-          variant: "success",
-          autoHideDuration: 1000
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      }
-    });
-  });
+  // event toaster
+  useEventToaster(eventToasterDefs);
 
   return (
     <Container component="main" maxWidth="xs">

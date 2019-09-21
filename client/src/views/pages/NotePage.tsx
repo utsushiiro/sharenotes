@@ -13,9 +13,9 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import Note from "@components/Note";
 import Editor from "@components/Editor";
-import { useSnackbar } from "notistack";
 import { useSelector } from "@state/store";
-import { eventsOperations, eventsConstants } from "@state/events";
+import { eventTypes } from "@state/events/constants";
+import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +47,33 @@ const editorModeStyle = {
   backgroundColor: "white"
 };
 
+const eventToasterDefs = [
+  {
+    eventType: eventTypes.CREATED_NOTE,
+    toasterOptions: {
+      message: "Successfully created",
+      variant: "success",
+      autoHideDuration: 1500
+    }
+  },
+  {
+    eventType: eventTypes.UPDATED_NOTE,
+    toasterOptions: {
+      message: "Successfully updated",
+      variant: "success",
+      autoHideDuration: 1500
+    }
+  },
+  {
+    eventType: eventTypes.FAILED_TO_UPDATE_NOTE,
+    toasterOptions: {
+      message: "Failed to update",
+      variant: "error",
+      autoHideDuration: 1500
+    }
+  }
+] as EventToasterDefs;
+
 type Props = {
   isEditorMode: boolean;
   noteId: string;
@@ -56,10 +83,10 @@ const NotePage: React.FC<Props> = props => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(state => state.notesState.isLoading);
-  const note = useSelector(state =>
-    state.notesState.notes.find(note => note.id === props.noteId)
-  );
+  const isLoading = useSelector(state => state.notesState.meta.isLoading);
+  const note = useSelector(
+    state => state.notesState.entities.byId[props.noteId]
+  ) as any;
 
   // fetch note when props.noteId changed
   useEffect(() => {
@@ -88,35 +115,10 @@ const NotePage: React.FC<Props> = props => {
   const [tabValue, setTabValue] = useState(props.isEditorMode ? 1 : 0);
   const tabModeStyle = tabValue === 1 ? editorModeStyle : {};
 
-  const events = useSelector(state => state.eventsState.events);
-  const { enqueueSnackbar } = useSnackbar();
-  useEffect(() => {
-    events.forEach(event => {
-      if (event.type === eventsConstants.eventTypes.CREATED_NOTE) {
-        enqueueSnackbar("Successfully created", {
-          variant: "success",
-          autoHideDuration: 1500
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      } else if (event.type === eventsConstants.eventTypes.UPDATED_NOTE) {
-        enqueueSnackbar("Successfully updated", {
-          variant: "success",
-          autoHideDuration: 1500
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      } else if (
-        event.type === eventsConstants.eventTypes.FAILED_TO_UPDATE_NOTE
-      ) {
-        enqueueSnackbar("Failed to update", {
-          variant: "error",
-          autoHideDuration: 1500
-        });
-        dispatch(eventsOperations.deleteEvent(event.id));
-      }
-    });
-  });
+  // event toaster
+  useEventToaster(eventToasterDefs);
 
-  return isLoading || note === undefined ? (
+  return note === undefined ? (
     <></>
   ) : (
     <>

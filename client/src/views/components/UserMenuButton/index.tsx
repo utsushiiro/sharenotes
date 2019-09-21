@@ -48,7 +48,7 @@ const UserMenuButton: React.FC = () => {
   }, []);
 
   // get logged in user name
-  const username = useSelector(state => state.authState.loginUser!.name);
+  const username = useSelector(state => state.authState.values.loginUser!.name);
 
   return (
     <>
