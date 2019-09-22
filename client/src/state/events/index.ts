@@ -1,4 +1,2 @@
-import eventsReducer from "./reducers";
-
-export { default as eventsOperations } from "./operations";
-export default eventsReducer;
+export { default as eventsACs } from "./actions";
+export { default as eventsReducer } from "./reducers";

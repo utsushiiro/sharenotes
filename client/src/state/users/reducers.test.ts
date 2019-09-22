@@ -14,7 +14,7 @@ describe("Users Reducers", () => {
       const userEntity = createTestUserEntity();
 
       const action: UsersAction = {
-        type: actionTypes.UPSERT_USER_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities: {
             [userEntity.id]: userEntity
@@ -61,7 +61,7 @@ describe("Users Reducers", () => {
       });
 
       const action: UsersAction = {
-        type: actionTypes.UPSERT_USER_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities: {
             [userId]: updatedUserEntity
@@ -101,7 +101,7 @@ describe("Users Reducers", () => {
       };
 
       const action: UsersAction = {
-        type: actionTypes.DELETE_USER_ENTITY,
+        type: actionTypes.DELETE_ENTITY,
         payload: {
           userId: userEntity.id
         }
@@ -137,7 +137,7 @@ describe("Users Reducers", () => {
       };
 
       const action: UsersAction = {
-        type: actionTypes.DELETE_USER_ENTITY,
+        type: actionTypes.DELETE_ENTITY,
         payload: {
           userId: userEntity1.id
         }
@@ -176,7 +176,7 @@ describe("Users Reducers", () => {
     };
 
     const action: UsersAction = {
-      type: actionTypes.RESET_USER_ENTITIES
+      type: actionTypes.RESET_ENTITIES
     };
 
     const expected: UsersState = {
@@ -203,7 +203,7 @@ describe("Users Reducers", () => {
     };
 
     const action: UsersAction = {
-      type: actionTypes.START_USER_LOADING
+      type: actionTypes.START_LOADING
     };
 
     const expected: UsersState = {
@@ -230,7 +230,7 @@ describe("Users Reducers", () => {
     };
 
     const action: UsersAction = {
-      type: actionTypes.FINISH_USER_LOADING
+      type: actionTypes.FINISH_LOADING
     };
 
     const expected: UsersState = {

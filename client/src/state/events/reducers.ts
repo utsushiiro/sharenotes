@@ -71,7 +71,7 @@ const entities = combineReducers<EventState["entities"], Action>({
   idsByType
 });
 
-export const eventsReducer = combineReducers<EventState, Action>({
+const eventsReducer = combineReducers<EventState, Action>({
   entities
 });
 

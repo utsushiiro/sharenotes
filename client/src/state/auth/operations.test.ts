@@ -19,7 +19,7 @@ describe("Auth Operations", () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.START_AUTH_LOADING
+        type: actionTypes.START_LOADING
       },
       {
         type: actionTypes.SET_LOGIN_USER,
@@ -28,7 +28,7 @@ describe("Auth Operations", () => {
         }
       },
       {
-        type: actionTypes.FINISH_AUTH_LOADING
+        type: actionTypes.FINISH_LOADING
       },
       push("/")
     ];
@@ -50,7 +50,7 @@ describe("Auth Operations", () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.START_AUTH_LOADING
+        type: actionTypes.START_LOADING
       },
       {
         type: actionTypes.SET_LOGIN_USER,
@@ -59,7 +59,7 @@ describe("Auth Operations", () => {
         }
       },
       {
-        type: actionTypes.FINISH_AUTH_LOADING
+        type: actionTypes.FINISH_LOADING
       },
       push("/login")
     ];
@@ -84,7 +84,7 @@ describe("Auth Operations", () => {
     // expected actions
     const expected: (AuthAction | RouterAction)[] = [
       {
-        type: actionTypes.START_AUTH_LOADING
+        type: actionTypes.START_LOADING
       },
       {
         type: actionTypes.SET_LOGIN_USER,
@@ -93,7 +93,7 @@ describe("Auth Operations", () => {
         }
       },
       {
-        type: actionTypes.FINISH_AUTH_LOADING
+        type: actionTypes.FINISH_LOADING
       },
       push("/")
     ];

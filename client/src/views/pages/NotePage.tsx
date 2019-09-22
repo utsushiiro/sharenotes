@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { notesOperations } from "@state/notes";
+import { notesOps } from "@state/notes";
 import { useEffect, useCallback, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -90,7 +90,7 @@ const NotePage: React.FC<Props> = props => {
 
   // fetch note when props.noteId changed
   useEffect(() => {
-    dispatch(notesOperations.fetchNote(props.noteId));
+    dispatch(notesOps.fetchNote(props.noteId));
   }, [props.noteId]);
 
   // for note update
@@ -98,7 +98,7 @@ const NotePage: React.FC<Props> = props => {
     (content: string) => {
       if (note !== undefined) {
         dispatch(
-          notesOperations.updateNote(note.id, note.title, content, note.version)
+          notesOps.updateNote(note.id, note.title, content, note.version)
         );
       }
     },
@@ -108,7 +108,7 @@ const NotePage: React.FC<Props> = props => {
   // for note delete
   const deleteNoteHandler = useCallback(() => {
     if (note !== undefined) {
-      dispatch(notesOperations.deleteNoteAndRedirect(note.id));
+      dispatch(notesOps.deleteNoteAndRedirect(note.id));
     }
   }, [note]);
 

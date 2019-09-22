@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { notesOperations } from "@state/notes";
+import { notesOps } from "@state/notes";
 import React from "react";
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
@@ -28,7 +28,7 @@ const NewNoteButton: React.FC = () => {
   const [title, setTitle] = useState("");
   const handleNewNote = useCallback(() => {
     handleDialogClose();
-    dispatch(notesOperations.createNoteAndRedirect(title, ""));
+    dispatch(notesOps.createNoteAndRedirect(title, ""));
   }, [title]);
 
   return (

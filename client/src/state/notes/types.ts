@@ -1,4 +1,4 @@
-import { actionCreators } from "./actions";
+import notesACs from "./actions";
 import { PickActionType, Entity } from "@state/types";
 import { User } from "@state/users/types";
 
@@ -15,7 +15,7 @@ export type Note = {
 
 export type NoteEntity = Entity<Note, "updatedBy" | "createdBy", never>;
 
-export type NotesAction = PickActionType<typeof actionCreators>;
+export type NotesAction = PickActionType<typeof notesACs>;
 
 export type NotesState = {
   entities: {

@@ -13,7 +13,7 @@ describe("Auth Reducers", () => {
     };
 
     const action: AuthAction = {
-      type: actionTypes.START_AUTH_LOADING
+      type: actionTypes.START_LOADING
     };
 
     const expected: AuthState = {
@@ -40,7 +40,7 @@ describe("Auth Reducers", () => {
     };
 
     const action: AuthAction = {
-      type: actionTypes.FINISH_AUTH_LOADING
+      type: actionTypes.FINISH_LOADING
     };
 
     const expected: AuthState = {

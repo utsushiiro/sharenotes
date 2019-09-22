@@ -1,5 +1,5 @@
-import { Reducer, combineReducers } from "redux";
-import { UsersState, UsersAction } from "./types";
+import { combineReducers } from "redux";
+import { UsersState } from "./types";
 import { actionTypes } from "./actions";
 import { Action } from "@state/types";
 
@@ -17,19 +17,19 @@ function byId(
   action: Action
 ): UsersState["entities"]["byId"] {
   switch (action.type) {
-    case actionTypes.UPSERT_USER_ENTITIES: {
+    case actionTypes.UPSERT_ENTITIES: {
       return {
         ...state,
         ...action.payload.userEntities
       };
     }
 
-    case actionTypes.DELETE_USER_ENTITY: {
+    case actionTypes.DELETE_ENTITY: {
       const { [action.payload.userId]: _, ...newState } = state;
       return newState;
     }
 
-    case actionTypes.RESET_USER_ENTITIES: {
+    case actionTypes.RESET_ENTITIES: {
       return {
         ...initialState.entities.byId
       };
@@ -42,13 +42,13 @@ function byId(
 
 function meta(state = initialState.meta, action: Action): UsersState["meta"] {
   switch (action.type) {
-    case actionTypes.START_USER_LOADING:
+    case actionTypes.START_LOADING:
       return {
         ...state,
         isLoading: true
       };
 
-    case actionTypes.FINISH_USER_LOADING:
+    case actionTypes.FINISH_LOADING:
       return {
         ...state,
         isLoading: false

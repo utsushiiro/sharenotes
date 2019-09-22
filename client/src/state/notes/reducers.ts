@@ -15,19 +15,19 @@ function byId(
   action: Action
 ): NotesState["entities"]["byId"] {
   switch (action.type) {
-    case actionTypes.UPSERT_NOTE_ENTITIES: {
+    case actionTypes.UPSERT_ENTITIES: {
       return {
         ...state,
         ...action.payload.noteEntities
       };
     }
 
-    case actionTypes.DELETE_NOTE_ENTITY: {
+    case actionTypes.DELETE_ENTITY: {
       const { [action.payload.noteId]: _, ...newState } = state;
       return newState;
     }
 
-    case actionTypes.RESET_NOTE_ENTITIES: {
+    case actionTypes.RESET_ENTITIES: {
       return {
         ...initialState.entities.byId
       };
@@ -40,12 +40,12 @@ function byId(
 
 function meta(state = initialState.meta, action: Action): NotesState["meta"] {
   switch (action.type) {
-    case actionTypes.START_NOTE_LOADING:
+    case actionTypes.START_LOADING:
       return {
         ...state,
         isLoading: true
       };
-    case actionTypes.FINISH_NOTE_LOADING:
+    case actionTypes.FINISH_LOADING:
       return {
         ...state,
         isLoading: false

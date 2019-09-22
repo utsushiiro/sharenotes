@@ -22,23 +22,23 @@ describe("Note Operations", () => {
     // expected actions
     const expected: (NotesAction | UsersAction | RouterAction)[] = [
       {
-        type: actionTypes.START_NOTE_LOADING
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities
         }
       },
       {
-        type: usersActionTypes.UPSERT_USER_ENTITIES,
+        type: usersActionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities
         }
       },
       push(`/notes/${note.id}`, { fromCreateNoteOperation: true }),
       {
-        type: actionTypes.FINISH_NOTE_LOADING
+        type: actionTypes.FINISH_LOADING
       }
     ];
 
@@ -68,22 +68,22 @@ describe("Note Operations", () => {
     // expected actions
     const expected: (NotesAction | UsersAction)[] = [
       {
-        type: actionTypes.START_NOTE_LOADING
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities
         }
       },
       {
-        type: usersActionTypes.UPSERT_USER_ENTITIES,
+        type: usersActionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities
         }
       },
       {
-        type: actionTypes.FINISH_NOTE_LOADING
+        type: actionTypes.FINISH_LOADING
       }
     ];
 
@@ -109,22 +109,22 @@ describe("Note Operations", () => {
     // expected actions
     const expected: (NotesAction | UsersAction)[] = [
       {
-        type: actionTypes.START_NOTE_LOADING
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities
         }
       },
       {
-        type: usersActionTypes.UPSERT_USER_ENTITIES,
+        type: usersActionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities
         }
       },
       {
-        type: actionTypes.FINISH_NOTE_LOADING
+        type: actionTypes.FINISH_LOADING
       }
     ];
 
@@ -149,24 +149,24 @@ describe("Note Operations", () => {
 
     // expected actions
     const expected: (NotesAction | UsersAction)[] = [
-      // {
-      //   type: actionTypes.START_NOTE_LOADING
-      // },
       {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.START_LOADING
+      },
+      {
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities
         }
       },
       {
-        type: usersActionTypes.UPSERT_USER_ENTITIES,
+        type: usersActionTypes.UPSERT_ENTITIES,
         payload: {
           userEntities
         }
+      },
+      {
+        type: actionTypes.FINISH_LOADING
       }
-      // {
-      //   type: actionTypes.FINISH_NOTE_LOADING
-      // }
     ];
 
     // api mock

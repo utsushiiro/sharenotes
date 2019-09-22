@@ -1,5 +1,5 @@
 import { PickActionType, Entity } from "@state/types";
-import { actionCreators } from "./actions";
+import { usersACs } from ".";
 
 export type User = {
   id: string;
@@ -9,7 +9,7 @@ export type User = {
 
 export type UserEntity = Entity<User, never, never>;
 
-export type UsersAction = PickActionType<typeof actionCreators>;
+export type UsersAction = PickActionType<typeof usersACs>;
 
 export type UsersState = {
   entities: {

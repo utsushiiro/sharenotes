@@ -1,22 +1,24 @@
 import { User } from "@state/users/types";
 
 export const actionTypes = {
-  SET_LOGIN_USER: "SET_LOGIN_USER",
-  START_AUTH_LOADING: "START_AUTH_LOADING",
-  FINISH_AUTH_LOADING: "FINISH_AUTH_LOADING"
+  SET_LOGIN_USER: "auth/SET_LOGIN_USER",
+  START_LOADING: "auth/START_LOADING",
+  FINISH_LOADING: "auth/FINISH_LOADING"
 } as const;
 
-export const actionCreators = {
+const actionCreators = {
   setLoginUser: (user: User | null) => ({
     type: actionTypes.SET_LOGIN_USER,
     payload: {
       user
     }
   }),
-  startAuthLoading: () => ({
-    type: actionTypes.START_AUTH_LOADING
+  startLoading: () => ({
+    type: actionTypes.START_LOADING
   }),
-  finishAuthLoading: () => ({
-    type: actionTypes.FINISH_AUTH_LOADING
+  finishLoading: () => ({
+    type: actionTypes.FINISH_LOADING
   })
 };
+
+export default actionCreators;

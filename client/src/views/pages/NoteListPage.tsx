@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { notesOperations } from "@state/notes";
+import { notesOps } from "@state/notes";
 import { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -52,7 +52,7 @@ const NoteListPage: React.FC = () => {
   const isLoading = useSelector(state => state.notesState.meta.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(notesOperations.fetchNotes());
+    dispatch(notesOps.fetchNotes());
   }, []);
 
   // event toaster

@@ -6,8 +6,8 @@ export const actionTypes = {
   DELETE: "events/DELETE"
 } as const;
 
-export const actionCreators = {
-  createEventEntity: (type: EventType) => ({
+const actionCreators = {
+  createEntity: (type: EventType) => ({
     type: actionTypes.CREATE,
     payload: {
       eventEntity: {
@@ -17,7 +17,7 @@ export const actionCreators = {
       } as EventEntity
     }
   }),
-  deleteEventEntity: (event: Event) => ({
+  deleteEntity: (event: Event) => ({
     type: actionTypes.DELETE,
     payload: {
       eventId: event.id,
@@ -25,3 +25,5 @@ export const actionCreators = {
     }
   })
 };
+
+export default actionCreators;

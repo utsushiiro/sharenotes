@@ -1,33 +1,35 @@
 import { NotesState } from "./types";
 
 export const actionTypes = {
-  UPSERT_NOTE_ENTITIES: "UPSERT_NOTE_ENTITIES",
-  DELETE_NOTE_ENTITY: "DELETE_NOTE_ENTITY",
-  RESET_NOTE_ENTITIES: "RESET_NOTE_ENTITIES",
-  START_NOTE_LOADING: "START_NOTE_LOADING",
-  FINISH_NOTE_LOADING: "FINISH_NOTE_LOADING"
+  UPSERT_ENTITIES: "notes/UPSERT_ENTITIES",
+  DELETE_ENTITY: "notes/DELETE_ENTITY",
+  RESET_ENTITIES: "notes/RESET_ENTITIES",
+  START_LOADING: "notes/START_LOADING",
+  FINISH_LOADING: "notes/FINISH_LOADING"
 } as const;
 
-export const actionCreators = {
-  upsertNoteEntities: (noteEntities: NotesState["entities"]["byId"]) => ({
-    type: actionTypes.UPSERT_NOTE_ENTITIES,
+const actionCreators = {
+  upsertEntities: (noteEntities: NotesState["entities"]["byId"]) => ({
+    type: actionTypes.UPSERT_ENTITIES,
     payload: {
       noteEntities
     }
   }),
-  deleteNoteEntity: (noteId: string) => ({
-    type: actionTypes.DELETE_NOTE_ENTITY,
+  deleteEntity: (noteId: string) => ({
+    type: actionTypes.DELETE_ENTITY,
     payload: {
       noteId
     }
   }),
-  resetNoteEntities: () => ({
-    type: actionTypes.RESET_NOTE_ENTITIES
+  resetEntities: () => ({
+    type: actionTypes.RESET_ENTITIES
   }),
-  startNoteLoading: () => ({
-    type: actionTypes.START_NOTE_LOADING
+  startLoading: () => ({
+    type: actionTypes.START_LOADING
   }),
-  finishNoteLoading: () => ({
-    type: actionTypes.FINISH_NOTE_LOADING
+  finishLoading: () => ({
+    type: actionTypes.FINISH_LOADING
   })
 };
+
+export default actionCreators;

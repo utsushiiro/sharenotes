@@ -3,7 +3,7 @@ import { useSelector } from "@state/store";
 import { useSnackbar, OptionsObject } from "notistack";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { eventsOperations } from "@state/events";
+import { eventsACs } from ".";
 
 export type EventToasterDefs = {
   eventType: EventType;
@@ -33,7 +33,7 @@ export function useEventToaster(defs: EventToasterDefs) {
         enqueueSnackbar(def.toasterOptions.message, {
           ...def.toasterOptions
         });
-        dispatch(eventsOperations.deleteEvent(event));
+        dispatch(eventsACs.deleteEntity(event));
       });
     });
   });

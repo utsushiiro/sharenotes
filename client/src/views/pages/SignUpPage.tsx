@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { authOperations } from "@state/auth";
+import { authOps } from "@state/auth";
 import { useCallback } from "react";
-
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -38,7 +37,7 @@ const SignUpPage: React.FC = () => {
   const dispatch = useDispatch();
   const submitHandler = useCallback(
     (username: string, email: string, password: string) => {
-      dispatch(authOperations.signUp(username, email, password));
+      dispatch(authOps.signUp(username, email, password));
     },
     [dispatch]
   );

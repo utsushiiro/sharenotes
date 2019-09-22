@@ -1,5 +1,5 @@
-import { Reducer, combineReducers } from "redux";
-import { AuthState, AuthAction } from "./types";
+import { combineReducers } from "redux";
+import { AuthState } from "./types";
 import { actionTypes } from "./actions";
 import storage from "@state/storage";
 import { Action } from "@state/types";
@@ -31,12 +31,12 @@ function values(
 
 function meta(state = initialState.meta, action: Action): AuthState["meta"] {
   switch (action.type) {
-    case actionTypes.START_AUTH_LOADING:
+    case actionTypes.START_LOADING:
       return {
         ...state,
         isLoading: true
       };
-    case actionTypes.FINISH_AUTH_LOADING:
+    case actionTypes.FINISH_LOADING:
       return {
         ...state,
         isLoading: false
@@ -46,7 +46,7 @@ function meta(state = initialState.meta, action: Action): AuthState["meta"] {
   }
 }
 
-export const authReducer = combineReducers<AuthState, Action>({
+const authReducer = combineReducers<AuthState, Action>({
   values,
   meta
 });

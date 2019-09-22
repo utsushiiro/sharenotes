@@ -14,7 +14,7 @@ describe("Note Reducers", () => {
       const noteEntity = createTestNoteEntity();
 
       const action: NotesAction = {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities: {
             [noteEntity.id]: noteEntity
@@ -58,7 +58,7 @@ describe("Note Reducers", () => {
       });
 
       const action: NotesAction = {
-        type: actionTypes.UPSERT_NOTE_ENTITIES,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
           noteEntities: {
             [noteId]: updatedNoteEntity
@@ -98,7 +98,7 @@ describe("Note Reducers", () => {
       };
 
       const action: NotesAction = {
-        type: actionTypes.DELETE_NOTE_ENTITY,
+        type: actionTypes.DELETE_ENTITY,
         payload: {
           noteId: noteEntity.id
         }
@@ -134,7 +134,7 @@ describe("Note Reducers", () => {
       };
 
       const action: NotesAction = {
-        type: actionTypes.DELETE_NOTE_ENTITY,
+        type: actionTypes.DELETE_ENTITY,
         payload: {
           noteId: noteEntity1.id
         }
@@ -173,7 +173,7 @@ describe("Note Reducers", () => {
     };
 
     const action: NotesAction = {
-      type: actionTypes.RESET_NOTE_ENTITIES
+      type: actionTypes.RESET_ENTITIES
     };
 
     const expected: NotesState = {
@@ -200,7 +200,7 @@ describe("Note Reducers", () => {
     };
 
     const action: NotesAction = {
-      type: actionTypes.START_NOTE_LOADING
+      type: actionTypes.START_LOADING
     };
 
     const expected: NotesState = {
@@ -227,7 +227,7 @@ describe("Note Reducers", () => {
     };
 
     const action: NotesAction = {
-      type: actionTypes.FINISH_NOTE_LOADING
+      type: actionTypes.FINISH_LOADING
     };
 
     const expected: NotesState = {
