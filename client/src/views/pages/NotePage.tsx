@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { notesOps } from "@state/notes";
 import { useEffect, useCallback, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,9 +11,9 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import Note from "@components/Note";
 import Editor from "@components/Editor";
-import { useSelector } from "@state/store";
 import { eventTypes } from "@state/events/constants";
 import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
+import { useNote } from "@state/notes/hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,25 +79,21 @@ type Props = {
 
 const NotePage: React.FC<Props> = props => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const { selectNote, fetchNote, updateNote, deleteNote } = useNote();
 
-  const isLoading = useSelector(state => state.notesState.meta.isLoading);
-  const note = useSelector(
-    state => state.notesState.entities.byId[props.noteId]
-  ) as any;
+  // get note from store
+  const note = selectNote(props.noteId);
 
   // fetch note when props.noteId changed
   useEffect(() => {
-    dispatch(notesOps.fetchNote(props.noteId));
+    fetchNote(props.noteId);
   }, [props.noteId]);
 
   // for note update
   const updateNoteHandler = useCallback(
     (content: string) => {
       if (note !== undefined) {
-        dispatch(
-          notesOps.updateNote(note.id, note.title, content, note.version)
-        );
+        updateNote(note.id, note.title, content, note.version);
       }
     },
     [note]
@@ -108,7 +102,7 @@ const NotePage: React.FC<Props> = props => {
   // for note delete
   const deleteNoteHandler = useCallback(() => {
     if (note !== undefined) {
-      dispatch(notesOps.deleteNoteAndRedirect(note.id));
+      deleteNote(note.id);
     }
   }, [note]);
 

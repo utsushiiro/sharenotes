@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { notesOps } from "@state/notes";
 import { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -10,9 +8,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-import { useSelector } from "@state/store";
 import { eventTypes } from "@state/events/constants";
 import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
+import { useNotes } from "@state/notes/hooks";
 
 const useStyles = makeStyles(
   createStyles({
@@ -46,13 +44,11 @@ const eventToasterDefs = [
 
 const NoteListPage: React.FC = () => {
   const classes = useStyles();
+  const { isLoading, fetchNotes, selectNotes } = useNotes();
 
-  const notesById = useSelector(state => state.notesState.entities.byId);
-  const notes = Object.keys(notesById).map(key => notesById[key]);
-  const isLoading = useSelector(state => state.notesState.meta.isLoading);
-  const dispatch = useDispatch();
+  const notes = selectNotes();
   useEffect(() => {
-    dispatch(notesOps.fetchNotes());
+    fetchNotes();
   }, []);
 
   // event toaster
@@ -66,29 +62,32 @@ const NoteListPage: React.FC = () => {
             Note List
           </Typography>
           <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-            {notes.map(note => (
-              <li key={note.id} style={{ marginBottom: "20px" }}>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Typography variant="h5" component="h2">
-                      {note.title}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      {note.content}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      component={Link}
-                      to={`/notes/${note.id}`}
-                    >
-                      Read More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </li>
-            ))}
+            {notes.map(
+              note =>
+                note !== undefined && (
+                  <li key={note.id} style={{ marginBottom: "20px" }}>
+                    <Card className={classes.card}>
+                      <CardContent>
+                        <Typography variant="h5" component="h2">
+                          {note.title}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          {note.content}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button
+                          size="small"
+                          component={Link}
+                          to={`/notes/${note.id}`}
+                        >
+                          Read More
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </li>
+                )
+            )}
           </ul>
         </Box>
       )}
