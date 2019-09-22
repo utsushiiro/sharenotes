@@ -17,6 +17,7 @@ export type Entity<
   FK2 extends keyof Model
 > = Omit<Model, FK1 | FK2> & { [K in FK1]: string } & { [K in FK2]: string[] };
 
+// Deprecated: replace with RootState
 export type State = {
   authState: AuthState;
   eventState: EventState;
