@@ -1,7 +1,4 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { authOps } from "@state/auth";
-import { useCallback } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +8,7 @@ import { Formik, Form } from "formik";
 import EmailField from "@components/EmailField";
 import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
+import { useAuth } from "@state/auth/hooks";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,14 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const SignUpPage: React.FC = () => {
   const classes = useStyles();
-
-  const dispatch = useDispatch();
-  const submitHandler = useCallback(
-    (username: string, email: string, password: string) => {
-      dispatch(authOps.signUp(username, email, password));
-    },
-    [dispatch]
-  );
+  const { signUp } = useAuth();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,7 +43,7 @@ const SignUpPage: React.FC = () => {
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           onSubmit={(values, actions) => {
-            submitHandler(values.username, values.email, values.password);
+            signUp(values.username, values.email, values.password);
             actions.setSubmitting(false);
           }}
           render={() => (

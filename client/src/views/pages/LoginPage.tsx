@@ -1,7 +1,4 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { authOps } from "@state/auth";
-import { useCallback } from "react";
 import { Formik, Form } from "formik";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +9,7 @@ import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
 import { eventTypes } from "@state/events/constants";
 import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
+import { useAuth } from "@state/auth/hooks";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -50,14 +48,7 @@ const eventToasterDefs = [
 
 const LoginPage: React.FC = () => {
   const classes = useStyles();
-
-  const dispatch = useDispatch();
-  const submitHandler = useCallback(
-    (username: string, password: string) => {
-      dispatch(authOps.login(username, password));
-    },
-    [dispatch]
-  );
+  const { login } = useAuth();
 
   // event toaster
   useEventToaster(eventToasterDefs);
@@ -72,7 +63,7 @@ const LoginPage: React.FC = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={(values, actions) => {
-            submitHandler(values.username, values.password);
+            login(values.username, values.password);
             actions.setSubmitting(false);
           }}
           render={() => (
