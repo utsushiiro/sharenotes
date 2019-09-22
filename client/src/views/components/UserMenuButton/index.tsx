@@ -9,8 +9,6 @@ import {
 } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { authOps } from "@state/auth";
 import { makeStyles } from "@material-ui/styles";
 import { useAuth } from "@state/auth/hooks";
 
@@ -30,7 +28,6 @@ const useStyles = makeStyles(() =>
 );
 const UserMenuButton: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   // for menu open&close
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -42,14 +39,9 @@ const UserMenuButton: React.FC = () => {
     setAnchorEl(null);
   }, []);
 
-  // for logout menu
-  const handleLogout = useCallback(() => {
-    dispatch(authOps.logout());
-  }, []);
-
-  // get logged in user name
-  const { loginUser } = useAuth();
-  const username = loginUser!.name;
+  // for logged-in user name & logout
+  const { loginUser, logout } = useAuth();
+  const username = loginUser ? loginUser.name : "unknown";
 
   return (
     <>
@@ -79,11 +71,7 @@ const UserMenuButton: React.FC = () => {
           <MenuItem className={classes.menuItem} dense={true}>
             Your Profile
           </MenuItem>
-          <MenuItem
-            className={classes.menuItem}
-            dense={true}
-            onClick={handleLogout}
-          >
+          <MenuItem className={classes.menuItem} dense={true} onClick={logout}>
             Logout
           </MenuItem>
         </Box>
