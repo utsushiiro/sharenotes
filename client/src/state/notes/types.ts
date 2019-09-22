@@ -20,7 +20,7 @@ export type NotesAction = PickActionType<typeof notesACs>;
 export type NotesState = {
   entities: {
     byId: {
-      [noteId: string]: NoteEntity;
+      [noteId: string]: NoteEntity | undefined;
     };
   };
   meta: {

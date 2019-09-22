@@ -14,7 +14,7 @@ export type UsersAction = PickActionType<typeof usersACs>;
 export type UsersState = {
   entities: {
     byId: {
-      [userId: string]: UserEntity;
+      [userId: string]: UserEntity | undefined;
     };
   };
   meta: {

@@ -30,6 +30,7 @@ export function useEventToaster(defs: EventToasterDefs) {
 
       eventsIds.forEach(eventId => {
         const event = eventsById[eventId];
+        if (event === undefined) return;
         enqueueSnackbar(def.toasterOptions.message, {
           ...def.toasterOptions
         });
