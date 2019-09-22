@@ -5,8 +5,32 @@ import Navbar from "@components/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import NotePage from "@pages/NotePage";
+import { eventTypes } from "@state/events/constants";
+import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
+
+const eventToasterDefs = [
+  {
+    eventType: eventTypes.LOGGED_IN,
+    toasterOptions: {
+      message: "Logged in",
+      variant: "success",
+      autoHideDuration: 1000
+    }
+  },
+  {
+    eventType: eventTypes.SIGNED_UP,
+    toasterOptions: {
+      message: "Welcome!",
+      variant: "success",
+      autoHideDuration: 1000
+    }
+  }
+] as EventToasterDefs;
 
 const App: React.FC = () => {
+  // event toaster
+  useEventToaster(eventToasterDefs);
+
   return (
     <>
       <CssBaseline />
