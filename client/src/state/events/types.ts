@@ -17,7 +17,7 @@ export type EventAction = PickActionType<typeof eventsACs>;
 export type EventState = {
   entities: {
     byId: {
-      [eventId: string]: EventEntity;
+      [eventId: string]: EventEntity | undefined;
     };
     idsByType: {
       [eventType: string]: string[] | undefined;
