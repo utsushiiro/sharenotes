@@ -1,5 +1,5 @@
-import { PickActionType } from "@state/types";
-import { actionCreators } from "./actions";
+import { PickActionType, Entity } from "@state/types";
+import { usersACs } from ".";
 
 export type User = {
   id: string;
@@ -7,8 +7,17 @@ export type User = {
   email: string;
 };
 
-export type UsersAction = PickActionType<typeof actionCreators>;
+export type UserEntity = Entity<User, never, never>;
+
+export type UsersAction = PickActionType<typeof usersACs>;
 
 export type UsersState = {
-  users: User[];
+  entities: {
+    byId: {
+      [userId: string]: UserEntity;
+    };
+  };
+  meta: {
+    isLoading: boolean;
+  };
 };

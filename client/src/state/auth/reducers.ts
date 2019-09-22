@@ -1,70 +1,54 @@
-import { Reducer } from "redux";
-import { AuthState, AuthAction } from "./types";
+import { combineReducers } from "redux";
+import { AuthState } from "./types";
 import { actionTypes } from "./actions";
 import storage from "@state/storage";
+import { Action } from "@state/types";
 
-const initialState: AuthState = {
-  isLoading: false,
-  loginUser: storage.getLoginUser()
-};
-
-const auth: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.LOGIN.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.LOGIN.DONE:
-      return {
-        ...state,
-        isLoading: false,
-        loginUser: action.payload.user
-      };
-    case actionTypes.LOGIN.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case actionTypes.LOGOUT.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.LOGOUT.DONE:
-      return {
-        ...state,
-        isLoading: false,
-        loginUser: null
-      };
-    case actionTypes.LOGOUT.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case actionTypes.SIGN_UP.STARTED:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case actionTypes.SIGN_UP.DONE:
-      return {
-        ...state,
-        isLoading: false,
-        loginUser: action.payload.user
-      };
-    case actionTypes.SIGN_UP.FAILED:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    default:
-      const _: never = action;
-      return state;
+export const initialState: AuthState = {
+  values: {
+    loginUser: storage.getLoginUser()
+  },
+  meta: {
+    isLoading: false
   }
 };
 
-export default auth;
+function values(
+  state = initialState.values,
+  action: Action
+): AuthState["values"] {
+  switch (action.type) {
+    case actionTypes.SET_LOGIN_USER:
+      return {
+        ...state,
+        loginUser: action.payload.user
+      };
+
+    default:
+      return state;
+  }
+}
+
+function meta(state = initialState.meta, action: Action): AuthState["meta"] {
+  switch (action.type) {
+    case actionTypes.START_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case actionTypes.FINISH_LOADING:
+      return {
+        ...state,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+}
+
+const authReducer = combineReducers<AuthState, Action>({
+  values,
+  meta
+});
+
+export default authReducer;

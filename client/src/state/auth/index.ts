@@ -1,4 +1,3 @@
-import authReducer from "./reducers";
-
-export { default as authOperations } from "./operations";
-export default authReducer;
+export { default as authACs } from "./actions";
+export { default as authOps } from "./operations";
+export { default as authReducer } from "./reducers";

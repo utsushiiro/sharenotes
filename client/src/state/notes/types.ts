@@ -1,5 +1,5 @@
-import { actionCreators } from "./actions";
-import { PickActionType } from "@state/types";
+import notesACs from "./actions";
+import { PickActionType, Entity } from "@state/types";
 import { User } from "@state/users/types";
 
 export type Note = {
@@ -13,9 +13,17 @@ export type Note = {
   version: string;
 };
 
-export type NotesAction = PickActionType<typeof actionCreators>;
+export type NoteEntity = Entity<Note, "updatedBy" | "createdBy", never>;
+
+export type NotesAction = PickActionType<typeof notesACs>;
 
 export type NotesState = {
-  isLoading: boolean;
-  notes: Note[];
+  entities: {
+    byId: {
+      [noteId: string]: NoteEntity;
+    };
+  };
+  meta: {
+    isLoading: boolean;
+  };
 };

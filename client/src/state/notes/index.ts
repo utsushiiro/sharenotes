@@ -1,4 +1,3 @@
-import notesReducer from "./reducers";
-
-export { default as notesOperations } from "./operations";
-export default notesReducer;
+export { default as notesACs } from "./actions";
+export { default as notesOps } from "./operations";
+export { default as notesReducer } from "./reducers";

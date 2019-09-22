@@ -1,21 +1,29 @@
-import { EventType } from "./types";
+import { EventType, EventEntity, Event } from "./types";
+import { v4 as uuid } from "uuid";
 
 export const actionTypes = {
-  CREATE_EVENT: "CREATE_EVENT",
-  DELETE_EVENT: "DELETE_EVENT"
+  CREATE: "events/CREATE",
+  DELETE: "events/DELETE"
 } as const;
 
-export const actionCreators = {
-  createEvent: (type: EventType) => ({
-    type: actionTypes.CREATE_EVENT,
+const actionCreators = {
+  createEntity: (type: EventType) => ({
+    type: actionTypes.CREATE,
     payload: {
-      type
+      eventEntity: {
+        id: uuid(),
+        type,
+        createdAt: new Date().toISOString()
+      } as EventEntity
     }
   }),
-  deleteEvent: (id: string) => ({
-    type: actionTypes.DELETE_EVENT,
+  deleteEntity: (event: Event) => ({
+    type: actionTypes.DELETE,
     payload: {
-      id
+      eventId: event.id,
+      eventType: event.type
     }
   })
 };
+
+export default actionCreators;

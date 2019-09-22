@@ -1,50 +1,34 @@
-import reducer from "./reducers";
+import reducer, { initialState } from "./reducers";
 import { actionTypes } from "./actions";
 import { EventAction, EventState } from "./types";
-import constants from "./constants";
+import { createTestEventEntity } from "@test-utils";
+import { eventTypes } from "./constants";
 
 describe("Event Reducers", () => {
-  test("CREATE_EVENT", () => {
+  test("CREATE", () => {
     // setup
     const state: EventState = {
-      events: []
+      ...initialState
     };
+
+    const eventEntity = createTestEventEntity();
 
     const action: EventAction = {
-      type: actionTypes.CREATE_EVENT,
+      type: actionTypes.CREATE,
       payload: {
-        type: constants.eventTypes.LOGGED_IN
-      }
-    };
-
-    // execute
-    const result = reducer(state, action);
-
-    // verify
-    expect(result.events[0].type).toEqual(action.payload.type);
-  });
-
-  test("DELETE_EVENT", () => {
-    // setup
-    const state: EventState = {
-      events: [
-        {
-          id: "XXX",
-          type: constants.eventTypes.LOGGED_IN,
-          createdAt: "XXX"
-        }
-      ]
-    };
-
-    const action: EventAction = {
-      type: actionTypes.DELETE_EVENT,
-      payload: {
-        id: "XXX"
+        eventEntity: eventEntity
       }
     };
 
     const expected: EventState = {
-      events: []
+      entities: {
+        byId: {
+          [eventEntity.id]: eventEntity
+        },
+        idsByType: {
+          [eventEntity.type]: [eventEntity.id]
+        }
+      }
     };
 
     // execute
@@ -52,5 +36,88 @@ describe("Event Reducers", () => {
 
     // verify
     expect(result).toEqual(expected);
+  });
+
+  describe("DELETE", () => {
+    test("no event after delete", () => {
+      // setup
+      const eventEntity = createTestEventEntity();
+
+      const state: EventState = {
+        entities: {
+          byId: {
+            [eventEntity.id]: eventEntity
+          },
+          idsByType: {
+            [eventEntity.type]: [eventEntity.id]
+          }
+        }
+      };
+
+      const action: EventAction = {
+        type: actionTypes.DELETE,
+        payload: {
+          eventId: eventEntity.id,
+          eventType: eventEntity.type
+        }
+      };
+
+      const expected: EventState = {
+        entities: {
+          byId: {},
+          idsByType: {}
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
+
+    test("some event after delete", () => {
+      // setup
+      const eventType = eventTypes.CREATED_NOTE;
+      const eventEntity1 = createTestEventEntity({ type: eventType });
+      const eventEntity2 = createTestEventEntity({ type: eventType });
+
+      const state: EventState = {
+        entities: {
+          byId: {
+            [eventEntity1.id]: eventEntity1,
+            [eventEntity2.id]: eventEntity2
+          },
+          idsByType: {
+            [eventType]: [eventEntity1.id, eventEntity2.id]
+          }
+        }
+      };
+
+      const action: EventAction = {
+        type: actionTypes.DELETE,
+        payload: {
+          eventId: eventEntity1.id,
+          eventType: eventEntity1.type
+        }
+      };
+
+      const expected: EventState = {
+        entities: {
+          byId: {
+            [eventEntity2.id]: eventEntity2
+          },
+          idsByType: {
+            [eventType]: [eventEntity2.id]
+          }
+        }
+      };
+
+      // execute
+      const result = reducer(state, action);
+
+      // verify
+      expect(result).toEqual(expected);
+    });
   });
 });

@@ -6,24 +6,40 @@ import {
   mockAxiosWith401Handler,
   createTestNote
 } from "@test-utils";
-import { Note, NotesAction } from "./types";
+import { NotesAction } from "./types";
+import { normalize } from "normalizr";
+import { noteSchema, notesObjectSchema } from "./schema";
+import { actionTypes as usersActionTypes } from "@state/users/actions";
+import { UsersAction } from "@state/users/types";
 
 describe("Note Operations", () => {
   test("createNoteAndRedirect", async () => {
     const note = createTestNote();
+    const normalizedData = normalize(note, noteSchema);
+    const noteEntities = normalizedData.entities.notes;
+    const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | RouterAction)[] = [
+    const expected: (NotesAction | UsersAction | RouterAction)[] = [
       {
-        type: actionTypes.CREATE_NOTE.STARTED
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.CREATE_NOTE.DONE,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
-          note
+          noteEntities
         }
       },
-      push(`/notes/${note.id}`, { fromCreateNoteOperation: true })
+      {
+        type: usersActionTypes.UPSERT_ENTITIES,
+        payload: {
+          userEntities
+        }
+      },
+      push(`/notes/${note.id}`, { fromCreateNoteOperation: true }),
+      {
+        type: actionTypes.FINISH_LOADING
+      }
     ];
 
     // api mock
@@ -42,23 +58,37 @@ describe("Note Operations", () => {
   });
 
   test("fetchNotes", async () => {
-    const notes = [createTestNote()];
+    const notes = {
+      notes: [createTestNote({ id: "0" }), createTestNote({ id: "1" })]
+    };
+    const normalizedData = normalize(notes, notesObjectSchema);
+    const noteEntities = normalizedData.entities.notes;
+    const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: NotesAction[] = [
+    const expected: (NotesAction | UsersAction)[] = [
       {
-        type: actionTypes.GET_NOTES.STARTED
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.GET_NOTES.DONE,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
-          notes
+          noteEntities
         }
+      },
+      {
+        type: usersActionTypes.UPSERT_ENTITIES,
+        payload: {
+          userEntities
+        }
+      },
+      {
+        type: actionTypes.FINISH_LOADING
       }
     ];
 
     // api mock
-    mockAxiosWith401Handler.onGet("/api/v1/notes").reply(200, { notes });
+    mockAxiosWith401Handler.onGet("/api/v1/notes").reply(200, { ...notes });
 
     // mock store
     const store = mockStore();
@@ -72,17 +102,29 @@ describe("Note Operations", () => {
 
   test("fetchNote", async () => {
     const note = createTestNote();
+    const normalizedData = normalize(note, noteSchema);
+    const noteEntities = normalizedData.entities.notes;
+    const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: NotesAction[] = [
+    const expected: (NotesAction | UsersAction)[] = [
       {
-        type: actionTypes.GET_NOTE.STARTED
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.GET_NOTE.DONE,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
-          note
+          noteEntities
         }
+      },
+      {
+        type: usersActionTypes.UPSERT_ENTITIES,
+        payload: {
+          userEntities
+        }
+      },
+      {
+        type: actionTypes.FINISH_LOADING
       }
     ];
 
@@ -101,30 +143,36 @@ describe("Note Operations", () => {
 
   test("updateNote", async () => {
     const note = createTestNote();
-
-    const updatedNote: Note = {
-      ...note,
-      version: "1"
-    };
+    const normalizedData = normalize(note, noteSchema);
+    const noteEntities = normalizedData.entities.notes;
+    const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | RouterAction)[] = [
+    const expected: (NotesAction | UsersAction)[] = [
       {
-        type: actionTypes.UPDATE_NOTE.STARTED
+        type: actionTypes.START_LOADING
       },
       {
-        type: actionTypes.UPDATE_NOTE.DONE,
+        type: actionTypes.UPSERT_ENTITIES,
         payload: {
-          note: updatedNote
+          noteEntities
         }
       },
-      push(`/notes/${updatedNote.id}`)
+      {
+        type: usersActionTypes.UPSERT_ENTITIES,
+        payload: {
+          userEntities
+        }
+      },
+      {
+        type: actionTypes.FINISH_LOADING
+      }
     ];
 
     // api mock
     mockAxiosWith401Handler
       .onPatch(`/api/v1/notes/${note.id}`)
-      .reply(200, updatedNote);
+      .reply(200, note);
 
     // mock store
     const store = mockStore();

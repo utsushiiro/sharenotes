@@ -1,10 +1,14 @@
-import { actionCreators } from "./actions";
 import { PickActionType } from "@state/types";
 import { User } from "@state/users/types";
+import { authACs } from ".";
 
-export type AuthAction = PickActionType<typeof actionCreators>;
+export type AuthAction = PickActionType<typeof authACs>;
 
 export type AuthState = {
-  isLoading: boolean;
-  loginUser: User | null;
+  values: {
+    loginUser: User | null;
+  };
+  meta: {
+    isLoading: boolean;
+  };
 };

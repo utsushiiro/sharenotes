@@ -10,7 +10,7 @@ import {
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { authOperations } from "@state/auth";
+import { authOps } from "@state/auth";
 import { makeStyles } from "@material-ui/styles";
 import { useSelector } from "@state/store";
 
@@ -44,11 +44,11 @@ const UserMenuButton: React.FC = () => {
 
   // for logout menu
   const handleLogout = useCallback(() => {
-    dispatch(authOperations.logout());
+    dispatch(authOps.logout());
   }, []);
 
   // get logged in user name
-  const username = useSelector(state => state.authState.loginUser!.name);
+  const username = useSelector(state => state.authState.values.loginUser!.name);
 
   return (
     <>

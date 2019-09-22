@@ -1,4 +1,2 @@
-import usersReducer from "./reducers";
-
-export { default as usersOperations } from "./operations";
-export default usersReducer;
+export { default as usersACs } from "./actions";
+export { default as usersReducer } from "./reducers";

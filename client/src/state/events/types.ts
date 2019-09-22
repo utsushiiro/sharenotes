@@ -1,8 +1,8 @@
-import { actionCreators } from "./actions";
-import { PickActionType } from "@state/types";
-import constants from "./constants";
+import { PickActionType, Entity } from "@state/types";
+import { eventTypes } from "./constants";
+import { eventsACs } from ".";
 
-export type EventType = keyof (typeof constants.eventTypes);
+export type EventType = keyof (typeof eventTypes);
 
 export type Event = {
   id: string;
@@ -10,8 +10,17 @@ export type Event = {
   createdAt: string;
 };
 
-export type EventAction = PickActionType<typeof actionCreators>;
+export type EventEntity = Entity<Event, never, never>;
+
+export type EventAction = PickActionType<typeof eventsACs>;
 
 export type EventState = {
-  events: Event[];
+  entities: {
+    byId: {
+      [eventId: string]: EventEntity;
+    };
+    idsByType: {
+      [eventType: string]: string[] | undefined;
+    };
+  };
 };

@@ -1,4 +1,4 @@
-const eventTypes = {
+export const eventTypes = {
   // auth
   LOGGED_IN: "LOGGED_IN",
   FAILED_TO_LOGIN: "FAILED_TO_LOGIN",
@@ -15,7 +15,3 @@ const eventTypes = {
   DELETED_NOTE: "DELETED_NOTE",
   FAILED_TO_DELETE_NOTE: "FAILED_TO_DELETE_NOTE"
 } as const;
-
-export default {
-  eventTypes
-};
