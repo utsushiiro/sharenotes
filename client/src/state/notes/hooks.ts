@@ -26,7 +26,11 @@ export function useNote() {
   };
 
   const fetchNote = async (noteId: string) => {
-    await dispatch(notesOps.fetchNote(noteId));
+    dispatch(notesOps.fetchNote(noteId));
+  };
+
+  const createNote = async (title: string, content: string) => {
+    dispatch(notesOps.createNoteAndRedirect(title, content));
   };
 
   const updateNote = (
@@ -35,17 +39,18 @@ export function useNote() {
     content: string,
     version: string
   ) => {
-    notesOps.updateNote(id, title, content, version);
+    dispatch(notesOps.updateNote(id, title, content, version));
   };
 
   const deleteNote = (id: string) => {
-    notesOps.deleteNoteAndRedirect(id);
+    dispatch(notesOps.deleteNoteAndRedirect(id));
   };
 
   return {
     isLoading,
     selectNote,
     fetchNote,
+    createNote,
     updateNote,
     deleteNote
   };
@@ -79,7 +84,7 @@ export function useNotes() {
   };
 
   const fetchNotes = async () => {
-    await dispatch(notesOps.fetchNotes());
+    dispatch(notesOps.fetchNotes());
   };
 
   return {
