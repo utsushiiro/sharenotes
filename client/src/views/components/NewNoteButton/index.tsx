@@ -15,10 +15,10 @@ import { useNote } from "@state/notes/hooks";
 const NewNoteButton: React.FC = () => {
   // for dialog open&close
   const [open, setOpen] = useState(false);
-  const handleDialogOpen = useCallback(() => {
+  const handleOpenDialog = useCallback(() => {
     setOpen(true);
   }, []);
-  const handleDialogClose = useCallback(() => {
+  const handleCloseDialog = useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -26,16 +26,16 @@ const NewNoteButton: React.FC = () => {
   const [title, setTitle] = useState("");
   const { createNote } = useNote();
   const handleNewNote = useCallback(() => {
-    handleDialogClose();
+    handleCloseDialog();
     createNote(title, "");
   }, [title]);
 
   return (
     <>
-      <IconButton color="inherit" onClick={handleDialogOpen}>
+      <IconButton color="inherit" onClick={handleOpenDialog}>
         <LibraryAddIcon />
       </IconButton>
-      <Dialog open={open} onClose={handleDialogClose} fullWidth={true}>
+      <Dialog open={open} onClose={handleCloseDialog} fullWidth={true}>
         <DialogTitle>Create New Note</DialogTitle>
         <DialogContent>
           <TextField
@@ -47,7 +47,7 @@ const NewNoteButton: React.FC = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} color="secondary">
+          <Button onClick={handleCloseDialog} color="secondary">
             Cancel
           </Button>
           <Button onClick={handleNewNote} color="primary">

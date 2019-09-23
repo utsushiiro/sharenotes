@@ -32,10 +32,10 @@ const UserMenuButton: React.FC = () => {
   // for menu open&close
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-  const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
-  const handleMenuClose = useCallback(() => {
+  const handleCloseMenu = useCallback(() => {
     setAnchorEl(null);
   }, []);
 
@@ -45,7 +45,7 @@ const UserMenuButton: React.FC = () => {
 
   return (
     <>
-      <IconButton edge="end" onClick={handleMenuOpen} color="inherit">
+      <IconButton edge="end" onClick={handleOpenMenu} color="inherit">
         <AccountBoxIcon />
       </IconButton>
       <Menu
@@ -54,7 +54,7 @@ const UserMenuButton: React.FC = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         keepMounted
         open={isMenuOpen}
-        onClose={handleMenuClose}
+        onClose={handleCloseMenu}
       >
         <Box pb={1}>
           <MenuItem
