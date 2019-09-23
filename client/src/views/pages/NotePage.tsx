@@ -14,6 +14,7 @@ import Editor from "@components/Editor";
 import { eventTypes } from "@state/events/constants";
 import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
 import { useNote } from "@state/notes/hooks";
+import { useRouter } from "@state/router/hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -100,9 +101,11 @@ const NotePage: React.FC<Props> = props => {
   );
 
   // for note delete
-  const deleteNoteHandler = useCallback(() => {
+  const router = useRouter();
+  const deleteNoteHandler = useCallback(async () => {
     if (note !== undefined) {
-      deleteNote(note.id);
+      await deleteNote(note.id);
+      router.push("/notes/");
     }
   }, [note]);
 

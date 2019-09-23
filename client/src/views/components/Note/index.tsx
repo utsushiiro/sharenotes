@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   note: Note;
-  onDelete: () => void;
+  onDelete: () => Promise<void>;
 };
 
 const Note: React.FC<Props> = props => {
