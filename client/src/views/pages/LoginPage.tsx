@@ -52,11 +52,6 @@ const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleLogin = (username: string, password: string) => {
-    login(username, password);
-    router.push("/");
-  };
-
   // event toaster
   useEventToaster(eventToasterDefs);
 
@@ -69,9 +64,10 @@ const LoginPage: React.FC = () => {
         </Typography>
         <Formik
           initialValues={{ username: "", password: "" }}
-          onSubmit={(values, actions) => {
-            handleLogin(values.username, values.password);
+          onSubmit={async (values, actions) => {
+            await login(values.username, values.password);
             actions.setSubmitting(false);
+            router.push("/");
           }}
           render={() => (
             <Form className={classes.form} noValidate>
