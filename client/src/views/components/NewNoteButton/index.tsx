@@ -11,6 +11,7 @@ import { useState, useCallback } from "react";
 import React from "react";
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 import { useNote } from "@state/notes/hooks";
+import { useRouter } from "@state/router/hooks";
 
 const NewNoteButton: React.FC = () => {
   // for dialog open&close
@@ -25,9 +26,14 @@ const NewNoteButton: React.FC = () => {
   // for new note form
   const [title, setTitle] = useState("");
   const { createNote } = useNote();
-  const handleNewNote = useCallback(() => {
+  const router = useRouter();
+  const handleNewNote = useCallback(async () => {
     handleCloseDialog();
-    createNote(title, "");
+    const noteId = await createNote(title, "");
+    // redirect to note page on success
+    if (noteId !== undefined) {
+      router.push(`/notes/${noteId}`);
+    }
   }, [title]);
 
   return (

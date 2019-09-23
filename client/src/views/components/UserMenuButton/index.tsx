@@ -11,6 +11,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { useState, useCallback } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { useAuth } from "@state/auth/hooks";
+import { useRouter } from "@state/router/hooks";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -41,7 +42,12 @@ const UserMenuButton: React.FC = () => {
 
   // for logged-in user name & logout
   const { loginUser, logout } = useAuth();
+  const router = useRouter();
   const username = loginUser ? loginUser.name : "unknown";
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
 
   return (
     <>
@@ -71,7 +77,11 @@ const UserMenuButton: React.FC = () => {
           <MenuItem className={classes.menuItem} dense={true}>
             Your Profile
           </MenuItem>
-          <MenuItem className={classes.menuItem} dense={true} onClick={logout}>
+          <MenuItem
+            className={classes.menuItem}
+            dense={true}
+            onClick={handleLogout}
+          >
             Logout
           </MenuItem>
         </Box>

@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { push } from "connected-react-router";
 import { apiPost } from "@api";
 import storage from "@state/storage";
 import { eventTypes } from "@state/events/constants";
@@ -24,7 +23,6 @@ function login(username: string, password: string) {
       dispatch(authACs.setLoginUser(response.data));
       dispatch(authACs.finishLoading());
       dispatch(eventsACs.createEntity(eventTypes.LOGGED_IN));
-      dispatch(push("/"));
     } catch (err) {
       dispatch(authACs.finishLoading());
       dispatch(eventsACs.createEntity(eventTypes.FAILED_TO_LOGIN));
@@ -41,7 +39,6 @@ function logout() {
       dispatch(authACs.setLoginUser(null));
       dispatch(authACs.finishLoading());
       dispatch(eventsACs.createEntity(eventTypes.LOGGED_OUT));
-      dispatch(push("/login"));
     } catch (err) {
       dispatch(authACs.finishLoading());
     }
@@ -63,7 +60,6 @@ function signUp(username: string, email: string, password: string) {
       dispatch(authACs.setLoginUser(response.data));
       dispatch(authACs.finishLoading());
       dispatch(eventsACs.createEntity(eventTypes.SIGNED_UP));
-      dispatch(push("/"));
     } catch (err) {
       dispatch(authACs.finishLoading());
     }

@@ -1,5 +1,5 @@
 import { actionTypes } from "./actions";
-import { push, RouterAction } from "connected-react-router";
+import { actionTypes as eventsActionTypes } from "@state/events/actions";
 import operations from "./operations";
 import {
   mockStore,
@@ -11,16 +11,26 @@ import { normalize } from "normalizr";
 import { noteSchema, notesObjectSchema } from "./schema";
 import { actionTypes as usersActionTypes } from "@state/users/actions";
 import { UsersAction } from "@state/users/types";
+import { EventAction } from "@state/events/types";
+import uuid from "uuid/v4";
+import dayjs from "dayjs";
+import { eventTypes } from "@state/events/constants";
+
+// mocks
+const fixedUUID = "00000000-0000-0000-0000-000000000000";
+jest.mock("uuid/v4", () => () => fixedUUID);
+const fixedDate = new Date("2019-09-23");
+jest.spyOn(global.Date, "now").mockImplementation(() => fixedDate.getTime());
 
 describe("Note Operations", () => {
-  test("createNoteAndRedirect", async () => {
+  test("createNote", async () => {
     const note = createTestNote();
     const normalizedData = normalize(note, noteSchema);
     const noteEntities = normalizedData.entities.notes;
     const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | UsersAction | RouterAction)[] = [
+    const expected: (NotesAction | UsersAction | EventAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -36,9 +46,18 @@ describe("Note Operations", () => {
           userEntities
         }
       },
-      push(`/notes/${note.id}`, { fromCreateNoteOperation: true }),
       {
         type: actionTypes.FINISH_LOADING
+      },
+      {
+        type: eventsActionTypes.CREATE,
+        payload: {
+          eventEntity: {
+            id: uuid(),
+            type: eventTypes.CREATED_NOTE,
+            createdAt: dayjs(Date.now()).toISOString()
+          }
+        }
       }
     ];
 
@@ -49,9 +68,7 @@ describe("Note Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(
-      operations.createNoteAndRedirect(note.title, note.content)
-    );
+    await store.dispatch(operations.createNote(note.title, note.content));
 
     // verify
     expect(store.getActions()).toEqual(expect.arrayContaining(expected));
@@ -148,7 +165,7 @@ describe("Note Operations", () => {
     const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | UsersAction)[] = [
+    const expected: (NotesAction | UsersAction | EventAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -166,6 +183,16 @@ describe("Note Operations", () => {
       },
       {
         type: actionTypes.FINISH_LOADING
+      },
+      {
+        type: eventsActionTypes.CREATE,
+        payload: {
+          eventEntity: {
+            id: uuid(),
+            type: eventTypes.UPDATED_NOTE,
+            createdAt: dayjs(Date.now()).toISOString()
+          }
+        }
       }
     ];
 

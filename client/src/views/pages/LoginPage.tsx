@@ -10,6 +10,7 @@ import PasswordField from "@components/PasswordField";
 import { eventTypes } from "@state/events/constants";
 import { EventToasterDefs, useEventToaster } from "@state/events/hooks";
 import { useAuth } from "@state/auth/hooks";
+import { useRouter } from "@state/router/hooks";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -49,6 +50,7 @@ const eventToasterDefs = [
 const LoginPage: React.FC = () => {
   const classes = useStyles();
   const { login } = useAuth();
+  const router = useRouter();
 
   // event toaster
   useEventToaster(eventToasterDefs);
@@ -62,9 +64,10 @@ const LoginPage: React.FC = () => {
         </Typography>
         <Formik
           initialValues={{ username: "", password: "" }}
-          onSubmit={(values, actions) => {
-            login(values.username, values.password);
+          onSubmit={async (values, actions) => {
+            await login(values.username, values.password);
             actions.setSubmitting(false);
+            router.push("/");
           }}
           render={() => (
             <Form className={classes.form} noValidate>

@@ -1,21 +1,20 @@
-import { useSelector } from "@state/store";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "@state/store";
 import { authOps } from ".";
 
 export function useAuth() {
   const loginUser = useSelector(state => state.authState.values.loginUser);
   const dispatch = useDispatch();
 
-  const login = (username: string, password: string) => {
-    dispatch(authOps.login(username, password));
+  const login = async (username: string, password: string) => {
+    await dispatch(authOps.login(username, password));
   };
 
-  const logout = () => {
-    dispatch(authOps.logout());
+  const logout = async () => {
+    await dispatch(authOps.logout());
   };
 
-  const signUp = (username: string, email: string, password: string) => {
-    dispatch(authOps.signUp(username, email, password));
+  const signUp = async (username: string, email: string, password: string) => {
+    await dispatch(authOps.signUp(username, email, password));
   };
 
   return {
