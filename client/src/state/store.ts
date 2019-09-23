@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
 });
 
 // types
-type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>;
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 export const useDispatch: () => ThunkDispatch<
   RootState,

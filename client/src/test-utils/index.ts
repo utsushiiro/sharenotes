@@ -2,17 +2,18 @@ import { axiosInstance, axiosInstanceWith401Handler } from "@api/axios-base";
 import MockAdapter from "axios-mock-adapter";
 import createMockStore from "redux-mock-store";
 import thunk, { ThunkDispatch } from "redux-thunk";
-import { State, Action } from "@state/types";
+import { Action } from "@state/types";
 import { Note, NoteEntity } from "@state/notes/types";
 import { User, UserEntity } from "@state/users/types";
 import { Event } from "@state/events/types";
 import { eventTypes } from "@state/events/constants";
 import uuid from "uuid";
+import { RootState } from "@state/store";
 
 // store
-type Dispatch = ThunkDispatch<State, void, Action>;
+type Dispatch = ThunkDispatch<RootState, void, Action>;
 const middlewares = [thunk];
-export const mockStore = createMockStore<State, Dispatch>(middlewares);
+export const mockStore = createMockStore<RootState, Dispatch>(middlewares);
 
 // axios
 export const mockAxios = new MockAdapter(axiosInstance);

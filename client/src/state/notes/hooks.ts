@@ -1,11 +1,9 @@
 import { Note } from "./types";
 import { notesOps } from ".";
-import { ThunkDispatch } from "redux-thunk";
-import { Action, State } from "@state/types";
 import { useDispatch, useSelector } from "@state/store";
 
 export function useNote() {
-  const dispatch: ThunkDispatch<State, void, Action> = useDispatch();
+  const dispatch = useDispatch();
   const isLoading = useSelector(state => state.notesState.meta.isLoading);
 
   const selectNote = (noteId: string) => {
@@ -58,7 +56,7 @@ export function useNote() {
 }
 
 export function useNotes() {
-  const dispatch: ThunkDispatch<State, void, Action> = useDispatch();
+  const dispatch = useDispatch();
   const isLoading = useSelector(state => state.notesState.meta.isLoading);
 
   const selectNotes = () => {

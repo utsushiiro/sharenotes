@@ -1,7 +1,7 @@
-import { NotesAction, NotesState } from "./notes/types";
-import { AuthAction, AuthState } from "./auth/types";
-import { UsersAction, UsersState } from "./users/types";
-import { EventsAction, EventsState } from "./events/types";
+import { NotesAction } from "@state/notes/types";
+import { AuthAction } from "@state/auth/types";
+import { UsersAction } from "@state/users/types";
+import { EventsAction } from "@state/events/types";
 
 type Unbox<T> = T extends { [K in keyof T]: infer U } ? U : never;
 type ReturnTypes<T> = {
@@ -16,13 +16,5 @@ export type Entity<
   FK1 extends keyof Model,
   FK2 extends keyof Model
 > = Omit<Model, FK1 | FK2> & { [K in FK1]: string } & { [K in FK2]: string[] };
-
-// Deprecated: replace with RootState
-export type State = {
-  authState: AuthState;
-  eventState: EventsState;
-  notesState: NotesState;
-  usersState: UsersState;
-};
 
 export type Action = AuthAction | EventsAction | NotesAction | UsersAction;
