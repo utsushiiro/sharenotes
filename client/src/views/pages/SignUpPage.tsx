@@ -35,11 +35,6 @@ const SignUpPage: React.FC = () => {
   const { signUp } = useAuth();
   const router = useRouter();
 
-  const handleSignUp = (username: string, email: string, password: string) => {
-    signUp(username, email, password);
-    router.push("/");
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -49,9 +44,10 @@ const SignUpPage: React.FC = () => {
         </Typography>
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
-          onSubmit={(values, actions) => {
-            handleSignUp(values.username, values.email, values.password);
+          onSubmit={async (values, actions) => {
+            await signUp(values.username, values.email, values.password);
             actions.setSubmitting(false);
+            router.push("/");
           }}
           render={() => (
             <Form className={classes.form} noValidate>
