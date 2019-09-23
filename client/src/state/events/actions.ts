@@ -1,5 +1,6 @@
 import { EventType, EventEntity, Event } from "./types";
-import { v4 as uuid } from "uuid";
+import uuid from "uuid/v4";
+import dayjs from "dayjs";
 
 export const actionTypes = {
   CREATE: "events/CREATE",
@@ -13,7 +14,7 @@ const actionCreators = {
       eventEntity: {
         id: uuid(),
         type,
-        createdAt: new Date().toISOString()
+        createdAt: dayjs(Date.now()).toISOString()
       } as EventEntity
     }
   }),

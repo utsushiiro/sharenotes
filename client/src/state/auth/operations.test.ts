@@ -1,5 +1,5 @@
 import { actionTypes } from "./actions";
-import { push, RouterAction } from "connected-react-router";
+import { actionTypes as eventsActionTypes } from "@state/events/actions";
 import operations from "./operations";
 import {
   mockAxios,
@@ -8,16 +8,23 @@ import {
   createTestUser
 } from "@test-utils";
 import { AuthAction } from "./types";
+import uuid from "uuid/v4";
+import dayjs from "dayjs";
+import { eventTypes } from "@state/events/constants";
+import { EventAction } from "@state/events/types";
 
-/**
- * TODO check eventsOperations call
- */
+// mocks
+const fixedUUID = "00000000-0000-0000-0000-000000000000";
+jest.mock("uuid/v4", () => () => fixedUUID);
+const fixedDate = new Date("2019-09-23");
+jest.spyOn(global.Date, "now").mockImplementation(() => fixedDate.getTime());
+
 describe("Auth Operations", () => {
   test("login (success)", async () => {
     const user = createTestUser();
 
     // expected actions
-    const expected: (AuthAction | RouterAction)[] = [
+    const expected: (AuthAction | EventAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -30,7 +37,16 @@ describe("Auth Operations", () => {
       {
         type: actionTypes.FINISH_LOADING
       },
-      push("/")
+      {
+        type: eventsActionTypes.CREATE,
+        payload: {
+          eventEntity: {
+            id: uuid(),
+            type: eventTypes.LOGGED_IN,
+            createdAt: dayjs(Date.now()).toISOString()
+          }
+        }
+      }
     ];
 
     // api mock
@@ -43,12 +59,12 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.login(user.name, "password"));
 
     // verify
-    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
+    expect(store.getActions()).toEqual(expected);
   });
 
   test("logout", async () => {
     // expected actions
-    const expected: (AuthAction | RouterAction)[] = [
+    const expected: (AuthAction | EventAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -61,7 +77,16 @@ describe("Auth Operations", () => {
       {
         type: actionTypes.FINISH_LOADING
       },
-      push("/login")
+      {
+        type: eventsActionTypes.CREATE,
+        payload: {
+          eventEntity: {
+            id: uuid(),
+            type: eventTypes.LOGGED_OUT,
+            createdAt: dayjs(Date.now()).toISOString()
+          }
+        }
+      }
     ];
 
     // api mock
@@ -75,14 +100,14 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.logout());
 
     // verify
-    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
+    expect(store.getActions()).toEqual(expected);
   });
 
   test("signUp", async () => {
     const user = createTestUser();
 
     // expected actions
-    const expected: (AuthAction | RouterAction)[] = [
+    const expected: (AuthAction | EventAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -95,7 +120,16 @@ describe("Auth Operations", () => {
       {
         type: actionTypes.FINISH_LOADING
       },
-      push("/")
+      {
+        type: eventsActionTypes.CREATE,
+        payload: {
+          eventEntity: {
+            id: uuid(),
+            type: eventTypes.SIGNED_UP,
+            createdAt: dayjs(Date.now()).toISOString()
+          }
+        }
+      }
     ];
 
     // api mock
@@ -109,6 +143,6 @@ describe("Auth Operations", () => {
     await store.dispatch(operations.signUp(user.name, user.email, "password"));
 
     // verify
-    expect(store.getActions()).toEqual(expect.arrayContaining(expected));
+    expect(store.getActions()).toEqual(expected);
   });
 });

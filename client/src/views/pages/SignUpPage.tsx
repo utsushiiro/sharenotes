@@ -9,6 +9,7 @@ import EmailField from "@components/EmailField";
 import UsernameField from "@components/UsernameField";
 import PasswordField from "@components/PasswordField";
 import { useAuth } from "@state/auth/hooks";
+import { useRouter } from "@state/router/hooks";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,6 +33,12 @@ const useStyles = makeStyles(theme => ({
 const SignUpPage: React.FC = () => {
   const classes = useStyles();
   const { signUp } = useAuth();
+  const router = useRouter();
+
+  const handleSignUp = (username: string, email: string, password: string) => {
+    signUp(username, email, password);
+    router.push("/");
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -43,7 +50,7 @@ const SignUpPage: React.FC = () => {
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           onSubmit={(values, actions) => {
-            signUp(values.username, values.email, values.password);
+            handleSignUp(values.username, values.email, values.password);
             actions.setSubmitting(false);
           }}
           render={() => (
