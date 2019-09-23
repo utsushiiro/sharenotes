@@ -11,7 +11,7 @@ import { AuthAction } from "./types";
 import uuid from "uuid/v4";
 import dayjs from "dayjs";
 import { eventTypes } from "@state/events/constants";
-import { EventAction } from "@state/events/types";
+import { EventsAction } from "@state/events/types";
 
 // mocks
 const fixedUUID = "00000000-0000-0000-0000-000000000000";
@@ -24,7 +24,7 @@ describe("Auth Operations", () => {
     const user = createTestUser();
 
     // expected actions
-    const expected: (AuthAction | EventAction)[] = [
+    const expected: (AuthAction | EventsAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -64,7 +64,7 @@ describe("Auth Operations", () => {
 
   test("logout", async () => {
     // expected actions
-    const expected: (AuthAction | EventAction)[] = [
+    const expected: (AuthAction | EventsAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -107,7 +107,7 @@ describe("Auth Operations", () => {
     const user = createTestUser();
 
     // expected actions
-    const expected: (AuthAction | EventAction)[] = [
+    const expected: (AuthAction | EventsAction)[] = [
       {
         type: actionTypes.START_LOADING
       },

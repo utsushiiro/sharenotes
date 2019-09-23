@@ -1,7 +1,7 @@
 import { NotesAction, NotesState } from "./notes/types";
 import { AuthAction, AuthState } from "./auth/types";
 import { UsersAction, UsersState } from "./users/types";
-import { EventAction, EventState } from "./events/types";
+import { EventsAction, EventsState } from "./events/types";
 
 type Unbox<T> = T extends { [K in keyof T]: infer U } ? U : never;
 type ReturnTypes<T> = {
@@ -20,9 +20,9 @@ export type Entity<
 // Deprecated: replace with RootState
 export type State = {
   authState: AuthState;
-  eventState: EventState;
+  eventState: EventsState;
   notesState: NotesState;
   usersState: UsersState;
 };
 
-export type Action = AuthAction | EventAction | NotesAction | UsersAction;
+export type Action = AuthAction | EventsAction | NotesAction | UsersAction;

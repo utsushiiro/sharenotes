@@ -1,26 +1,26 @@
 import reducer, { initialState } from "./reducers";
 import { actionTypes } from "./actions";
-import { EventAction, EventState } from "./types";
+import { EventsAction, EventsState } from "./types";
 import { createTestEventEntity } from "@test-utils";
 import { eventTypes } from "./constants";
 
 describe("Event Reducers", () => {
   test("CREATE", () => {
     // setup
-    const state: EventState = {
+    const state: EventsState = {
       ...initialState
     };
 
     const eventEntity = createTestEventEntity();
 
-    const action: EventAction = {
+    const action: EventsAction = {
       type: actionTypes.CREATE,
       payload: {
         eventEntity: eventEntity
       }
     };
 
-    const expected: EventState = {
+    const expected: EventsState = {
       entities: {
         byId: {
           [eventEntity.id]: eventEntity
@@ -43,7 +43,7 @@ describe("Event Reducers", () => {
       // setup
       const eventEntity = createTestEventEntity();
 
-      const state: EventState = {
+      const state: EventsState = {
         entities: {
           byId: {
             [eventEntity.id]: eventEntity
@@ -54,7 +54,7 @@ describe("Event Reducers", () => {
         }
       };
 
-      const action: EventAction = {
+      const action: EventsAction = {
         type: actionTypes.DELETE,
         payload: {
           eventId: eventEntity.id,
@@ -62,7 +62,7 @@ describe("Event Reducers", () => {
         }
       };
 
-      const expected: EventState = {
+      const expected: EventsState = {
         entities: {
           byId: {},
           idsByType: {}
@@ -82,7 +82,7 @@ describe("Event Reducers", () => {
       const eventEntity1 = createTestEventEntity({ type: eventType });
       const eventEntity2 = createTestEventEntity({ type: eventType });
 
-      const state: EventState = {
+      const state: EventsState = {
         entities: {
           byId: {
             [eventEntity1.id]: eventEntity1,
@@ -94,7 +94,7 @@ describe("Event Reducers", () => {
         }
       };
 
-      const action: EventAction = {
+      const action: EventsAction = {
         type: actionTypes.DELETE,
         payload: {
           eventId: eventEntity1.id,
@@ -102,7 +102,7 @@ describe("Event Reducers", () => {
         }
       };
 
-      const expected: EventState = {
+      const expected: EventsState = {
         entities: {
           byId: {
             [eventEntity2.id]: eventEntity2

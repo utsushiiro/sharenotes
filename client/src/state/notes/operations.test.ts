@@ -11,7 +11,7 @@ import { normalize } from "normalizr";
 import { noteSchema, notesObjectSchema } from "./schema";
 import { actionTypes as usersActionTypes } from "@state/users/actions";
 import { UsersAction } from "@state/users/types";
-import { EventAction } from "@state/events/types";
+import { EventsAction } from "@state/events/types";
 import uuid from "uuid/v4";
 import dayjs from "dayjs";
 import { eventTypes } from "@state/events/constants";
@@ -30,7 +30,7 @@ describe("Note Operations", () => {
     const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | UsersAction | EventAction)[] = [
+    const expected: (NotesAction | UsersAction | EventsAction)[] = [
       {
         type: actionTypes.START_LOADING
       },
@@ -165,7 +165,7 @@ describe("Note Operations", () => {
     const userEntities = normalizedData.entities.users;
 
     // expected actions
-    const expected: (NotesAction | UsersAction | EventAction)[] = [
+    const expected: (NotesAction | UsersAction | EventsAction)[] = [
       {
         type: actionTypes.START_LOADING
       },

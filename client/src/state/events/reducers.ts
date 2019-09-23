@@ -1,9 +1,9 @@
-import { EventState } from "./types";
+import { EventsState } from "./types";
 import { Action } from "@state/types";
 import { actionTypes } from "./actions";
 import { combineReducers } from "redux";
 
-export const initialState: EventState = {
+export const initialState: EventsState = {
   entities: {
     byId: {},
     idsByType: {}
@@ -66,12 +66,12 @@ function idsByType(
   }
 }
 
-const entities = combineReducers<EventState["entities"], Action>({
+const entities = combineReducers<EventsState["entities"], Action>({
   byId,
   idsByType
 });
 
-const eventsReducer = combineReducers<EventState, Action>({
+const eventsReducer = combineReducers<EventsState, Action>({
   entities
 });
 

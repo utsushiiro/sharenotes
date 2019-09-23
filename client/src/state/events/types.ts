@@ -12,9 +12,9 @@ export type Event = {
 
 export type EventEntity = Entity<Event, never, never>;
 
-export type EventAction = PickActionType<typeof eventsACs>;
+export type EventsAction = PickActionType<typeof eventsACs>;
 
-export type EventState = {
+export type EventsState = {
   entities: {
     byId: {
       [eventId: string]: EventEntity | undefined;
