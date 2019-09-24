@@ -3,6 +3,8 @@ package jp.utsushiiro.sharenotes.api.domain;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -44,11 +46,11 @@ public class Folder {
     )
     private List<Note> notes = new ArrayList<>();
 
-    @CreatedDate
+    @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @CreatedBy
+    @LastModifiedBy
     @ManyToOne(
             fetch = FetchType.EAGER,
             optional = false
