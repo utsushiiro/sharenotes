@@ -46,6 +46,36 @@ public class Folder {
     )
     private List<Note> notes = new ArrayList<>();
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_read_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithReadAuthority;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_read_write_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithReadWriteAuthority;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_group_with_admin_authority_id",
+            nullable = false
+    )
+    private UserGroup groupWithAdminAuthority;
+
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -79,6 +109,12 @@ public class Folder {
     @Version
     @Column(name = "version")
     private Long version;
+
+    public enum AuthorityType {
+        READ,
+        READ_WRITE,
+        ADMIN
+    }
 
     public void addSubFolder(Folder folder) {
         subFolders.add(folder);
