@@ -30,12 +30,9 @@ const rootReducer = combineReducers({
 
 // types
 export type RootState = ReturnType<typeof rootReducer>;
+export type Dispatch = ThunkDispatch<RootState, void, Action>;
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
-export const useDispatch: () => ThunkDispatch<
-  RootState,
-  void,
-  Action
-> = useReduxDispatch;
+export const useDispatch: () => Dispatch = useReduxDispatch;
 
 export default function configureStore(initialState = {}) {
   return createStore(
