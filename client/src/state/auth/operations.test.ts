@@ -56,10 +56,13 @@ describe("Auth Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.login(user.name, "password"));
+    const result = await store.dispatch(
+      operations.login(user.name, "password")
+    );
 
     // verify
     expect(store.getActions()).toEqual(expected);
+    expect(result).toEqual(true);
   });
 
   test("logout", async () => {
@@ -97,10 +100,11 @@ describe("Auth Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.logout());
+    const result = await store.dispatch(operations.logout());
 
     // verify
     expect(store.getActions()).toEqual(expected);
+    expect(result).toEqual(true);
   });
 
   test("signUp", async () => {
@@ -140,9 +144,12 @@ describe("Auth Operations", () => {
     const store = mockStore();
 
     // execute
-    await store.dispatch(operations.signUp(user.name, user.email, "password"));
+    const result = await store.dispatch(
+      operations.signUp(user.name, user.email, "password")
+    );
 
     // verify
     expect(store.getActions()).toEqual(expected);
+    expect(result).toEqual(true);
   });
 });

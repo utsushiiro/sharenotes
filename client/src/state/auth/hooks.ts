@@ -6,15 +6,15 @@ export function useAuth() {
   const dispatch = useDispatch();
 
   const login = async (username: string, password: string) => {
-    await dispatch(authOps.login(username, password));
+    return await dispatch(authOps.login(username, password));
   };
 
   const logout = async () => {
-    await dispatch(authOps.logout());
+    return await dispatch(authOps.logout());
   };
 
   const signUp = async (username: string, email: string, password: string) => {
-    await dispatch(authOps.signUp(username, email, password));
+    return await dispatch(authOps.signUp(username, email, password));
   };
 
   return {

@@ -65,9 +65,11 @@ const LoginPage: React.FC = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={async (values, actions) => {
-            await login(values.username, values.password);
+            const result = await login(values.username, values.password);
             actions.setSubmitting(false);
-            router.push("/");
+            if (result) {
+              router.push("/");
+            }
           }}
           render={() => (
             <Form className={classes.form} noValidate>
