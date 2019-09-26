@@ -45,8 +45,10 @@ const UserMenuButton: React.FC = () => {
   const router = useRouter();
   const username = loginUser ? loginUser.name : "unknown";
   const handleLogout = async () => {
-    await logout();
-    router.push("/login");
+    const result = await logout();
+    if (result) {
+      router.push("/login");
+    }
   };
 
   return (
