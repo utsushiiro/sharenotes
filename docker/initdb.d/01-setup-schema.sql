@@ -57,6 +57,9 @@ create table note_revision (
     created_by bigint not null,
     primary key (id),
     foreign key (note_id) references note (id),
+    foreign key (user_group_with_read_authority_id) references user_group (id),
+    foreign key (user_group_with_read_write_authority_id) references user_group (id),
+    foreign key (user_group_with_admin_authority_id) references user_group (id),
     foreign key (created_by) references user (id)
 );
 
@@ -83,6 +86,9 @@ create table folder (
     version bigint not null,
     primary key (id),
     foreign key (parent_folder_id) references folder (id),
+    foreign key (user_group_with_read_authority_id) references user_group (id),
+    foreign key (user_group_with_read_write_authority_id) references user_group (id),
+    foreign key (user_group_with_admin_authority_id) references user_group (id),
     foreign key (updated_by) references user (id),
     foreign key (created_by) references user (id)
 );
