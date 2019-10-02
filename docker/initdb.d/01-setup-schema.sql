@@ -35,12 +35,35 @@ create table user_group_mapping (
     foreign key (user_group_id) references user_group (id)
 );
 
+create table workspace (
+    id bigint not null auto_increment,
+    name varchar(255) not null,
+    description text not null,
+    root_folder_id bigint not null,
+    workspace_user_group_id bigint not null,
+    workspace_admin_group_id bigint not null,
+    updated_at timestamp not null default current_timestamp,
+    updated_by bigint not null,
+    created_at timestamp not null default current_timestamp,
+    created_by bigint not null,
+    unique (name),
+    foreign key (root_folder_id) references folder (id),
+    foreign key (workspace_user_group_id) references user_group (id),
+    foreign key (workspace_admin_group_id) references user_group (id),
+    foreign key (updated_by) references user (id),
+    foreign key (created_by) references user (id)
+);
+
 create table note (
     id bigint not null auto_increment,
+    workspace_id bigint not null,
     folder_id bigint not null,
+    title text not null,
     created_at timestamp not null default current_timestamp,
     created_by bigint not null,
     primary key (id),
+    unique (workspace_id, folder_id, title),
+    foreign key (workspace_id) references workspace (id),
     foreign key (folder_id) references folder (id),
     foreign key (created_by) references user (id)
 );
@@ -72,6 +95,7 @@ create table latest_note_revision_mapping (
 
 create table folder (
     id bigint not null auto_increment,
+    workspace_id bigint not null,
     name varchar(255) not null,
     parent_folder_id bigint,
     user_group_with_write_authority_id bigint not null,
@@ -82,6 +106,7 @@ create table folder (
     created_by bigint not null,
     version bigint not null,
     primary key (id),
+    unique (workspace_id, parent_folder_id, name),
     foreign key (parent_folder_id) references folder (id),
     foreign key (user_group_with_write_authority_id) references user_group (id),
     foreign key (user_group_with_admin_authority_id) references user_group (id),
