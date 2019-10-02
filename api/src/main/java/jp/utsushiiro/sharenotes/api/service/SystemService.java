@@ -30,7 +30,7 @@ public class SystemService {
 
     @Transactional
     public User install(String username, String email, String password) {
-        userGroupService.create(UserGroup.EVERYONE_USER_GROUP_NAME);
+        UserGroup everyoneGroup = userGroupService.create(UserGroup.EVERYONE_USER_GROUP_NAME);
         UserGroup adminGroup = userGroupService.create(UserGroup.ADMIN_USER_GROUP_NAME);
 
         User user = userService.create(username, email, password);
@@ -38,6 +38,9 @@ public class SystemService {
 
         Folder rootFolder = new Folder();
         rootFolder.setName(Folder.ROOT_FOLDER_NAME);
+        rootFolder.setGroupWithReadAuthority(everyoneGroup);
+        rootFolder.setGroupWithReadWriteAuthority(everyoneGroup);
+        rootFolder.setGroupWithAdminAuthority(adminGroup);
         rootFolder.setCreatedBy(user);
         rootFolder.setUpdatedBy(user);
         folderRepository.save(rootFolder);

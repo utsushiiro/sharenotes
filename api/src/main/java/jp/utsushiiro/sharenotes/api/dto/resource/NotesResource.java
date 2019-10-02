@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class NotesResource {
 
-    List<NoteResource> notes = new ArrayList<>();
+    private List<NoteResource> notes = new ArrayList<>();
 
     public NotesResource(List<Note> notes) {
         for (Note note : notes) {

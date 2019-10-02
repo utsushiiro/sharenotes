@@ -32,6 +32,7 @@ public class UserGroup {
 
     @OneToMany(
             mappedBy = "userGroup",
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
