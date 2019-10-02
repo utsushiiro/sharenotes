@@ -45,12 +45,8 @@ public class NotePermissionEvaluator {
 
     private boolean _hasPermission(User user, Note target, Note.AuthorityType authorityType) {
         switch (authorityType) {
-            case READ: {
-                return target.getLatestRevision().getGroupWithReadAuthority().hasUser(user);
-            }
-
-            case READ_WRITE: {
-                return target.getLatestRevision().getGroupWithReadWriteAuthority().hasUser(user);
+            case WRITE: {
+                return target.getLatestRevision().getGroupWithWriteAuthority().hasUser(user);
             }
 
             case ADMIN: {

@@ -39,20 +39,10 @@ public class NoteRevision {
             optional = false
     )
     @JoinColumn(
-            name = "user_group_with_read_authority_id",
+            name = "user_group_with_write_authority_id",
             nullable = false
     )
-    private UserGroup groupWithReadAuthority;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            optional = false
-    )
-    @JoinColumn(
-            name = "user_group_with_read_write_authority_id",
-            nullable = false
-    )
-    private UserGroup groupWithReadWriteAuthority;
+    private UserGroup groupWithWriteAuthority;
 
     @ManyToOne(
             fetch = FetchType.EAGER,

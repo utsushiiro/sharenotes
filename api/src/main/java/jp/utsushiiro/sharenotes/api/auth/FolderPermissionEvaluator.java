@@ -45,12 +45,8 @@ public class FolderPermissionEvaluator {
 
     private boolean _hasPermission(User user, Folder target, Folder.AuthorityType authorityType) {
         switch (authorityType) {
-            case READ: {
-                return target.getGroupWithReadAuthority().hasUser(user);
-            }
-
-            case READ_WRITE: {
-                return target.getGroupWithReadWriteAuthority().hasUser(user);
+            case WRITE: {
+                return target.getGroupWithWriteAuthority().hasUser(user);
             }
 
             case ADMIN: {

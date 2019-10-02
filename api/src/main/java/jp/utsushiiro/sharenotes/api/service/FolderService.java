@@ -42,8 +42,7 @@ public class FolderService {
                 folder = new Folder();
                 folder.setName(folderName);
                 folder.setParentFolder(parentFolder);
-                folder.setGroupWithReadAuthority(everyoneGroup);
-                folder.setGroupWithReadWriteAuthority(everyoneGroup);
+                folder.setGroupWithWriteAuthority(everyoneGroup);
                 folder.setGroupWithAdminAuthority(ownerGroup);
                 folderRepository.saveAndFlush(folder);
             }

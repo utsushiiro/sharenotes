@@ -38,8 +38,7 @@ public class SystemService {
 
         Folder rootFolder = new Folder();
         rootFolder.setName(Folder.ROOT_FOLDER_NAME);
-        rootFolder.setGroupWithReadAuthority(everyoneGroup);
-        rootFolder.setGroupWithReadWriteAuthority(everyoneGroup);
+        rootFolder.setGroupWithWriteAuthority(everyoneGroup);
         rootFolder.setGroupWithAdminAuthority(adminGroup);
         rootFolder.setCreatedBy(user);
         rootFolder.setUpdatedBy(user);

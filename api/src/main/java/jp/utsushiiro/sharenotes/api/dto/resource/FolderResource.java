@@ -48,36 +48,21 @@ public class FolderResource {
     }
 
     public FolderResource(Folder folder, User accessUser) {
-        // check user can access folder itself
-        if (!folder.getGroupWithReadAuthority().hasUser(accessUser)) {
-            throw new ForbiddenOperationException();
-        }
-
         this.id = folder.getId().toString();
         this.name = folder.getName();
 
-        // check user can access parent folders
         Folder parentFolder = folder.getParentFolder();
         while (parentFolder != null) {
-            if (!parentFolder.getGroupWithReadAuthority().hasUser(accessUser)) {
-                throw new ForbiddenOperationException();
-            }
             this.parentFolders.add(new FolderIdentifierResource(parentFolder));
             parentFolder = parentFolder.getParentFolder();
         }
 
-        // collect readable sub folders
         for (Folder subFolder: folder.getSubFolders()) {
-            if (subFolder.getGroupWithReadAuthority().hasUser(accessUser)) {
-                this.subFolders.add(new FolderIdentifierResource(subFolder));
-            }
+            this.subFolders.add(new FolderIdentifierResource(subFolder));
         }
 
-        // collect readable notes in a folder
         for (Note note: folder.getNotes()) {
-            if (note.getLatestRevision().getGroupWithReadAuthority().hasUser(accessUser)){
-                this.notes.add(new NoteResource(note));
-            }
+            this.notes.add(new NoteResource(note));
         }
 
         this.updatedAt = folder.getUpdatedAt();

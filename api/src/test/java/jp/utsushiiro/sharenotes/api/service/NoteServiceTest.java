@@ -84,8 +84,7 @@ class NoteServiceTest {
         NoteRevision revision = result.getLatestRevision();
         assertThat(revision.getTitle()).isEqualTo(createNoteForm.getTitle());
         assertThat(revision.getContent()).isEqualTo(createNoteForm.getContent());
-        assertThat(revision.getGroupWithReadAuthority()).isEqualTo(everyoneGroup);
-        assertThat(revision.getGroupWithReadWriteAuthority()).isEqualTo(everyoneGroup);
+        assertThat(revision.getGroupWithWriteAuthority()).isEqualTo(everyoneGroup);
         assertThat(revision.getGroupWithAdminAuthority()).isEqualTo(user.getSelfGroup());
 
         Mockito.verify(noteRepository, Mockito.times(2)).save(ArgumentMatchers.any(Note.class));
@@ -105,8 +104,7 @@ class NoteServiceTest {
         UserGroup userGroupWithReadAuthority = new UserGroup();
         UserGroup userGroupWithReadWriteAuthority = new UserGroup();
         UserGroup userGroupWithAdminAuthority = new UserGroup();
-        Mockito.doReturn(userGroupWithReadAuthority).when(mockNoteRevision).getGroupWithReadAuthority();
-        Mockito.doReturn(userGroupWithReadWriteAuthority).when(mockNoteRevision).getGroupWithReadWriteAuthority();
+        Mockito.doReturn(userGroupWithReadWriteAuthority).when(mockNoteRevision).getGroupWithWriteAuthority();
         Mockito.doReturn(userGroupWithAdminAuthority).when(mockNoteRevision).getGroupWithAdminAuthority();
 
         UpdateNoteForm updateNoteForm = new UpdateNoteForm();
@@ -121,8 +119,7 @@ class NoteServiceTest {
         Mockito.verify(noteRevisionRepository, Mockito.times(1)).save(Mockito.argThat(
                 noteRevision -> noteRevision.getTitle().equals(updateNoteForm.getTitle()) &&
                             noteRevision.getContent().equals(updateNoteForm.getContent()) &&
-                            noteRevision.getGroupWithReadAuthority().equals(userGroupWithReadAuthority) &&
-                            noteRevision.getGroupWithReadWriteAuthority().equals(userGroupWithReadWriteAuthority) &&
+                            noteRevision.getGroupWithWriteAuthority().equals(userGroupWithReadWriteAuthority) &&
                             noteRevision.getGroupWithAdminAuthority().equals(userGroupWithAdminAuthority) &&
                             noteRevision.getNote().equals(mockNote)
         ));

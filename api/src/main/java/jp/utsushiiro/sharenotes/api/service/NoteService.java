@@ -66,8 +66,7 @@ public class NoteService {
         revision.setContent(form.getContent());
         UserGroup ownerGroup = user.getSelfGroup();
         UserGroup everyoneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
-        revision.setGroupWithReadAuthority(everyoneGroup);
-        revision.setGroupWithReadWriteAuthority(everyoneGroup);
+        revision.setGroupWithWriteAuthority(everyoneGroup);
         revision.setGroupWithAdminAuthority(ownerGroup);
         noteRevisionRepository.save(revision);
 
@@ -77,7 +76,7 @@ public class NoteService {
         return note;
     }
 
-    @PreAuthorize("isAuthenticated() and hasPermission(#noteId, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).READ_WRITE)")
+    @PreAuthorize("isAuthenticated() and hasPermission(#noteId, 'jp.utsushiiro.sharenotes.api.domain.Note', T(jp.utsushiiro.sharenotes.api.domain.Note$AuthorityType).WRITE)")
     @Transactional
     public Note update(Long noteId, UpdateNoteForm form) {
         Note note = noteRepository.findById(noteId)
@@ -92,8 +91,7 @@ public class NoteService {
         next.setNote(note);
         next.setTitle(form.getTitle());
         next.setContent(form.getContent());
-        next.setGroupWithReadAuthority(prev.getGroupWithReadAuthority());
-        next.setGroupWithReadWriteAuthority(prev.getGroupWithReadWriteAuthority());
+        next.setGroupWithWriteAuthority(prev.getGroupWithWriteAuthority());
         next.setGroupWithAdminAuthority(prev.getGroupWithAdminAuthority());
         noteRevisionRepository.save(next);
 

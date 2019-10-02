@@ -48,8 +48,7 @@ public class Note{
     private User createdBy;
 
     public enum AuthorityType {
-        READ,
-        READ_WRITE,
+        WRITE,
         ADMIN
     }
 
