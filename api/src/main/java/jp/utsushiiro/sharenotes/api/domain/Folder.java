@@ -25,6 +25,16 @@ public class Folder {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "workspace_id",
+            nullable = false
+    )
+    private Workspace workspace;
+
     @Column(name = "name")
     private String name;
 

@@ -20,6 +20,16 @@ public class Note{
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn(
+            name = "workspace_id",
+            nullable = false
+    )
+    private Workspace workspace;
+
     @ManyToOne
     @JoinColumn(name = "folder_id")
     private Folder folder;

@@ -1,9 +1,8 @@
 package jp.utsushiiro.sharenotes.api.service;
 
-import jp.utsushiiro.sharenotes.api.domain.Folder;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
-import jp.utsushiiro.sharenotes.api.repository.FolderRepository;
+import jp.utsushiiro.sharenotes.api.domain.Workspace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,36 +14,33 @@ public class SystemService {
 
     private final UserGroupService userGroupService;
 
-    private final FolderRepository folderRepository;
+    private final WorkspaceService workspaceService;
 
     @Autowired
     public SystemService(
             UserService userService,
             UserGroupService userGroupService,
-            FolderRepository folderRepository
+            WorkspaceService workspaceService
     ) {
         this.userService = userService;
         this.userGroupService = userGroupService;
-        this.folderRepository = folderRepository;
+        this.workspaceService = workspaceService;
     }
 
     @Transactional
     public User install(String username, String email, String password) {
+        // create user groups
         UserGroup everyoneGroup = userGroupService.create(UserGroup.EVERYONE_USER_GROUP_NAME);
         UserGroup adminGroup = userGroupService.create(UserGroup.ADMIN_USER_GROUP_NAME);
 
-        User user = userService.create(username, email, password);
-        adminGroup.addUser(user);
+        // create admin user
+        User adminUser = userService.create(username, email, password);
+        adminGroup.addUser(adminUser);
 
-        Folder rootFolder = new Folder();
-        rootFolder.setName(Folder.ROOT_FOLDER_NAME);
-        rootFolder.setGroupWithWriteAuthority(everyoneGroup);
-        rootFolder.setGroupWithAdminAuthority(adminGroup);
-        rootFolder.setCreatedBy(user);
-        rootFolder.setUpdatedBy(user);
-        folderRepository.save(rootFolder);
+        // create general workspace
+        Workspace generalWorkspace = workspaceService.createPublicWorkspace("general", "everything ok", adminUser);
 
-        return user;
+        return adminUser;
     }
 
     @Transactional

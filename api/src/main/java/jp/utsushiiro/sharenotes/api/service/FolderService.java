@@ -3,6 +3,7 @@ package jp.utsushiiro.sharenotes.api.service;
 import jp.utsushiiro.sharenotes.api.domain.Folder;
 import jp.utsushiiro.sharenotes.api.domain.User;
 import jp.utsushiiro.sharenotes.api.domain.UserGroup;
+import jp.utsushiiro.sharenotes.api.domain.Workspace;
 import jp.utsushiiro.sharenotes.api.exception.exceptions.ResourceNotFoundException;
 import jp.utsushiiro.sharenotes.api.repository.FolderRepository;
 import jp.utsushiiro.sharenotes.api.repository.UserGroupRepository;
@@ -31,7 +32,7 @@ public class FolderService {
 
     @PreAuthorize("isAuthenticated()")
     @Transactional
-    public Folder create(String[] folderNames, User user) {
+    public Folder create(Workspace workspace, String[] folderNames, User user) {
         UserGroup ownerGroup = user.getSelfGroup();
         UserGroup everyoneGroup = userGroupRepository.findByName(UserGroup.EVERYONE_USER_GROUP_NAME);
 
@@ -40,6 +41,7 @@ public class FolderService {
             Folder folder = folderRepository.findByName(folderName);
             if (folder == null) {
                 folder = new Folder();
+                folder.setWorkspace(workspace);
                 folder.setName(folderName);
                 folder.setParentFolder(parentFolder);
                 folder.setGroupWithWriteAuthority(everyoneGroup);
