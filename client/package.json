@@ -56,7 +56,7 @@
   "dependencies": {
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "codemirror": "^5.48.4",
     "connected-react-router": "^6.5.2",
     "dayjs": "^1.8.16",
